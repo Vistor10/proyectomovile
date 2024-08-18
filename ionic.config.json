@@ -1,0 +1,7 @@
+{
+  "name": "proyectomovile",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
