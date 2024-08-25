@@ -1,0 +1,13 @@
+.center-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Asegura que el ion-content ocupe toda la altura de la pantalla */
+}
+
+form {
+  width: 100%;
+  max-width: 400px; /* Limita el ancho del formulario */
+}
+
+  
