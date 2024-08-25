@@ -1,119 +1,93 @@
-<ion-header [translucent]="true">
-  <ion-toolbar color="dark">
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>gadgetzone</ion-title>
-    <ion-buttons slot="end">
-      <img class="icon" src="" alt="logo">
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true" color="dark" class="ion-padding">
-  <ion-header collapse="condense">
+<!-- Menú lateral -->
+<ion-menu contentId="main-content">
+  <ion-header>
     <ion-toolbar>
-      <ion-title size="large">gabinetes</ion-title>
+      <ion-title>Menú</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <ion-card>
-    <img alt="Gabinete" src="https://media.spdigital.cl/thumbnails/products/88txvj8i_200d227b_thumbnail_512.png" />
-    <ion-card-header>
-      <ion-card-title>Gabinete Gamer Corsair iCue 4000X, RGB, Vidrio templado, ATX, MicroATX, Mini-ITX</ion-card-title>
-      <ion-card-subtitle>$119.000 CLP</ion-card-subtitle>
-    </ion-card-header>
+  <ion-content class="ion-padding">
+    <ion-list>
+      <ion-item routerLink="/login">
+        <ion-icon name="log-in-outline" slot="start"></ion-icon>
+        <ion-label>Iniciar Sesión</ion-label>
+      </ion-item>
+      <ion-item routerLink="/gabinetes">
+        <ion-icon name="cube-outline" slot="start"></ion-icon>
+        <ion-label>Gabinetes</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
 
-    <ion-card-content>
-      El Gabinete Gamer Corsair iCue 4000X es una excelente opción para quienes buscan un gabinete con estilo y
-      rendimiento superior. Equipado con paneles de vidrio templado y una impresionante iluminación RGB, este modelo ATX
-      también es compatible con placas base MicroATX y Mini-ITX, ofreciendo una amplia flexibilidad para tus necesidades
-      de hardware. Su diseño optimizado para una ventilación eficiente y su espacioso interior garantizan un flujo de
-      aire adecuado para mantener tus componentes frescos y funcionando al máximo. Con el Corsair iCue 4000X, no solo
-      obtienes una apariencia elegante y moderna, sino también un rendimiento excepcional para tu configuración de
-      gaming.
-    </ion-card-content>
-    <ion-grid>
-      <ion-row>
-        <ion-col>
+<!-- Contenido principal de la página -->
+<div class="ion-page" id="main-content">
+  <ion-header [translucent]="true">
+    <ion-toolbar color="dark">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>gadgetzone</ion-title>
+      <ion-buttons slot="end">
+        <img class="icon" src="" alt="logo">
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
 
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-card>
+  <ion-content [fullscreen]="true" color="dark" class="ion-padding">
+    <ion-header collapse="condense">
+      <ion-toolbar>
+        <ion-title size="large">gabinetes</ion-title>
+      </ion-toolbar>
+    </ion-header>
 
-  <ion-card>
-    <img alt="gabinetes" src="https://media.spdigital.cl/thumbnails/products/6h2lh1by_22f3ee6b_thumbnail_512.jpg" />
-    <ion-card-header>
-      <ion-card-title>Gabinete Gamer Kolink Void RGB, Vidrio Templado, Mid Tower, ATX, Mini-ATX, Mini-ITX, Color
-        blanco</ion-card-title>
-      <ion-card-subtitle>$49.570 CLP</ion-card-subtitle>
-    </ion-card-header>
+    <!-- Tarjeta 1 -->
+    <ion-card>
+      <img alt="Gabinete" src="https://media.spdigital.cl/thumbnails/products/88txvj8i_200d227b_thumbnail_512.png" />
+      <ion-card-header>
+        <ion-card-title>Gabinete Gamer Corsair iCue 4000X, RGB, Vidrio templado, ATX, MicroATX, Mini-ITX</ion-card-title>
+        <ion-card-subtitle>$119.000 CLP</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        El Gabinete Gamer Corsair iCue 4000X es una excelente opción para quienes buscan un gabinete con estilo y rendimiento superior...
+      </ion-card-content>
+    </ion-card>
 
+    <!-- Tarjeta 2 -->
+    <ion-card>
+      <img alt="gabinetes" src="https://media.spdigital.cl/thumbnails/products/6h2lh1by_22f3ee6b_thumbnail_512.jpg" />
+      <ion-card-header>
+        <ion-card-title>Gabinete Gamer Kolink Void RGB, Vidrio Templado, Mid Tower, ATX, Mini-ATX, Mini-ITX, Color blanco</ion-card-title>
+        <ion-card-subtitle>$49.570 CLP</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        El Gabinete Gamer Kolink Void RGB combina estilo y funcionalidad en un diseño Mid Tower elegante y moderno...
+      </ion-card-content>
+    </ion-card>
 
-    <ion-card-content>
-      El Gabinete Gamer Kolink Void RGB combina estilo y funcionalidad en un diseño Mid Tower elegante y moderno. Con
-      paneles de vidrio templado y una vibrante iluminación RGB, ofrece una vista impresionante de tus componentes
-      internos mientras agrega un toque dinámico a tu configuración. Compatible con placas base ATX, Mini-ATX y
-      Mini-ITX,
-      proporciona flexibilidad para adaptarse a diferentes configuraciones de hardware. Su espacioso interior y eficaz
-      ventilación aseguran un rendimiento óptimo, mientras que su acabado en color blanco realza su apariencia visual.
-      Ideal para quienes buscan una mezcla de estética y eficiencia en su equipo de gaming.
-    </ion-card-content>
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-card>
+    <!-- Tarjeta 3 -->
+    <ion-card>
+      <img alt="gabinetes" src="https://media.spdigital.cl/thumbnails/products/_wq4_3_m_0d4a84e2_thumbnail_512.jpg" />
+      <ion-card-header>
+        <ion-card-title>Gabinete Gamer Aerocool Shard , Vidrio Templado, Mid-Tower, ATX, m-ATX</ion-card-title>
+        <ion-card-subtitle>$89.990 CLP</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        El Gabinete Gamer Aerocool Shard es la elección ideal para los entusiastas del gaming que buscan un gabinete de alto rendimiento con un diseño impactante...
+      </ion-card-content>
+    </ion-card>
 
-  <ion-card>
-    <img alt="gabinetes" src="https://media.spdigital.cl/thumbnails/products/_wq4_3_m_0d4a84e2_thumbnail_512.jpg" />
-    <ion-card-header>
-      <ion-card-title>Gabinete Gamer Aerocool Shard , Vidrio Templado, Mid-Tower, ATX, m-ATX</ion-card-title>
-      <ion-card-subtitle>$89.990 CLP</ion-card-subtitle>
-    </ion-card-header>
+    <!-- Tarjeta 4 -->
+    <ion-card>
+      <img alt="gabinetes" src="https://media.spdigital.cl/thumbnails/products/9mtx0k9j_4b2c460e_thumbnail_512.jpg" />
+      <ion-card-header>
+        <ion-card-title>Gabinete Gamer Aerocool Shard , Vidrio Templado, Mid-Tower, ATX, m-ATX</ion-card-title>
+        <ion-card-subtitle>$64.490 CLP</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        El Cooler Master CMP 520 es el gabinete de torre media perfecto para quienes buscan un equilibrio entre estilo y funcionalidad...
+      </ion-card-content>
+    </ion-card>
 
-    <ion-card-content>
-      El Gabinete Gamer Aerocool Shard es la elección ideal para los entusiastas del gaming que buscan un gabinete de
-      alto rendimiento con un diseño impactante. Este modelo Mid-Tower cuenta con un panel frontal de malla y laterales
-      de vidrio templado, ofreciendo una vista clara de tus componentes internos y un flujo de aire optimizado para
-      mantener todo fresco durante las sesiones de juego intensas. Compatible con placas base ATX y m-ATX, proporciona
-      un amplio espacio para tarjetas gráficas de gran tamaño y sistemas de refrigeración. Su diseño moderno y funcional
-      no solo mejora el rendimiento del sistema, sino que también añade un toque estilizado a tu configuración de juego.
-    </ion-card-content>
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-card>
-  <ion-card>
-    <img alt="gabinetes" src="https://media.spdigital.cl/thumbnails/products/9mtx0k9j_4b2c460e_thumbnail_512.jpg" />
-    <ion-card-header>
-      <ion-card-title>Gabinete Gamer Aerocool Shard , Vidrio Templado, Mid-Tower, ATX, m-ATX</ion-card-title>
-      <ion-card-subtitle>$64.490 CLP</ion-card-subtitle>
-    </ion-card-header>
-
-    <ion-card-content>
-      El Cooler Master CMP 520 es el gabinete de torre media perfecto para quienes buscan un equilibrio entre estilo y
-      funcionalidad. Con un diseño moderno que incluye un elegante panel frontal de malla y un panel lateral de vidrio
-      templado, no solo exhibe tus componentes internos con un toque de sofisticación, sino que también asegura una
-      ventilación excepcional. Su amplio interior es compatible con placas base ATX y permite la instalación de tarjetas
-      gráficas de gran tamaño y sistemas de refrigeración líquida, mientras que las opciones de gestión de cables
-      mantienen todo en orden. Ideal para mejorar tanto el rendimiento como la estética de tu sistema, el CMP 520
-      combina versatilidad y elegancia en un solo paquete
-    </ion-card-content>
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-card>
-
-</ion-content>
+  </ion-content>
+</div>
