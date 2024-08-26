@@ -30,6 +30,10 @@ const routes: Routes = [
     path: 'teclados',
     loadChildren: () => import('./teclados/teclados.module').then( m => m.TecladosPageModule)
   },
+  {
+    path: 'audifonosgamer',
+    loadChildren: () => import('./audifonosgamer/audifonosgamer.module').then( m => m.AudifonosgamerPageModule)
+  },
 
 ];
 
