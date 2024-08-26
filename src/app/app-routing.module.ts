@@ -22,17 +22,26 @@ const routes: Routes = [
   {
     path: 'gabinetes',
     loadChildren: () => import('./pages/gabinetes/gabinetes.module').then( m => m.GabinetesPageModule)
-  },  {
+  },
+  {
     path: 'registro',
     loadChildren: () => import('./pages/registro/registro.module').then( m => m.RegistroPageModule)
   },
   {
     path: 'teclados',
-    loadChildren: () => import('./teclados/teclados.module').then( m => m.TecladosPageModule)
+    loadChildren: () => import('./pages/teclados/teclados.module').then( m => m.TecladosPageModule)
   },
   {
     path: 'audifonosgamer',
-    loadChildren: () => import('./audifonosgamer/audifonosgamer.module').then( m => m.AudifonosgamerPageModule)
+    loadChildren: () => import('./pages/audifonosgamer/audifonosgamer.module').then( m => m.AudifonosgamerPageModule)
+  },
+  {
+    path: 'teclados',
+    loadChildren: () => import('./pages/teclados/teclados.module').then( m => m.TecladosPageModule)
+  },
+  {
+    path: 'audifonosgamer',
+    loadChildren: () => import('./pages/audifonosgamer/audifonosgamer.module').then( m => m.AudifonosgamerPageModule)
   },
 
 ];
