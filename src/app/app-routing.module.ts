@@ -42,7 +42,11 @@ const routes: Routes = [
   {
     path: 'audifonosgamer',
     loadChildren: () => import('./pages/audifonosgamer/audifonosgamer.module').then( m => m.AudifonosgamerPageModule)
+  },  {
+    path: 'placasmadre',
+    loadChildren: () => import('./pages/placasmadre/placasmadre.module').then( m => m.PlacasmadrePageModule)
   },
+
 
 ];
 
