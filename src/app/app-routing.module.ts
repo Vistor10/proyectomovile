@@ -26,6 +26,10 @@ const routes: Routes = [
     path: 'registro',
     loadChildren: () => import('./pages/registro/registro.module').then( m => m.RegistroPageModule)
   },
+  {
+    path: 'teclados',
+    loadChildren: () => import('./teclados/teclados.module').then( m => m.TecladosPageModule)
+  },
 
 ];
 
