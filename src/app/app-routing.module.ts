@@ -46,6 +46,10 @@ const routes: Routes = [
     path: 'placasmadre',
     loadChildren: () => import('./pages/placasmadre/placasmadre.module').then( m => m.PlacasmadrePageModule)
   },
+  {
+    path: 'fuentesdepoder',
+    loadChildren: () => import('./pages/fuentesdepoder/fuentesdepoder.module').then( m => m.FuentesdepoderPageModule)
+  },
 
 
 ];
