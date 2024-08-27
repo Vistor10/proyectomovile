@@ -58,6 +58,14 @@ const routes: Routes = [
     path: 'procesadores',
     loadChildren: () => import('./pages/procesadores/procesadores.module').then( m => m.ProcesadoresPageModule)
   },
+  {
+    path: 'tarjetasdevideo',
+    loadChildren: () => import('./pages/tarjetasdevideo/tarjetasdevideo.module').then( m => m.TarjetasdevideoPageModule)
+  },
+  {
+    path: 'monitores',
+    loadChildren: () => import('./pages/monitores/monitores.module').then( m => m.MonitoresPageModule)
+  },
 
 
 ];
