@@ -6,10 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./recuperarcontrasena.page.scss'],
 })
 export class RecuperarcontrasenaPage implements OnInit {
+  email: string = '';
 
   constructor() { }
 
   ngOnInit() {
+  }
+  onForward() {
+
   }
 
 }
