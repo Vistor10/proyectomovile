@@ -50,6 +50,10 @@ const routes: Routes = [
     path: 'fuentesdepoder',
     loadChildren: () => import('./pages/fuentesdepoder/fuentesdepoder.module').then( m => m.FuentesdepoderPageModule)
   },
+  {
+    path: 'memoriasram',
+    loadChildren: () => import('./pages/memoriasram/memoriasram.module').then( m => m.MemoriasramPageModule)
+  },
 
 
 ];
