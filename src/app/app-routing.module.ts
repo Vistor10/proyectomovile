@@ -66,6 +66,10 @@ const routes: Routes = [
     path: 'monitores',
     loadChildren: () => import('./pages/monitores/monitores.module').then( m => m.MonitoresPageModule)
   },
+  {
+    path: 'recuperarcontrasena',
+    loadChildren: () => import('./pages/recuperarcontrasena/recuperarcontrasena.module').then( m => m.RecuperarcontrasenaPageModule)
+  },
 
 
 ];
