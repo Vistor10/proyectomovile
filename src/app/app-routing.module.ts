@@ -54,6 +54,10 @@ const routes: Routes = [
     path: 'memoriasram',
     loadChildren: () => import('./pages/memoriasram/memoriasram.module').then( m => m.MemoriasramPageModule)
   },
+  {
+    path: 'procesadores',
+    loadChildren: () => import('./pages/procesadores/procesadores.module').then( m => m.ProcesadoresPageModule)
+  },
 
 
 ];
