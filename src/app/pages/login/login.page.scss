@@ -2,12 +2,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%; /* Asegura que el ion-content ocupe toda la altura de la pantalla */
+  height: 100%; 
 }
 
 form {
   width: 100%;
-  max-width: 400px; /* Limita el ancho del formulario */
+  max-width: 400px; 
 }
 .extra-links {
   text-align: center;
