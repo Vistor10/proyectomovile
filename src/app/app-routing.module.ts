@@ -70,6 +70,10 @@ const routes: Routes = [
     path: 'recuperarcontrasena',
     loadChildren: () => import('./pages/recuperarcontrasena/recuperarcontrasena.module').then( m => m.RecuperarcontrasenaPageModule)
   },
+  {
+    path: 'carritocompras',
+    loadChildren: () => import('./pages/carritocompras/carritocompras.module').then( m => m.CarritocomprasPageModule)
+  },
 
 
 ];
