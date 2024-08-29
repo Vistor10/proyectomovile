@@ -29,7 +29,7 @@
       <ion-input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" required></ion-input>
     </ion-item>
 
-    <ion-button expand="full" type="submit" color="primary" [disabled]="!registerForm.form.valid || !passwordsMatch()">Registrarse</ion-button>
+    <ion-button expand="full" type="submit" color="primary" [disabled]="!registerForm.form.valid || !passwordsMatch()" [routerLink]="['/paginainicio']">Registrarse</ion-button>
   </form>
 
   <ion-text color="danger" *ngIf="!passwordsMatch() && registerForm.submitted">
