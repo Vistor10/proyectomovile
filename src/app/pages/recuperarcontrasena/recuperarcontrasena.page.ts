@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-recuperarcontrasena',
@@ -8,11 +9,13 @@ import { Component, OnInit } from '@angular/core';
 export class RecuperarcontrasenaPage implements OnInit {
   email: string = '';
 
-  constructor() { }
+  constructor(private navCtrl: NavController) { }
 
   ngOnInit() {
   }
   onForward() {
+    console.log('Correo válido:', this.email);
+    this.navCtrl.navigateRoot('/login');
 
   }
 
