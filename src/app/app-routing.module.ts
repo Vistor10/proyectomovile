@@ -81,6 +81,55 @@ const routes: Routes = [
     path: 'carritocompras',
     loadChildren: () => import('./pages/carritocompras/carritocompras.module').then( m => m.CarritocomprasPageModule)
   },
+  {
+    path: 'razer-kraken-kitty',
+    loadChildren: () => import('./pages/razer-kraken-kitty/razer-kraken-kitty.module').then( m => m.RazerKrakenKittyPageModule)
+  },
+  {
+    path: 'hyperx-cloud-stinger-2',
+    loadChildren: () => import('./pages/hyperx-cloud-stinger-2/hyperx-cloud-stinger-2.module').then( m => m.HyperxCloudStinger2PageModule)
+  },
+  {
+    path: 'logitech-g335',
+    loadChildren: () => import('./pages/logitech-g335/logitech-g335.module').then( m => m.LogitechG335PageModule)
+  },
+  {
+    path: 'hyperx-cloud-3',
+    loadChildren: () => import('./pages/hyperx-cloud-3/hyperx-cloud-3.module').then( m => m.HyperxCloud3PageModule)
+  },
+  {
+    path: 'gabinete-gamercorsair-icue-4000',
+    loadChildren: () => import('./pages/gabinete-gamercorsair-icue-4000/gabinete-gamercorsair-icue-4000.module').then( m => m.GabineteGamercorsairIcue4000PageModule)
+  },
+  {
+    path: 'gabinete-gamer-kolink',
+    loadChildren: () => import('./pages/gabinete-gamer-kolink/gabinete-gamer-kolink.module').then( m => m.GabineteGamerKolinkPageModule)
+  },
+  {
+    path: 'gabinete-gamer-aerocool-shard',
+    loadChildren: () => import('./pages/gabinete-gamer-aerocool-shard/gabinete-gamer-aerocool-shard.module').then( m => m.GabineteGamerAerocoolShardPageModule)
+  },
+  {
+    path: 'gabinete-gamer-cooler-master-cmp520',
+    loadChildren: () => import('./pages/gabinete-gamer-cooler-master-cmp520/gabinete-gamer-cooler-master-cmp520.module').then( m => m.GabineteGamerCoolerMasterCmp520PageModule)
+  },
+  {
+    path: 'teclado-gamer-razer-blackwidow',
+    loadChildren: () => import('./pages/teclado-gamer-razer-blackwidow/teclado-gamer-razer-blackwidow.module').then( m => m.TecladoGamerRazerBlackwidowPageModule)
+  },
+  {
+    path: 'teclado-gamer-razer-huntsman',
+    loadChildren: () => import('./pages/teclado-gamer-razer-huntsman/teclado-gamer-razer-huntsman.module').then( m => m.TecladoGamerRazerHuntsmanPageModule)
+  },
+  {
+    path: 'teclado-gamer-cougar-attack',
+    loadChildren: () => import('./pages/teclado-gamer-cougar-attack/teclado-gamer-cougar-attack.module').then( m => m.TecladoGamerCougarAttackPageModule)
+  },
+  {
+    path: 'teclado-gamer-logitech-g213',
+    loadChildren: () => import('./pages/teclado-gamer-logitech-g213/teclado-gamer-logitech-g213.module').then( m => m.TecladoGamerLogitechG213PageModule)
+  },
+
   
 
   

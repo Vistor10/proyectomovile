@@ -5,3 +5,34 @@
     margin: 0; 
     
   }
+  ion-card {
+    height: 400px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  ion-card img {
+    height: 150px; 
+    object-fit: cover;
+  }
+  
+  ion-card-header {
+    flex-grow: 1;
+  }
+  
+  ion-card-content {
+    flex-grow: 1;
+  }
+  
+  ion-button {
+    margin-top: auto;
+  }
+  
+
+  
+
+  
+
+  
+  

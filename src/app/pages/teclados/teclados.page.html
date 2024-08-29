@@ -4,98 +4,73 @@
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
-      <ion-title></ion-title>
-      <ion-buttons slot="end">
-        <ion-router-link [routerLink]="['/paginainicio']">
-          <img class="icon" src="../../assets/icon/gadgetzone_logo-removebg-preview.png" alt="logo">
-        </ion-router-link>
-      </ion-buttons>
+      <ion-title>Teclados</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <ion-content [fullscreen]="true" color="dark" class="ion-padding">
     <ion-header collapse="condense">
       <ion-toolbar>
-        <ion-title size="large">teclados</ion-title>
+        <ion-title size="large">Teclados</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    
-    <ion-card>
-      <img alt="teclado" src="https://media.spdigital.cl/thumbnails/products/3r2pwux4_8665678f_thumbnail_512.jpg" />
-      <ion-card-header>
-        <ion-card-title>Teclado Gamer Razer Blackwidow V4, 75%, Switch Orange, Inglés US, Blanco</ion-card-title>
-        <ion-card-subtitle>$239.000 CLP</ion-card-subtitle>
-      </ion-card-header>
-      <ion-card-content>
-        El Teclado Gamer Razer Blackwidow V4 es la herramienta definitiva para llevar tu experiencia de juego al
-        siguiente nivel. Con un diseño compacto al 75% y una estética en blanco pulcro, este teclado no solo destaca por
-        su apariencia elegante, sino también por su rendimiento superior. Equipado con los switches mecánicos Razer
-        Orange, ofrece una respuesta táctil y silenciosa, ideal para largas sesiones de juego y escritura precisa. La
-        distribución en inglés US garantiza una disposición familiar y eficiente de las teclas. Además, la
-        retroiluminación personalizable permite crear el ambiente perfecto con efectos de iluminación dinámica. Con el
-        Razer Blackwidow V4, obtienes un teclado que combina funcionalidad avanzada y diseño estilizado, perfecto para
-        jugadores exigentes.
-      </ion-card-content>
-      <ion-button expand="full" color="primary">Añadir al Carrito</ion-button>
-    </ion-card>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6" size-md="6">
+          <ion-card>
+            <ion-router-link [routerLink]="['/teclado-gamer-razer-blackwidow']">
+              <img alt="Teclado Razer Blackwidow V4" src="https://media.spdigital.cl/thumbnails/products/3r2pwux4_8665678f_thumbnail_512.jpg" />
+              <ion-card-header>
+                <ion-card-title>Teclado Gamer Razer Blackwidow V4</ion-card-title>
+                <ion-card-subtitle>$239.000 CLP</ion-card-subtitle>
+              </ion-card-header>
+            </ion-router-link>
+            <ion-button expand="full" color="primary">Añadir al Carrito</ion-button>
+          </ion-card>
+        </ion-col>
 
-    
-    <ion-card>
-      <img alt="teclado" src="https://media.spdigital.cl/thumbnails/products/snyhppat_a721dfd4_thumbnail_512.jpg" />
-      <ion-card-header>
-        <ion-card-title>Teclado Gamer Razer Huntsman Mini, 60%, Switch Purple, Inglés US</ion-card-title>
-        <ion-card-subtitle>$109.990 CLP</ion-card-subtitle>
-      </ion-card-header>
-      <ion-card-content>
-        El Teclado Gamer Razer Huntsman Mini es la elección perfecta para los jugadores que buscan un teclado compacto y
-        de alto rendimiento. Con un diseño al 60%, es ideal para aquellos que desean maximizar su espacio de escritorio
-        sin sacrificar funcionalidad. Equipado con los switches mecánicos Razer Purple, proporciona una respuesta táctil
-        y audible que mejora la precisión y la satisfacción en cada pulsación. La distribución en inglés US ofrece una
-        experiencia de escritura familiar y eficiente. Además, su construcción compacta y robusta lo hace perfecto para
-        transportarlo a eventos y torneos. Con el Razer Huntsman Mini, obtienes un teclado que combina potencia, estilo
-        y portabilidad en un solo paquete.
-      </ion-card-content>
-      <ion-button expand="full" color="primary">Añadir al Carrito</ion-button>
-    </ion-card>
+        <ion-col size="6" size-md="6">
+          <ion-card>
+            <ion-router-link [routerLink]="['/teclado-gamer-razer-huntsman']">
+              <img alt="Teclado Razer Huntsman Mini" src="https://media.spdigital.cl/thumbnails/products/snyhppat_a721dfd4_thumbnail_512.jpg" />
+              <ion-card-header>
+                <ion-card-title>Teclado Gamer Razer Huntsman Mini</ion-card-title>
+                <ion-card-subtitle>$109.990 CLP</ion-card-subtitle>
+              </ion-card-header>
+            </ion-router-link>
+            <ion-button expand="full" color="primary">Añadir al Carrito</ion-button>
+          </ion-card>
+        </ion-col>
+      </ion-row>
 
-    
-    <ion-card>
-      <img alt="teclado" src="https://media.spdigital.cl/thumbnails/products/zwy4s9lw_57966fd8_thumbnail_512.png" />
-      <ion-card-header>
-        <ion-card-title> Teclado Gamer Cougar Attack X3, RGB, Mecánico, Reposa-Muñecas, Black, Inglés</ion-card-title>
-        <ion-card-subtitle>$95.990 CLP</ion-card-subtitle>
-      </ion-card-header>
-      <ion-card-content>
-        El Teclado Gamer Cougar Attack X3 es la opción ideal para quienes buscan un teclado mecánico con un rendimiento
-        excepcional y un estilo vibrante. Equipado con retroiluminación RGB completamente personalizable, te permite
-        crear un ambiente de juego único con efectos de iluminación dinámica. Su diseño ergonómico incluye un
-        reposa-muñecas acolchado que brinda comodidad durante largas sesiones de juego. La construcción robusta en negro
-        y la distribución en inglés garantizan una experiencia de escritura precisa y duradera. Con el Cougar Attack X3,
-        obtienes un teclado que combina funcionalidad avanzada, confort y un estilo llamativo, perfecto para elevar tu
-        configuración de gaming al siguiente nivel.
-      </ion-card-content>
-      <ion-button expand="full" color="primary">Añadir al Carrito</ion-button>
-    </ion-card>
+      <ion-row>
+        <ion-col size="6" size-md="6">
+          <ion-card>
+            <ion-router-link [routerLink]="['/teclado-gamer-cougar-attack']">
+              <img alt="Teclado Cougar Attack X3" src="https://media.spdigital.cl/thumbnails/products/zwy4s9lw_57966fd8_thumbnail_512.png" />
+              <ion-card-header>
+                <ion-card-title>Teclado Gamer Cougar Attack X3</ion-card-title>
+                <ion-card-subtitle>$95.990 CLP</ion-card-subtitle>
+              </ion-card-header>
+            </ion-router-link>
+            <ion-button expand="full" color="primary">Añadir al Carrito</ion-button>
+          </ion-card>
+        </ion-col>
 
-    
-    <ion-card>
-      <img alt="teclado" src="https://media.spdigital.cl/thumbnails/products/ppwci9lq_50a0c365_thumbnail_512.jpg" />
-      <ion-card-header>
-        <ion-card-title>Teclado Gamer LOGITECH G213 Prodigy Led RGB, Ingles</ion-card-title>
-        <ion-card-subtitle>$53.780 CLP</ion-card-subtitle>
-      </ion-card-header>
-      <ion-card-content>
-        El Teclado Gamer Logitech G213 Prodigy es la herramienta perfecta para mejorar tu experiencia de juego con
-        estilo y funcionalidad. Equipado con retroiluminación LED RGB, te permite personalizar tu configuración con una
-        amplia gama de colores y efectos para crear un ambiente único. Su diseño en inglés proporciona una disposición
-        de teclas eficiente y cómoda, ideal para sesiones prolongadas de juego y trabajo. Además, el teclado cuenta con
-        teclas de membrana resistentes y silenciosas, que ofrecen una respuesta rápida y precisa. Con el Logitech G213
-        Prodigy, disfrutarás de un teclado que combina rendimiento confiable y una estética vibrante, elevando tu
-        experiencia de gaming a nuevos niveles.
-      </ion-card-content>
-      <ion-button expand="full" color="primary">Añadir al Carrito</ion-button>
-    </ion-card>
-
+        <ion-col size="6" size-md="6">
+          <ion-card>
+            <ion-router-link [routerLink]="['/teclado-gamer-logitech-g213']">
+              <img alt="Teclado Logitech G213 Prodigy" src="https://media.spdigital.cl/thumbnails/products/ppwci9lq_50a0c365_thumbnail_512.jpg" />
+              <ion-card-header>
+                <ion-card-title>Teclado Gamer LOGITECH G213 Prodigy </ion-card-title>
+                <ion-card-subtitle>$53.780 CLP</ion-card-subtitle>
+              </ion-card-header>
+            </ion-router-link>
+            <ion-button expand="full" color="primary">Añadir al Carrito</ion-button>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-content>
 </div>
