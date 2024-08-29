@@ -192,6 +192,22 @@ const routes: Routes = [
     path: 'procesador-amd-ryzen7-8700-g',
     loadChildren: () => import('./pages/procesador-amd-ryzen7-8700-g/procesador-amd-ryzen7-8700-g.module').then( m => m.ProcesadorAMDRyzen78700GPageModule)
   },
+  {
+    path: 'tarjeta-de-video-asus-dual-nvidia-rtx4070',
+    loadChildren: () => import('./pages/tarjeta-de-video-asus-dual-nvidia-rtx4070/tarjeta-de-video-asus-dual-nvidia-rtx4070.module').then( m => m.TarjetaDeVideoASUSDualNvidiaRTX4070PageModule)
+  },
+  {
+    path: 'tarjeta-de-video-gigabyte-nvidia-geforce-rtx-4070',
+    loadChildren: () => import('./pages/tarjeta-de-video-gigabyte-nvidia-geforce-rtx-4070/tarjeta-de-video-gigabyte-nvidia-geforce-rtx-4070.module').then( m => m.TarjetaDeVideoGigabyteNvidiaGeforceRTX4070PageModule)
+  },
+  {
+    path: 'tarjeta-de-video-zotac-gaming-nvidia-geforce-rtx-4070',
+    loadChildren: () => import('./pages/tarjeta-de-video-zotac-gaming-nvidia-geforce-rtx-4070/tarjeta-de-video-zotac-gaming-nvidia-geforce-rtx-4070.module').then( m => m.TarjetaDeVideoZotacGamingNvidiaGeforceRtx4070PageModule)
+  },
+  {
+    path: 'tarjeta-de-video-asus-tuf-gaming-nvidia-geforce-rtx-4080',
+    loadChildren: () => import('./pages/tarjeta-de-video-asus-tuf-gaming-nvidia-geforce-rtx-4080/tarjeta-de-video-asus-tuf-gaming-nvidia-geforce-rtx-4080.module').then( m => m.TarjetaDeVideoASUSTUFGAMINGNvidiaGeforceRtx4080PageModule)
+  },
 
 
 
