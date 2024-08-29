@@ -144,6 +144,22 @@ const routes: Routes = [
     path: 'placa-madre-gigabyte-z790-ud',
     loadChildren: () => import('./pages/placa-madre-gigabyte-z790-ud/placa-madre-gigabyte-z790-ud.module').then( m => m.PlacaMadreGigabyteZ790UDPageModule)
   },
+  {
+    path: 'fuente-de-poder-seasonic-vertexpx',
+    loadChildren: () => import('./pages/fuente-de-poder-seasonic-vertexpx/fuente-de-poder-seasonic-vertexpx.module').then( m => m.FuenteDePoderSEASONICVERTEXPXPageModule)
+  },
+  {
+    path: 'fuente-de-poder-seasonic-g12',
+    loadChildren: () => import('./pages/fuente-de-poder-seasonic-g12/fuente-de-poder-seasonic-g12.module').then( m => m.FuenteDePoderSEASONICG12PageModule)
+  },
+  {
+    path: 'fuente-de-poder-thermaltake-smart700',
+    loadChildren: () => import('./pages/fuente-de-poder-thermaltake-smart700/fuente-de-poder-thermaltake-smart700.module').then( m => m.FuenteDePoderThermaltakeSmart700PageModule)
+  },
+  {
+    path: 'fuente-de-poder-clio-atx-700',
+    loadChildren: () => import('./pages/fuente-de-poder-clio-atx-700/fuente-de-poder-clio-atx-700.module').then( m => m.FuenteDePoderCLIOATX700PageModule)
+  },
 
 
   
