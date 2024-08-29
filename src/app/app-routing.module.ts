@@ -128,7 +128,23 @@ const routes: Routes = [
   {
     path: 'teclado-gamer-logitech-g213',
     loadChildren: () => import('./pages/teclado-gamer-logitech-g213/teclado-gamer-logitech-g213.module').then( m => m.TecladoGamerLogitechG213PageModule)
+  },  {
+    path: 'placa-madre-msi-a520-m-apro',
+    loadChildren: () => import('./pages/placa-madre-msi-a520-m-apro/placa-madre-msi-a520-m-apro.module').then( m => m.PlacaMadreMSIA520MAPROPageModule)
   },
+  {
+    path: 'placa-madre-gigabyte-aorux-elite-ax',
+    loadChildren: () => import('./pages/placa-madre-gigabyte-aorux-elite-ax/placa-madre-gigabyte-aorux-elite-ax.module').then( m => m.PlacaMadreGigabyteAORUXELITEAXPageModule)
+  },
+  {
+    path: 'placa-madre-msi-pro-z70-amax',
+    loadChildren: () => import('./pages/placa-madre-msi-pro-z70-amax/placa-madre-msi-pro-z70-amax.module').then( m => m.PlacaMadreMSIPROZ70AMAXPageModule)
+  },
+  {
+    path: 'placa-madre-gigabyte-z790-ud',
+    loadChildren: () => import('./pages/placa-madre-gigabyte-z790-ud/placa-madre-gigabyte-z790-ud.module').then( m => m.PlacaMadreGigabyteZ790UDPageModule)
+  },
+
 
   
 
