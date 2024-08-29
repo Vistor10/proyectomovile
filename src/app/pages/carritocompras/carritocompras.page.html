@@ -1,13 +1,59 @@
+
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>carritocompras</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/paginainicio"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Carrito de Compras</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">carritocompras</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-list>
+    <ion-item>
+      <ion-thumbnail slot="start">
+        <img src="https://media.spdigital.cl/thumbnails/products/9mtx0k9j_4b2c460e_thumbnail_512.jpg" alt="Cooler Master CMP 520" />
+      </ion-thumbnail>
+      <ion-label>
+        <h2>Cooler Master CMP 520</h2>
+        <p>$64.490 CLP</p>
+      </ion-label>
+      <ion-button color="danger" slot="end">Eliminar</ion-button>
+    </ion-item>
+
+    <ion-item>
+      <ion-thumbnail slot="start">
+        <img src="https://media.spdigital.cl/thumbnails/products/_xiag1e3_7be5c2ae_thumbnail_512.jpg" alt="Memoria Ram DDR4 16GB 3200MHz Kingston FURY Beast, CL16, DIMM, 1.35V" />
+      </ion-thumbnail>
+      <ion-label>
+        <h2>Memoria Ram DDR4 16GB 3200MHz Kingston FURY Beast, CL16, DIMM, 1.35V</h2>
+        <p>$99.990 CLP</p>
+      </ion-label>
+      <ion-button color="danger" slot="end">Eliminar</ion-button>
+    </ion-item>
+
+    <ion-item>
+      <ion-thumbnail slot="start">
+        <img src="https://media.spdigital.cl/thumbnails/products/ypolap0x_dcedc470_thumbnail_512.jpg" alt="Audífonos Gamer HyperX Cloud 3, 3.5mm, USB, Color Negro/Rojo" />
+      </ion-thumbnail>
+      <ion-label>
+        <h2>Audífonos Gamer HyperX Cloud 3, 3.5mm, USB, Color Negro/Rojo</h2>
+        <p>$63.990 CLP</p>
+      </ion-label>
+      <ion-button color="danger" slot="end">Eliminar</ion-button>
+    </ion-item>
+  </ion-list>
+
+  <ion-item lines="none">
+    <ion-label>
+      <h2>Total:</h2>
+    </ion-label>
+    <ion-note slot="end" color="primary">
+      <h2>$228.470 CLP</h2>
+    </ion-note>
+  </ion-item>
+
+  <ion-button expand="full" color="success" class="ion-margin-top"
+    >Finalizar Compra</ion-button
+  >
 </ion-content>
