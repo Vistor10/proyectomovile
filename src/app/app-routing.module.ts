@@ -128,7 +128,8 @@ const routes: Routes = [
   {
     path: 'teclado-gamer-logitech-g213',
     loadChildren: () => import('./pages/teclado-gamer-logitech-g213/teclado-gamer-logitech-g213.module').then( m => m.TecladoGamerLogitechG213PageModule)
-  },  {
+  },
+  {
     path: 'placa-madre-msi-a520-m-apro',
     loadChildren: () => import('./pages/placa-madre-msi-a520-m-apro/placa-madre-msi-a520-m-apro.module').then( m => m.PlacaMadreMSIA520MAPROPageModule)
   },
@@ -159,6 +160,22 @@ const routes: Routes = [
   {
     path: 'fuente-de-poder-clio-atx-700',
     loadChildren: () => import('./pages/fuente-de-poder-clio-atx-700/fuente-de-poder-clio-atx-700.module').then( m => m.FuenteDePoderCLIOATX700PageModule)
+  },
+  {
+    path: 'memoria-ram-kingston-fury-renegade',
+    loadChildren: () => import('./pages/memoria-ram-kingston-fury-renegade/memoria-ram-kingston-fury-renegade.module').then( m => m.MemoriaRamKingstonFuryRenegadePageModule)
+  },
+  {
+    path: 'memoria-ram-ddr4-xpg-spectrix',
+    loadChildren: () => import('./pages/memoria-ram-ddr4-xpg-spectrix/memoria-ram-ddr4-xpg-spectrix.module').then( m => m.MemoriaRamDdr4XPGSPECTRIXPageModule)
+  },
+  {
+    path: 'memoria-ram-kingston-fury-beast',
+    loadChildren: () => import('./pages/memoria-ram-kingston-fury-beast/memoria-ram-kingston-fury-beast.module').then( m => m.MemoriaRamKingstonFuryBeastPageModule)
+  },
+  {
+    path: 'memoria-ram-corsair-vengeance',
+    loadChildren: () => import('./pages/memoria-ram-corsair-vengeance/memoria-ram-corsair-vengeance.module').then( m => m.MemoriaRamCorsairVengeancePageModule)
   },
 
 
