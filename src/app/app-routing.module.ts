@@ -176,7 +176,23 @@ const routes: Routes = [
   {
     path: 'memoria-ram-corsair-vengeance',
     loadChildren: () => import('./pages/memoria-ram-corsair-vengeance/memoria-ram-corsair-vengeance.module').then( m => m.MemoriaRamCorsairVengeancePageModule)
+  },  {
+    path: 'procesador-amd-ryzen7-5800-xt',
+    loadChildren: () => import('./pages/procesador-amd-ryzen7-5800-xt/procesador-amd-ryzen7-5800-xt.module').then( m => m.ProcesadorAMDRyzen75800XTPageModule)
   },
+  {
+    path: 'procesador-intel-core-i5-10400',
+    loadChildren: () => import('./pages/procesador-intel-core-i5-10400/procesador-intel-core-i5-10400.module').then( m => m.ProcesadorIntelCoreI510400PageModule)
+  },
+  {
+    path: 'procesador-intel-core-i9-14900',
+    loadChildren: () => import('./pages/procesador-intel-core-i9-14900/procesador-intel-core-i9-14900.module').then( m => m.ProcesadorIntelCoreI914900PageModule)
+  },
+  {
+    path: 'procesador-amd-ryzen7-8700-g',
+    loadChildren: () => import('./pages/procesador-amd-ryzen7-8700-g/procesador-amd-ryzen7-8700-g.module').then( m => m.ProcesadorAMDRyzen78700GPageModule)
+  },
+
 
 
   
