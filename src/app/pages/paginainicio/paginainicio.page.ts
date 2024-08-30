@@ -20,9 +20,21 @@ export class PaginainicioPage {
   }
 
   onSearchSubmit() {
-    // Verifica si el término de búsqueda es "gabinetes" y redirige
-    if (this.searchTerm.trim().toLowerCase() === 'gabinetes') {
-      this.router.navigate(['/gabinetes']);
+    const routes: { [key: string]: string } = {
+      'gabinetes': '/gabinetes',
+      'teclados': '/teclados',
+      'audifonos gamer': '/audifonosgamer',
+      'placas madre': '/placasmadre',
+      'fuentes de poder': '/fuentesdepoder',
+      'memorias ram': '/memoriasram',
+      'procesadores': '/procesadores',
+      'tarjetas de video': '/tarjetasdevideo',
+      'monitores': '/monitores'
+    };
+
+    const route = routes[this.searchTerm.trim().toLowerCase()];
+    if (route) {
+      this.router.navigate([route]);
     }
   }
 }

@@ -1,15 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-procesadores',
   templateUrl: './procesadores.page.html',
   styleUrls: ['./procesadores.page.scss'],
 })
-export class ProcesadoresPage implements OnInit {
+export class ProcesadoresPage {
+  searchTerm: string = '';
 
-  constructor() { }
+  constructor(private router: Router) {}
 
-  ngOnInit() {
+  onSearchInput(event: any) {
+    this.searchTerm = event.target.value;
   }
 
+  onSearchClear() {
+    this.searchTerm = '';
+  }
+
+  ngOnInit() {
+    if (this.searchTerm.toLowerCase() === 'procesadores') {
+      this.router.navigate(['/procesadores']);
+    }
+  }
 }

@@ -1,15 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+// teclados.page.ts
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-teclados',
   templateUrl: './teclados.page.html',
   styleUrls: ['./teclados.page.scss'],
 })
-export class TecladosPage implements OnInit {
+export class TecladosPage {
+  searchTerm: string = '';
 
-  constructor() { }
+  constructor(private router: Router) {}
 
-  ngOnInit() {
+  onSearchInput(event: any) {
+    this.searchTerm = event.target.value;
   }
 
+  onSearchClear() {
+    this.searchTerm = '';
+  }
+
+  ngOnInit() {
+    if (this.searchTerm.toLowerCase() === 'teclados') {
+      this.router.navigate(['/teclados']);
+    }
+  }
 }
