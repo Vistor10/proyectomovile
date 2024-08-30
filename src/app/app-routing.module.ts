@@ -226,13 +226,18 @@ const routes: Routes = [
     path: 'monitor-gamer-curvo-msi-49',
     loadChildren: () => import('./pages/monitor-gamer-curvo-msi-49/monitor-gamer-curvo-msi-49.module').then( m => m.MonitorGamerCurvoMSI49PageModule)
   },
-  
+  {
+    path: 'perfil',
+    loadChildren: () => import('./pages/perfil/perfil.module').then( m => m.PerfilPageModule)
+  },
   {
 
     path: '**',
     loadChildren: () => import('./pages/notfound/notfound.module').then( m => m.NotfoundPageModule)
  
   },
+
+
   
 
 
@@ -250,3 +255,16 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+
+  
+
+
+
+  
+
+  
+
+
+
+
+

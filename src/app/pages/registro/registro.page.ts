@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-registro',
@@ -11,23 +12,22 @@ export class RegistroPage implements OnInit {
   password: string = '';
   confirmPassword: string = '';
 
-  constructor() { }
+  constructor(private navCtrl: NavController) { }
 
   ngOnInit() {
   }
   passwordsMatch(): boolean {
     return this.password === this.confirmPassword;
   }
-
   onRegister() {
-    if (this.passwordsMatch()) {
-      console.log('Formulario de registro enviado', {
+    if (this.username && this.email && this.passwordsMatch()) {
+      console.log('Registro exitoso:', {
         username: this.username,
         email: this.email,
-        password: this.password
+        password: this.password,
       });
-    } else {
-      console.log('Las contraseñas no coinciden');
+
+      this.navCtrl.navigateRoot('/paginainicio');
     }
   }
 }

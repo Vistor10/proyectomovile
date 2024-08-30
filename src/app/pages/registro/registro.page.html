@@ -9,30 +9,50 @@
 
 <ion-content [fullscreen]="true" class="ion-padding center-content">
   <form (ngSubmit)="onRegister()" #registerForm="ngForm">
+
     <ion-item>
       <ion-label position="floating">Nombre de Usuario</ion-label>
-      <ion-input type="text" [(ngModel)]="username" name="username" required></ion-input>
+      <ion-input type="text" [(ngModel)]="username" name="username" required #usernameInput="ngModel"></ion-input>
     </ion-item>
+    <ion-text color="danger" *ngIf="usernameInput.invalid && usernameInput.touched">
+      <p>El nombre de usuario es obligatorio.</p>
+    </ion-text>
     
     <ion-item>
       <ion-label position="floating">Correo Electrónico</ion-label>
-      <ion-input type="email" [(ngModel)]="email" name="email" required></ion-input>
+      <ion-input type="email" [(ngModel)]="email" name="email" required email #emailInput="ngModel"></ion-input>
     </ion-item>
+    <ion-text color="danger" *ngIf="emailInput.invalid && emailInput.touched">
+      <p>Por favor, ingresa un correo válido.</p>
+    </ion-text>
 
     <ion-item>
       <ion-label position="floating">Contraseña</ion-label>
-      <ion-input type="password" [(ngModel)]="password" name="password" required></ion-input>
+      <ion-input type="password" [(ngModel)]="password" name="password" required minlength="8" pattern="^(?=.*[A-Z]).{8,}$" #passwordInput="ngModel"></ion-input>
     </ion-item>
+    <ion-text color="danger" *ngIf="passwordInput.invalid && passwordInput.touched">
+      <p>La contraseña es obligatoria.</p>
+    </ion-text>
+    <ion-text color="danger" *ngIf="passwordInput.errors?.['minlength'] && passwordInput.touched">
+      <p>La contraseña debe tener al menos 8 caracteres.</p>
+    </ion-text>
+    <ion-text color="danger" *ngIf="passwordInput.errors?.['pattern'] && passwordInput.touched">
+      <p>La contraseña debe tener al menos una letra mayúscula.</p>
+    </ion-text>
 
     <ion-item>
       <ion-label position="floating">Repetir Contraseña</ion-label>
-      <ion-input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" required></ion-input>
+      <ion-input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" required #confirmPasswordInput="ngModel"></ion-input>
     </ion-item>
+    <ion-text color="danger" *ngIf="confirmPasswordInput.invalid && confirmPasswordInput.touched">
+      <p>Debes confirmar tu contraseña.</p>
+    </ion-text>
 
-    <ion-button expand="full" type="submit" color="primary" [disabled]="!registerForm.form.valid || !passwordsMatch()" [routerLink]="['/paginainicio']">Registrarse</ion-button>
+    <ion-text color="danger" *ngIf="!passwordsMatch() && registerForm.submitted">
+      <p>Las contraseñas no coinciden</p>
+    </ion-text>
+
+    <ion-button  expand="full"  type="submit" color="primary" [disabled]="!registerForm.form.valid || !passwordsMatch()">Registrarse</ion-button>
   </form>
 
-  <ion-text color="danger" *ngIf="!passwordsMatch() && registerForm.submitted">
-    <p>Las contraseñas no coinciden</p>
-  </ion-text>
 </ion-content>
