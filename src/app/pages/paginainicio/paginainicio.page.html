@@ -14,9 +14,14 @@
       (keyup.enter)="onSearchSubmit()">
     </ion-searchbar>
     <ion-buttons slot="end">
-      <ion-router-link [routerLink]="['/paginainicio']">
-        <img class="icon" src="../../assets/icon/gadgetzone_logo-removebg-preview.png" alt="logo">
+      <ion-router-link [routerLink]="['/carritocompras']">
+        <ion-icon name="cart" class="cart-icon"></ion-icon>
       </ion-router-link>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
+<ion-content class="ion-padding center-content">
+  <div class="logo-container">
+    <img class="icon" src="../../assets/icon/gadgetzone_logo-removebg-preview.png" alt="logo">
+  </div>
+</ion-content>

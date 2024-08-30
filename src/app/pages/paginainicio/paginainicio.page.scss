@@ -1,7 +1,19 @@
+.center-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; 
+}
+
+.logo-container {
+  text-align: center;
+}
+
 .icon {
-    width: 100px; 
-    height: auto; 
-    display: block;
-    margin: 0; 
-    
-  }
+  max-width: 100%;
+  max-height: 200px; 
+}
+.cart-icon {
+  font-size: 32px;
+  --ionicon-stroke-width: 32px; 
+}
