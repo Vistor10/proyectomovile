@@ -211,6 +211,23 @@ const routes: Routes = [
 
   }, 
   {
+    path: 'monitor-gamer-samsung-odyssey-g6',
+    loadChildren: () => import('./pages/monitor-gamer-samsung-odyssey-g6/monitor-gamer-samsung-odyssey-g6.module').then( m => m.MonitorGamerSamsungOdysseyG6PageModule)
+  },
+  {
+    path: 'monitor-ultrawide-curvo-lg',
+    loadChildren: () => import('./pages/monitor-ultrawide-curvo-lg/monitor-ultrawide-curvo-lg.module').then( m => m.MonitorUltrawideCurvoLGPageModule)
+  },
+  {
+    path: 'monitor-gamer-curvo-samsung-odyssey-g95-c-49',
+    loadChildren: () => import('./pages/monitor-gamer-curvo-samsung-odyssey-g95-c-49/monitor-gamer-curvo-samsung-odyssey-g95-c-49.module').then( m => m.MonitorGamerCurvoSamsungOdysseyG95C49PageModule)
+  },
+  {
+    path: 'monitor-gamer-curvo-msi-49',
+    loadChildren: () => import('./pages/monitor-gamer-curvo-msi-49/monitor-gamer-curvo-msi-49.module').then( m => m.MonitorGamerCurvoMSI49PageModule)
+  },
+  
+  {
 
     path: '**',
     loadChildren: () => import('./pages/notfound/notfound.module').then( m => m.NotfoundPageModule)

@@ -12,78 +12,86 @@
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
-
-  <ion-content [fullscreen]="true" color="dark" class="ion-padding">
-    <ion-header collapse="condense">
-      <ion-toolbar>
-        <ion-title size="large">Monitores</ion-title>
+  <div class="ion-page" id="main-content">
+    <ion-header [translucent]="true">
+      <ion-toolbar color="dark">
+        <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Monitores</ion-title>
       </ion-toolbar>
     </ion-header>
 
+    <ion-content [fullscreen]="true" color="dark" class="ion-padding">
+      <ion-header collapse="condense">
+        <ion-toolbar>
+          <ion-title size="large">Monitores</ion-title>
+        </ion-toolbar>
+      </ion-header>
 
-    <ion-card>
-      <img alt="monitores" src="https://media.spdigital.cl/thumbnails/products/fqqvtub3_0cac7e5a_thumbnail_512.jpg" />
-      <ion-card-header>
-        <ion-card-title>Monitor Gamer Samsung Odyssey G6, 32" WQHD, 240Hz, FreeSync Premium Pro, DisplayHDR
-          600</ion-card-title>
-        <ion-card-subtitle>$599.000CLP</ion-card-subtitle>
-      </ion-card-header>
-      <ion-card-content>
-        El Monitor Gamer Samsung Odyssey G6 de 32" WQHD ofrece una experiencia visual inmersiva con una tasa de refresco
-        de 240Hz y soporte para FreeSync Premium Pro. Con certificación DisplayHDR 600, garantiza colores vibrantes y un
-        alto rango dinámico, ideal para gaming competitivo y contenido multimedia de alta calidad.
-      </ion-card-content>
-      <ion-button expand="full" color="primary">Añadir al Carrito</ion-button>
-    </ion-card>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" size-md="6">
+            <ion-card>
+              <ion-router-link [routerLink]="['/monitor-gamer-samsung-odyssey-g6']">
+                <img alt="Monitor Gamer Samsung Odyssey G6, 32 pulgadas WQHD, 240Hz, FreeSync Premium Pro, DisplayHDR
+                600" src="https://media.spdigital.cl/thumbnails/products/fqqvtub3_0cac7e5a_thumbnail_512.jpg" />
+                <ion-card-header>
+                  <ion-card-title>Monitor Gamer Samsung Odyssey G6, 32" </ion-card-title>
+                  <ion-card-subtitle>$599.000 CLP</ion-card-subtitle>
+                </ion-card-header>
+              </ion-router-link>
+              <ion-button expand="full" color="primary">Añadir al Carrito</ion-button>
+            </ion-card>
+          </ion-col>
 
+          <ion-col size="6" size-md="6">
+            <ion-card>
+              <ion-router-link [routerLink]="['/monitor-ultrawide-curvo-lg']">
+                <img alt="Monitor Ultrawide Curvo LG 34MP65C-B, Panel VA, 3440 x 1440, 160 hz, 1ms, HDR10, FreeSync
+                Premium" src="https://media.spdigital.cl/thumbnails/products/jyho6xu9_78536bc0_thumbnail_512.jpg" />
+                <ion-card-header>
+                  <ion-card-title> Monitor Ultrawide Curvo LG 34MP65C-B,
+                  </ion-card-title>
+                  <ion-card-subtitle>$470.750 CLP</ion-card-subtitle>
+                </ion-card-header>
+              </ion-router-link>
+              <ion-button expand="full" color="primary">Añadir al Carrito</ion-button>
+            </ion-card>
+          </ion-col>
+        </ion-row>
 
-    <ion-card>
-      <img alt="monitores" src="https://media.spdigital.cl/thumbnails/products/jyho6xu9_78536bc0_thumbnail_512.jpg" />
-      <ion-card-header>
-        <ion-card-title>Monitor Ultrawide Curvo LG 34MP65C-B, Panel VA, 3440 x 1440, 160 hz, 1ms, HDR10, FreeSync
-          Premium</ion-card-title>
-        <ion-card-subtitle>$470.750CLP</ion-card-subtitle>
-      </ion-card-header>
-      <ion-card-content>
-        El Monitor Ultrawide Curvo LG 34MP65C-B cuenta con un panel VA de 34" y resolución de 3440 x 1440 para una
-        visualización expansiva y detallada. Con una tasa de refresco de 160Hz, tiempo de respuesta de 1ms, y soporte
-        para HDR10 y FreeSync Premium, ofrece un rendimiento fluido y colores vibrantes, ideal para gaming inmersivo y
-        trabajo multitarea.
-      </ion-card-content>
-      <ion-button expand="full" color="primary">Añadir al Carrito</ion-button>
-    </ion-card>
+        <ion-row>
+          <ion-col size="6" size-md="6">
+            <ion-card>
+              <ion-router-link [routerLink]="['/monitor-gamer-curvo-samsung-odyssey-g95-c-49']">
+                <img alt="Monitor Gamer Curvo Samsung Odyssey G95C 49”, QHD, Panel VA, 240Hz, 5120x1440"
+                  src="https://media.spdigital.cl/thumbnails/products/tvlpbdac_aa836e31_thumbnail_512.jpg" />
+                <ion-card-header>
+                  <ion-card-title> Monitor Gamer Curvo Samsung Odyssey G95C 49”
+                  </ion-card-title>
+                  <ion-card-subtitle>$991.250</ion-card-subtitle>
+                </ion-card-header>
+              </ion-router-link>
+              <ion-button expand="full" color="primary">Añadir al Carrito</ion-button>
+            </ion-card>
+          </ion-col>
 
-
-    <ion-card>
-      <img alt="monitores" src="https://media.spdigital.cl/thumbnails/products/tvlpbdac_aa836e31_thumbnail_512.jpg" />
-      <ion-card-header>
-        <ion-card-title>Monitor Gamer Curvo Samsung Odyssey G95C 49”, QHD, Panel VA, 240Hz, 5120x1440</ion-card-title>
-        <ion-card-subtitle>$991.250 CLP</ion-card-subtitle>
-      </ion-card-header>
-      <ion-card-content>
-        El Monitor Gamer Curvo Samsung Odyssey G95C de 49" ofrece una experiencia visual panorámica con resolución QHD
-        de 5120x1440 y una tasa de refresco de 240Hz. Equipado con un panel VA curvo, proporciona imágenes nítidas y
-        fluidas, ideal para inmersión total en gaming y multitarea avanzada.
-      </ion-card-content>
-      <ion-button expand="full" color="primary">Añadir al Carrito</ion-button>
-    </ion-card>
-
-
-    <ion-card>
-      <img alt="monitores" src="https://media.spdigital.cl/thumbnails/products/pbgyco0j_7ae2c79b_thumbnail_512.jpg" />
-      <ion-card-header>
-        <ion-card-title>Monitor Gamer Curvo MSI 49" MPG 491CQP QD-OLED, 0.03ms, 144Hz, DP, HDMI, DisplayHDR, Curve
-          1800R</ion-card-title>
-        <ion-card-subtitle>$1.257.180 CLP</ion-card-subtitle>
-      </ion-card-header>
-      <ion-card-content>
-        El Monitor Gamer Curvo MSI MPG 491CQP QD-OLED de 49" ofrece un rendimiento excepcional con una tasa de refresco
-        de 144Hz y un tiempo de respuesta ultra rápido de 0.03ms. Su curvatura de 1800R y soporte para DisplayHDR
-        garantizan una experiencia visual inmersiva y colores vibrantes, ideal para gaming de alta calidad y contenido
-        multimedia. Equipado con puertos DP y HDMI para una conectividad versátil.
-      </ion-card-content>
-      <ion-button expand="full" color="primary">Añadir al Carrito</ion-button>
-    </ion-card>
-
-  </ion-content>
-</div>
+          <ion-col size="6" size-md="6">
+            <ion-card>
+              <ion-router-link [routerLink]="['/monitor-gamer-curvo-msi-49']">
+                <img alt="Monitor Gamer Curvo MSI 49 pulgadas MPG 491CQP QD-OLED, 0.03ms, 144Hz, DP, HDMI, DisplayHDR, Curve
+                1800R" src="https://media.spdigital.cl/thumbnails/products/pbgyco0j_7ae2c79b_thumbnail_512.jpg" />
+                <ion-card-header>
+                  <ion-card-title> Monitor Gamer Curvo MSI 49"
+                  </ion-card-title>
+                  <ion-card-subtitle>$1.257.180 CLP</ion-card-subtitle>
+                </ion-card-header>
+              </ion-router-link>
+              <ion-button expand="full" color="primary">Añadir al Carrito</ion-button>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-content>
+  </div>
