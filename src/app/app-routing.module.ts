@@ -231,11 +231,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/perfil/perfil.module').then( m => m.PerfilPageModule)
   },
   {
-
-    path: '**',
-    loadChildren: () => import('./pages/notfound/notfound.module').then( m => m.NotfoundPageModule)
- 
-  },  {
     path: 'agregarproducto',
     loadChildren: () => import('./pages/agregarproducto/agregarproducto.module').then( m => m.AgregarproductoPageModule)
   },
@@ -243,6 +238,13 @@ const routes: Routes = [
     path: 'modificarproducto',
     loadChildren: () => import('./pages/modificarproducto/modificarproducto.module').then( m => m.ModificarproductoPageModule)
   },
+  {
+
+    path: '**',
+    loadChildren: () => import('./pages/notfound/notfound.module').then( m => m.NotfoundPageModule)
+ 
+  },
+  
 
 
 
