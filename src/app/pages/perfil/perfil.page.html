@@ -1,13 +1,32 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>perfil</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="paginainicio"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Perfil</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">perfil</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="profile-header">
+    <ion-icon name="person-circle-outline" class="profile-icon"></ion-icon>
+    <h2 class="user-name">Usuario</h2>
+    <p class="user-role">Juan Perez</p>
+  </div>
+
+  <ion-list>
+    <ion-item lines="full">
+      <ion-label>Email:</ion-label>
+      <ion-note slot="start">juanitoperez&commat;gmail.com</ion-note>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-button expand="full" color="primary" class="ion-margin-top" routerLink="/agregarproducto">
+    Agregar Producto
+  </ion-button>
+
+  <ion-button expand="full" color="secondary" class="ion-margin-top" routerLink="/modificarproducto">
+    Modificar Producto
+  </ion-button>
 </ion-content>
