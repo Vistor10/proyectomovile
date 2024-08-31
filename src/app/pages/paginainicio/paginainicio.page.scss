@@ -17,3 +17,31 @@
   font-size: 32px;
   --ionicon-stroke-width: 32px; 
 }
+.categories-container p {
+  color: white;
+  text-align: center;
+  font-weight: bold;
+}
+
+.category-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0;
+}
+
+.category-circle img {
+  width: 100%;
+  height: auto;
+}
+
+
+
+
+
+

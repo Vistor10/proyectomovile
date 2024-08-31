@@ -7,6 +7,18 @@ import { Router } from '@angular/router';
   styleUrls: ['./paginainicio.page.scss'],
 })
 export class PaginainicioPage {
+  categories = [
+    { name: 'Gabinetes', imgSrc: '../../assets/img/gabinetes.jpg', link: 'gabinetes' },
+    { name: 'Teclados', imgSrc: '../../assets/img/teclados.jpg', link: 'teclados' },
+    { name: 'Audífonos Gamer', imgSrc: '../../assets/img/audifonosgamer.jpg', link: 'audifonosgamer' },
+    { name: 'Placas Madre', imgSrc: '../../assets/img/placasmadre.jpg', link: 'placasmadre' },
+    { name: 'Fuentes de Poder', imgSrc: '../../assets/img/fuentesdepoder.jpg', link: 'fuentesdepoder' },
+    { name: 'Memorias RAM', imgSrc: '../../assets/img/memoriasram.jpg', link: 'memoriasram' },
+    { name: 'Procesadores', imgSrc: '../../assets/img/procesadores.jpg', link: 'procesadores' },
+    { name: 'Tarjetas de Video', imgSrc: '../../assets/img/tarjetasdevideo.jpg', link: 'tarjetasdevideo' },
+    { name: 'Monitores', imgSrc: '../../assets/img/monitores.jpg', link: 'monitores' },
+  ];
+
   searchTerm: string = '';
 
   constructor(private router: Router) {}
