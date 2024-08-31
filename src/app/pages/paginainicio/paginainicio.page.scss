@@ -39,6 +39,16 @@
   width: 100%;
   height: auto;
 }
+.footer-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.footer-icons ion-col {
+  text-align: center;
+}
 
 
 

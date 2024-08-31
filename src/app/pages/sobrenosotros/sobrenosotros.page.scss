@@ -13,4 +13,14 @@ ion-header{
     height: 100%;
   
   }
+  .footer-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  
+  .footer-icons ion-col {
+    text-align: center;
+  }
   
