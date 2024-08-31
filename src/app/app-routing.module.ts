@@ -235,7 +235,15 @@ const routes: Routes = [
     path: '**',
     loadChildren: () => import('./pages/notfound/notfound.module').then( m => m.NotfoundPageModule)
  
+  },  {
+    path: 'agregarproducto',
+    loadChildren: () => import('./pages/agregarproducto/agregarproducto.module').then( m => m.AgregarproductoPageModule)
   },
+  {
+    path: 'modificarproducto',
+    loadChildren: () => import('./pages/modificarproducto/modificarproducto.module').then( m => m.ModificarproductoPageModule)
+  },
+
 
 
   
