@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
 import { RazerKrakenKittyPage } from './razer-kraken-kitty.page';
 
 const routes: Routes = [

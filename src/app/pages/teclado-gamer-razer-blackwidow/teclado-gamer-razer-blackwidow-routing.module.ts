@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
 import { TecladoGamerRazerBlackwidowPage } from './teclado-gamer-razer-blackwidow.page';
 
 const routes: Routes = [

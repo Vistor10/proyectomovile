@@ -255,19 +255,6 @@ const routes: Routes = [
  
   },
 
-
-  
-
-
-
-  
-
-
-
-  
-
-  
-
 ];
 
 @NgModule({

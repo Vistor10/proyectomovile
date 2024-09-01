@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
 import { MemoriaRamDdr4XPGSPECTRIXPage } from './memoria-ram-ddr4-xpg-spectrix.page';
 
 const routes: Routes = [

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
 import { MonitorGamerCurvoSamsungOdysseyG95C49Page } from './monitor-gamer-curvo-samsung-odyssey-g95-c-49.page';
 
 const routes: Routes = [

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
 import { HyperxCloudStinger2Page } from './hyperx-cloud-stinger-2.page';
 
 const routes: Routes = [

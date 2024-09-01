@@ -13,11 +13,11 @@
       <ion-label position="floating">
         Ingresa tu correo para mandarte un código de acceso
       </ion-label>
-      <ion-input type="email"[(ngModel)]="email"name="email"required email #emailInput="ngModel"></ion-input>
+      <ion-input type="email" [(ngModel)]="email" name="email" required email #emailInput="ngModel"></ion-input>
     </ion-item>
     <ion-text color="danger" *ngIf="emailInput.invalid && emailInput.touched">
       <p>Por favor, ingresa un correo válido.</p>
     </ion-text>
-    <ion-button expand="full"  color="primary"  type="submit" [disabled]="!forwardForm.form.valid">Enviar</ion-button>
+    <ion-button expand="full" color="primary" type="submit" [disabled]="!forwardForm.form.valid">Enviar</ion-button>
   </form>
 </ion-content>

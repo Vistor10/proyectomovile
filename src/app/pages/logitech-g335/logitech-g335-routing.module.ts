@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
 import { LogitechG335Page } from './logitech-g335.page';
 
 const routes: Routes = [

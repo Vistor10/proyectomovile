@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
 import { TarjetaDeVideoASUSDualNvidiaRTX4070Page } from './tarjeta-de-video-asus-dual-nvidia-rtx4070.page';
 
 const routes: Routes = [
@@ -14,4 +13,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class TarjetaDeVideoASUSDualNvidiaRTX4070PageRoutingModule {}
+export class TarjetaDeVideoASUSDualNvidiaRTX4070PageRoutingModule { }

@@ -9,30 +9,19 @@
 
 <ion-content [fullscreen]="true" color="dark" class="ion-padding center-content">
   <form (ngSubmit)="onUpdateProfile()" #updateProfileForm="ngForm">
-    
+
     <ion-item>
       <ion-label position="floating">Nuevo Usuario</ion-label>
-      <ion-input 
-        type="text" 
-        [(ngModel)]="newUsername" 
-        name="newUsername" 
-        required 
-        #newUsernameInput="ngModel">
+      <ion-input type="text" [(ngModel)]="newUsername" name="newUsername" required #newUsernameInput="ngModel">
       </ion-input>
     </ion-item>
     <ion-text color="danger" *ngIf="newUsernameInput.invalid && newUsernameInput.touched">
       <p>El nombre de usuario es obligatorio.</p>
     </ion-text>
-    
+
     <ion-item>
       <ion-label position="floating">Nuevo Correo Electrónico</ion-label>
-      <ion-input 
-        type="email" 
-        [(ngModel)]="newEmail" 
-        name="newEmail" 
-        required 
-        email 
-        #newEmailInput="ngModel">
+      <ion-input type="email" [(ngModel)]="newEmail" name="newEmail" required email #newEmailInput="ngModel">
       </ion-input>
     </ion-item>
     <ion-text color="danger" *ngIf="newEmailInput.invalid && newEmailInput.touched">
@@ -41,27 +30,17 @@
 
     <ion-item>
       <ion-label position="floating">Nueva Contraseña</ion-label>
-      <ion-input 
-        type="password" 
-        [(ngModel)]="newPassword" 
-        name="newPassword" 
-        required 
-        minlength="8" 
-        pattern="^(?=.*[A-Z]).{8,}$" 
-        #newPasswordInput="ngModel">
+      <ion-input type="password" [(ngModel)]="newPassword" name="newPassword" required minlength="8"
+        pattern="^(?=.*[A-Z]).{8,}$" #newPasswordInput="ngModel">
       </ion-input>
     </ion-item>
     <ion-text color="danger" *ngIf="newPasswordInput.invalid && newPasswordInput.touched">
       <p>La contraseña debe tener al menos 8 caracteres y una letra mayúscula.</p>
     </ion-text>
-    
+
     <ion-item>
       <ion-label position="floating">Confirmar Nueva Contraseña</ion-label>
-      <ion-input 
-        type="password" 
-        [(ngModel)]="confirmNewPassword" 
-        name="confirmNewPassword" 
-        required 
+      <ion-input type="password" [(ngModel)]="confirmNewPassword" name="confirmNewPassword" required
         #confirmNewPasswordInput="ngModel">
       </ion-input>
     </ion-item>
@@ -69,10 +48,7 @@
       <p>Las contraseñas no coinciden.</p>
     </ion-text>
 
-    <ion-button 
-      expand="full" 
-      type="submit" 
-      color="primary" 
+    <ion-button expand="full" type="submit" color="primary"
       [disabled]="!updateProfileForm.form.valid || !passwordsMatch()">
       Actualizar Perfil
     </ion-button>

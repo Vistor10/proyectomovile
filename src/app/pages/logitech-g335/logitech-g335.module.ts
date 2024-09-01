@@ -1,11 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 import { IonicModule } from '@ionic/angular';
-
 import { LogitechG335PageRoutingModule } from './logitech-g335-routing.module';
-
 import { LogitechG335Page } from './logitech-g335.page';
 
 @NgModule({

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
 import { MonitorUltrawideCurvoLGPage } from './monitor-ultrawide-curvo-lg.page';
 
 const routes: Routes = [

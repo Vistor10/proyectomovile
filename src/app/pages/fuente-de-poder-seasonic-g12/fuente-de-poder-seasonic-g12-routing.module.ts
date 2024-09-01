@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
 import { FuenteDePoderSEASONICG12Page } from './fuente-de-poder-seasonic-g12.page';
 
 const routes: Routes = [

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
 import { FuenteDePoderThermaltakeSmart700Page } from './fuente-de-poder-thermaltake-smart700.page';
 
 const routes: Routes = [

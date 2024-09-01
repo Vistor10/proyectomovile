@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
 import { MemoriaRamKingstonFuryRenegadePage } from './memoria-ram-kingston-fury-renegade.page';
 
 const routes: Routes = [
