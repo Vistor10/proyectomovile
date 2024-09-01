@@ -23,6 +23,9 @@ export class LoginPage implements OnInit {
     });
     toast.present();
   }
+  isFormValid(): boolean {
+    return this.username.trim() !== '' && this.password.length > 8;
+  }
 
   async onLogin() {
     if (this.username && this.password) {

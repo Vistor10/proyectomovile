@@ -11,22 +11,35 @@
   <form (ngSubmit)="onLogin()" #loginForm="ngForm">
     <ion-item>
       <ion-label position="floating">Usuario</ion-label>
-      <ion-input type="text" [(ngModel)]="username" name="username" required #usernameInput="ngModel"></ion-input>
+      <ion-input 
+        type="text" 
+        [(ngModel)]="username" 
+        name="username" 
+        required 
+        pattern="^[a-zA-Z]+$" 
+        #usernameInput="ngModel">
+      </ion-input>
     </ion-item>
     <ion-text color="danger" *ngIf="usernameInput.invalid && usernameInput.touched">
-      <p>El nombre de usuario es obligatorio.</p>
+      <p>El nombre de usuario es obligatorio y solo puede contener letras.</p>
     </ion-text>
 
     <ion-item>
       <ion-label position="floating">Contraseña</ion-label>
-      <ion-input type="password" [(ngModel)]="password" name="password" required #passwordInput="ngModel"></ion-input>
+      <ion-input 
+        type="password" 
+        [(ngModel)]="password" 
+        name="password" 
+        required 
+        minlength="8" 
+        #passwordInput="ngModel">
+      </ion-input>
     </ion-item>
-
     <ion-text color="danger" *ngIf="passwordInput.invalid && passwordInput.touched">
-      <p>La contraseña es obligatoria.</p>
+      <p>La contraseña debe tener al menos 8 caracteres.</p>
     </ion-text>
 
-    <button mat-raised-button class="custom-login-button" type="submit" [disabled]="!loginForm.form.valid">
+    <button mat-raised-button class="custom-login-button" type="submit" [disabled]="!isFormValid()">
       Entrar
     </button>
   </form>
