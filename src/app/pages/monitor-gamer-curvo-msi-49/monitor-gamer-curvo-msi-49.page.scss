@@ -1,0 +1,41 @@
+.icon {
+  width: 100px;
+  height: auto;
+  display: block;
+  margin: 0;
+}
+
+ion-card {
+  height: 800px; 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center; 
+}
+
+ion-card img {
+  width: 100%; 
+  height: auto;
+  max-height: 350px; 
+  object-fit: contain; 
+}
+
+ion-card-header {
+  flex-grow: 1;
+  text-align: center;
+}
+
+ion-card-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; 
+  text-align: center;
+}
+
+ion-button {
+  margin-top: auto; 
+  width: 90%; 
+  align-self: center; 
+}
