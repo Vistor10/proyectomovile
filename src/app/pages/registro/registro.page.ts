@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-registro',
@@ -12,20 +12,29 @@ export class RegistroPage implements OnInit {
   password: string = '';
   confirmPassword: string = '';
 
-  constructor(private navCtrl: NavController) { }
+  constructor(private navCtrl: NavController, private toastController: ToastController) { }
 
   ngOnInit() {
+  }
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000, 
+      position: 'bottom', 
+    });
+    toast.present();
   }
   passwordsMatch(): boolean {
     return this.password === this.confirmPassword;
   }
-  onRegister() {
+  async onRegister() {
     if (this.username && this.email && this.passwordsMatch()) {
       console.log('Registro exitoso:', {
         username: this.username,
         email: this.email,
         password: this.password,
       });
+      this.presentToast('Registro exitoso');
 
       this.navCtrl.navigateRoot('/paginainicio');
     }
