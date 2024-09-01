@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, ToastController } from '@ionic/angular';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -12,32 +13,27 @@ export class LoginPage implements OnInit {
 
   constructor(private navCtrl: NavController, private toastController: ToastController) { }
 
-  ngOnInit() {
+  ngOnInit() {}
 
-  }
   async presentToast(message: string) {
     const toast = await this.toastController.create({
       message: message,
-      duration: 2000, 
-      position: 'bottom', 
+      duration: 2000,
+      position: 'bottom',
     });
     toast.present();
   }
-  isFormValid(): boolean {
-    return this.username.trim() !== '' && this.password.length > 8;
-  }
 
-  async onLogin() {
-    if (this.username && this.password) {
+  async onLogin(form: NgForm) {
+    if (form.valid) {
       console.log('Inicio de sesión con:', {
         username: this.username,
         password: this.password,
       });
       this.presentToast('Inicio de sesión exitoso');
-
       this.navCtrl.navigateRoot('/paginainicio');
-  } else {
-    this.presentToast('Por favor, ingresa todos los campos');
-}
-}
+    } else {
+      this.presentToast('Por favor, completa el formulario correctamente.');
+    }
+  }
 }
