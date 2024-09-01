@@ -34,7 +34,7 @@ export class RegistroPage implements OnInit {
         email: this.email,
         password: this.password,
       });
-      this.presentToast('Registro exitoso');
+      this.presentToast(`Inicio de sesión exitoso. Bienvenido, ${this.username}!`);
 
       this.navCtrl.navigateRoot('/paginainicio');
     }
