@@ -18,3 +18,16 @@ form {
   margin-top: 8px;
   color: var(--ion-color-primary);
 }
+.custom-login-button {
+  width: 100%;
+  height: 50px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #007bff;
+  color: white;
+
+  &:disabled {
+    background-color: #c0c0c0;
+    color: #6c757d;
+  }
+}

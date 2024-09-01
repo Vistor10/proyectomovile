@@ -18,6 +18,6 @@
     <ion-text color="danger" *ngIf="emailInput.invalid && emailInput.touched">
       <p>Por favor, ingresa un correo válido.</p>
     </ion-text>
-    <ion-button expand="full" color="primary" type="submit" [disabled]="!forwardForm.form.valid">Enviar</ion-button>
+    <button mat-raised-button class="custom-forward-button" type="submit" [disabled]="!forwardForm.form.valid">Enviar</button>
   </form>
 </ion-content>

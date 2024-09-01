@@ -54,8 +54,7 @@
       <p>Las contraseñas no coinciden</p>
     </ion-text>
 
-    <ion-button expand="full" type="submit" color="primary"
-      [disabled]="!registerForm.form.valid || !passwordsMatch()">Registrarse</ion-button>
+    <button mat-raised-button class="custom-register-button" [disabled]="!registerForm.form.valid || !passwordsMatch()">Registrarse</button>
   </form>
 
 </ion-content>
