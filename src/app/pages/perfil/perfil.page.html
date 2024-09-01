@@ -12,7 +12,13 @@
     <ion-icon name="person-circle-outline" class="profile-icon"></ion-icon>
     <h2 class="user-name">Usuario</h2>
     <p class="user-role">Juan Perez</p>
+    <ion-buttons slot="center">
+      <ion-router-link [routerLink]="['/modificarperfil']">
+        <ion-icon name="create-outline"></ion-icon>
+      </ion-router-link>
+    </ion-buttons>
   </div>
+  
 
   <ion-list>
     <ion-item lines="full">   
