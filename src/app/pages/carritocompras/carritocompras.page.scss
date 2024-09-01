@@ -1,22 +1,32 @@
+ion-content {
+  --background: #000;
+}
+
+.cart-container {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.cart-list {
+  margin-bottom: 20px;
+}
+
 .cart-item {
   display: flex;
   align-items: center;
-  --min-height: 80px; 
+  --min-height: 80px;
   --padding-start: 10px;
   --padding-end: 10px;
 }
 
-.cart-item ion-thumbnail {
-  width: 75px; 
-  height: 75px;
-}
-
 .cart-item ion-thumbnail img {
-  width: 100%; 
-  height: auto; 
-  max-height: 75px; 
-  object-fit: contain; 
-  border-radius: 5px; 
+  width: 100px;
+  height: auto;
+  max-height: 75px;
+  object-fit: contain;
+  border-radius: 5px;
 }
 
 .cart-item ion-label {
@@ -28,36 +38,40 @@
   font-size: 16px;
   font-weight: bold;
   margin: 0;
-  line-height: 1.2; 
 }
 
 .cart-item p {
   font-size: 14px;
-  margin: 2px 0 0; 
-  color: #777; 
+  margin: 0;
+  color: #777;
 }
 
 .total-item {
-  font-size: 18px;
-  font-weight: bold;
-  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #fff;
+  font-size: 14px;
+  border-radius: 10px;
+}
+
+.total-item ion-label h2 {
+  margin: 0;
+  font-size: 16px; 
+  color: #000; 
+}
+
+.total-item ion-note {
+  font-size: 16px; 
 }
 
 .total-item ion-note h2 {
   margin: 0;
-  font-size: 18px;
+  font-size: 16px; 
+  color: #000; 
 }
 
-ion-button[fill="clear"] {
-  margin: 0;
-  padding: 0;
-}
-
-ion-button[fill="clear"] ion-icon {
-  font-size: 20px;
-  color: #ff4d4d; 
-}
-
-ion-button {
-  border-radius: 20px;
+.finalize-button {
+  margin-top: 10px;
 }
