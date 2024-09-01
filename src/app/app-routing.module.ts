@@ -238,12 +238,18 @@ const routes: Routes = [
     path: 'modificarproducto',
     loadChildren: () => import('./pages/modificarproducto/modificarproducto.module').then( m => m.ModificarproductoPageModule)
   },
+  
+  {
+    path: 'modificarperfil',
+    loadChildren: () => import('./pages/modificarperfil/modificarperfil.module').then( m => m.ModificarperfilPageModule)
+  },
   {
 
     path: '**',
     loadChildren: () => import('./pages/notfound/notfound.module').then( m => m.NotfoundPageModule)
  
   },
+
   
 
 
