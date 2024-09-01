@@ -1,12 +1,29 @@
 ion-header{
     --background: black;
   }
-  
   ion-title {
     color:  white(196, 10, 10, 0.779);
     font-family: Roboto;
-    font-size: 22px;
+    font-size: 20px;
     text-align: center;
+  }
+  .image-container {
+    text-align: center; 
+}
+
+ion-img {
+    width: 250px; 
+    height: auto; 
+    display: inline-block; 
+}
+
+
+  ion-text {
+    color:  white(196, 10, 10, 0.779);
+    font-family: Roboto;
+    font-size: 14px;
+    text-align: center;
+    
   }
   .icon{
     width: 60px; 
