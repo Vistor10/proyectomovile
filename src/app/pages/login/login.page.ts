@@ -30,7 +30,7 @@ export class LoginPage implements OnInit {
         username: this.username,
         password: this.password,
       });
-      this.presentToast('Inicio de sesión exitoso');
+      this.presentToast(`Inicio de sesión exitoso. Bienvenido, ${this.username}!`);
       this.navCtrl.navigateRoot('/paginainicio');
     } else {
       this.presentToast('Por favor, completa el formulario correctamente.');
