@@ -8,48 +8,57 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <ion-item>
-    <ion-select placeholder="Selecciona un producto" required>
-      <ion-select-option value="1">Audífonos Gamer Razer Kraken Kitty</ion-select-option>
-      <ion-select-option value="2">Audífonos Gamer HyperX Cloud Stinger 2 Wireless</ion-select-option>
-      <ion-select-option value="3">Audífonos Gamer HyperX Cloud 3</ion-select-option>
-      <ion-select-option value="4">Audífonos Gamer Logitech G335</ion-select-option>
-      <ion-select-option value="5">Fuente de Poder Seasonic SEASONIC VERTEX PX-1000</ion-select-option>
-      <ion-select-option value="6">Fuente de Poder Seasonic G12-850GM 850W</ion-select-option>
-      <ion-select-option value="7">Fuente de Poder Thermaltake Smart 700W</ion-select-option>
-      <ion-select-option value="8">Fuente de Poder CLIO ATX-700</ion-select-option>
-      <ion-select-option value="9">Gabinete Gamer Corsair iCue 4000X</ion-select-option>
-      <ion-select-option value="10">Gabinete Gamer Kolink void RBG</ion-select-option>
-      <ion-select-option value="11">Gabinete Gamer Aerocool Shard</ion-select-option>
-      <ion-select-option value="12">Gabinete gamer Cooler Master CMP 520</ion-select-option>
-      <ion-select-option value="13">Kit de Memoria RAM Kingston FURY Renegade</ion-select-option>
-      <ion-select-option value="14">Memoria Ram DDR4 XPG SPECTRIX D35G</ion-select-option>
-      <ion-select-option value="15">Memoria Ram DDR4 Kingston FURY Beast</ion-select-option>
-      <ion-select-option value="16">Memoria Ram DDR4 Corsair Vengeance</ion-select-option>
-      <ion-select-option value="17">Monitor Gamer Samsung Odyssey G6, 32</ion-select-option>
-      <ion-select-option value="18">Monitor Ultrawide Curvo LG 34MP65C-B</ion-select-option>
-      <ion-select-option value="19">Monitor Gamer Curvo Samsung Odyssey G95C 49</ion-select-option>
-      <ion-select-option value="20">Monitor Gamer Curvo MSI 49</ion-select-option>
-      <ion-select-option value="21">placa madre msi M 520 A PRO</ion-select-option>
-      <ion-select-option value="22">Placa madre gigabyte aorux elite AX</ion-select-option>
-      <ion-select-option value="23">Placa madre MSI PRO Z70 A MAX</ion-select-option>
-      <ion-select-option value="24">Placa Madre Gigabyte Z790 UD</ion-select-option>
-      <ion-select-option value="25">Procesador AMD Ryzen™ 7 5800XT</ion-select-option>
-      <ion-select-option value="26">Procesador Intel® Core™ i5-10400</ion-select-option>
-      <ion-select-option value="27">Procesador Intel® Core™ i9-14900</ion-select-option>
-      <ion-select-option value="28">Procesador AMD Ryzen™ 7 8700G</ion-select-option>
-      <ion-select-option value="29">ASUS Dual Nvidia GeForce RTX 4070</ion-select-option>
-      <ion-select-option value="30">Gigabyte Nvidia GeForce RTX™ 4070 Ti </ion-select-option>
-      <ion-select-option value="31">Zotac Gaming Nvidia GeForce RTX 4070 Ti</ion-select-option>
-      <ion-select-option value="32">ASUS TUF Gaming Nvidia GeForce RTX 4080 SUPER</ion-select-option>
-      <ion-select-option value="33">Teclado Gamer Razer Blackwidow V4</ion-select-option>
-      <ion-select-option value="34">Teclado Gamer Razer Huntsman Mini </ion-select-option>
-      <ion-select-option value="35">Teclado Gamer Cougar Attack X3</ion-select-option>
-      <ion-select-option value="36">Teclado Gamer LOGITECH G213 Prodigy</ion-select-option>
-    </ion-select>
-  </ion-item>
+  <form (ngSubmit)="onSubmit(eliminarProductoForm)" #eliminarProductoForm="ngForm">
+    <ion-item>
+      <ion-label>Selecciona un producto</ion-label>
+      <ion-select name="producto" [(ngModel)]="productoSeleccionado" required #productoInput="ngModel" placeholder="Selecciona un producto">
+        <ion-select-option value="1">Audífonos Gamer Razer Kraken Kitty</ion-select-option>
+        <ion-select-option value="2">Audífonos Gamer HyperX Cloud Stinger 2 Wireless</ion-select-option>
+        <ion-select-option value="3">Audífonos Gamer HyperX Cloud 3</ion-select-option>
+        <ion-select-option value="4">Audífonos Gamer Logitech G335</ion-select-option>
+        <ion-select-option value="5">Fuente de Poder Seasonic SEASONIC VERTEX PX-1000</ion-select-option>
+        <ion-select-option value="6">Fuente de Poder Seasonic G12-850GM 850W</ion-select-option>
+        <ion-select-option value="7">Fuente de Poder Thermaltake Smart 700W</ion-select-option>
+        <ion-select-option value="8">Fuente de Poder CLIO ATX-700</ion-select-option>
+        <ion-select-option value="9">Gabinete Gamer Corsair iCue 4000X</ion-select-option>
+        <ion-select-option value="10">Gabinete Gamer Kolink void RBG</ion-select-option>
+        <ion-select-option value="11">Gabinete Gamer Aerocool Shard</ion-select-option>
+        <ion-select-option value="12">Gabinete gamer Cooler Master CMP 520</ion-select-option>
+        <ion-select-option value="13">Kit de Memoria RAM Kingston FURY Renegade</ion-select-option>
+        <ion-select-option value="14">Memoria Ram DDR4 XPG SPECTRIX D35G</ion-select-option>
+        <ion-select-option value="15">Memoria Ram DDR4 Kingston FURY Beast</ion-select-option>
+        <ion-select-option value="16">Memoria Ram DDR4 Corsair Vengeance</ion-select-option>
+        <ion-select-option value="17">Monitor Gamer Samsung Odyssey G6, 32</ion-select-option>
+        <ion-select-option value="18">Monitor Ultrawide Curvo LG 34MP65C-B</ion-select-option>
+        <ion-select-option value="19">Monitor Gamer Curvo Samsung Odyssey G95C 49</ion-select-option>
+        <ion-select-option value="20">Monitor Gamer Curvo MSI 49</ion-select-option>
+        <ion-select-option value="21">placa madre msi M 520 A PRO</ion-select-option>
+        <ion-select-option value="22">Placa madre gigabyte aorux elite AX</ion-select-option>
+        <ion-select-option value="23">Placa madre MSI PRO Z70 A MAX</ion-select-option>
+        <ion-select-option value="24">Placa Madre Gigabyte Z790 UD</ion-select-option>
+        <ion-select-option value="25">Procesador AMD Ryzen™ 7 5800XT</ion-select-option>
+        <ion-select-option value="26">Procesador Intel® Core™ i5-10400</ion-select-option>
+        <ion-select-option value="27">Procesador Intel® Core™ i9-14900</ion-select-option>
+        <ion-select-option value="28">Procesador AMD Ryzen™ 7 8700G</ion-select-option>
+        <ion-select-option value="29">ASUS Dual Nvidia GeForce RTX 4070</ion-select-option>
+        <ion-select-option value="30">Gigabyte Nvidia GeForce RTX™ 4070 Ti </ion-select-option>
+        <ion-select-option value="31">Zotac Gaming Nvidia GeForce RTX 4070 Ti</ion-select-option>
+        <ion-select-option value="32">ASUS TUF Gaming Nvidia GeForce RTX 4080 SUPER</ion-select-option>
+        <ion-select-option value="33">Teclado Gamer Razer Blackwidow V4</ion-select-option>
+        <ion-select-option value="34">Teclado Gamer Razer Huntsman Mini </ion-select-option>
+        <ion-select-option value="35">Teclado Gamer Cougar Attack X3</ion-select-option>
+        <ion-select-option value="36">Teclado Gamer LOGITECH G213 Prodigy</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-text color="danger" *ngIf="productoInput.invalid && productoInput.touched">
+      <p>Debe seleccionar un producto para eliminar.</p>
+    </ion-text>
 
-  <ion-button expand="full" color="danger" class="ion-margin-top" routerLink="/perfil">
-    Eliminar Producto
-  </ion-button>
+    <ion-button expand="full" color="danger" class="ion-margin-top" [disabled]="!eliminarProductoForm.form.valid" type="submit">
+      Eliminar Producto
+    </ion-button>
+  </form>
 </ion-content>
+
+
+      
