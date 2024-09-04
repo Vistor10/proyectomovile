@@ -8,37 +8,55 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <form>
+  <form (ngSubmit)="onSubmit(productForm)" #productForm="ngForm">
     <ion-item>
       <ion-label position="floating">Nombre del Producto</ion-label>
-      <ion-input type="text" required></ion-input>
+      <ion-input type="text" name="nombre" [(ngModel)]="producto.nombre" required minlength="3"
+        pattern="^[a-zA-ZÀ-ÿ\s]+$" #nombreInput="ngModel"></ion-input>
     </ion-item>
+    <ion-text color="danger" *ngIf="nombreInput.invalid && nombreInput.touched">
+      <p *ngIf="nombreInput.errors?.['required']">El nombre del producto es obligatorio.</p>
+      <p *ngIf="nombreInput.errors?.['minlength']">El nombre debe tener al menos 3 caracteres.</p>
+      <p *ngIf="nombreInput.errors?.['pattern']">El nombre no puede contener números ni caracteres especiales.</p>
+    </ion-text>
 
     <ion-item>
       <ion-label position="floating">Precio</ion-label>
-      <ion-input type="number" required></ion-input>
+      <ion-input type="number" name="precio" [(ngModel)]="producto.precio" required min="1" #precioInput="ngModel"></ion-input>
     </ion-item>
+    <ion-text color="danger" *ngIf="precioInput.invalid && precioInput.touched">
+      <p *ngIf="precioInput.errors?.['required']">El precio es obligatorio.</p>
+      <p *ngIf="precioInput.errors?.['min']">El precio debe ser mayor que 0.</p>
+    </ion-text>
 
     <ion-item>
-      <ion-select placeholder="Selecciona una categoría" required>
+      <ion-label position="floating">Categoría</ion-label>
+      <ion-select name="categoria" [(ngModel)]="producto.categoria" required #categoriaInput="ngModel">
         <ion-select-option value="audifonos">Audífonos</ion-select-option>
-        <ion-select-option value="teclados">Fuentes de poder</ion-select-option>
-        <ion-select-option value="monitores">Gabinetes</ion-select-option>
-        <ion-select-option value="procesadores">Memorias Ram</ion-select-option>
-        <ion-select-option value="teclados">Monitores</ion-select-option>
-        <ion-select-option value="monitores">Placas Madre</ion-select-option>
+        <ion-select-option value="fuentes-poder">Fuentes de poder</ion-select-option>
+        <ion-select-option value="gabinetes">Gabinetes</ion-select-option>
+        <ion-select-option value="memorias-ram">Memorias Ram</ion-select-option>
+        <ion-select-option value="monitores">Monitores</ion-select-option>
+        <ion-select-option value="placas-madre">Placas Madre</ion-select-option>
         <ion-select-option value="procesadores">Procesadores</ion-select-option>
-        <ion-select-option value="monitores">Tarjetas de video</ion-select-option>
-        <ion-select-option value="procesadores">Teclados</ion-select-option>
+        <ion-select-option value="tarjetas-video">Tarjetas de video</ion-select-option>
+        <ion-select-option value="teclados">Teclados</ion-select-option>
       </ion-select>
     </ion-item>
+    <ion-text color="danger" *ngIf="categoriaInput.invalid && categoriaInput.touched">
+      <p>La categoría es obligatoria.</p>
+    </ion-text>
 
     <ion-item>
       <ion-label position="floating">Imagen del Producto (URL)</ion-label>
-      <ion-input type="url" required></ion-input>
+      <ion-input type="url" name="imagen" [(ngModel)]="producto.imagen" required pattern="https?://.+" #imagenInput="ngModel"></ion-input>
     </ion-item>
+    <ion-text color="danger" *ngIf="imagenInput.invalid && imagenInput.touched">
+      <p *ngIf="imagenInput.errors?.['required']">La URL de la imagen es obligatoria.</p>
+      <p *ngIf="imagenInput.errors?.['pattern']">La URL no es válida.</p>
+    </ion-text>
 
-    <ion-button expand="full" color="primary" class="ion-margin-top" routerLink="/perfil">
+    <ion-button expand="full" color="primary" class="ion-margin-top" [disabled]="!productForm.form.valid" type="submit">
       Agregar Producto
     </ion-button>
   </form>
