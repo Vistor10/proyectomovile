@@ -11,6 +11,7 @@ export class RegistroPage implements OnInit {
   email: string = '';
   password: string = '';
   confirmPassword: string = '';
+  rut: string = '';
 
   constructor(private navCtrl: NavController, private toastController: ToastController) { }
 
@@ -27,14 +28,19 @@ export class RegistroPage implements OnInit {
   passwordsMatch(): boolean {
     return this.password === this.confirmPassword;
   }
+  isValidRUT(rut: string): boolean {
+    const rutPattern = /^\d{7,8}-[\dkK]$/;
+    return rutPattern.test(rut);
+  }
   async onRegister() {
-    if (this.username && this.email && this.passwordsMatch()) {
+    if (this.username && this.email && this.passwordsMatch() && this.isValidRUT(this.rut)) {
       console.log('Registro exitoso:', {
         username: this.username,
         email: this.email,
         password: this.password,
+        rut: this.rut,
       });
-      this.presentToast(`Inicio de sesión exitoso. Bienvenido, ${this.username}!`);
+      this.presentToast(`Registro exitoso. Bienvenido, ${this.username}!`);
 
       this.navCtrl.navigateRoot('/paginainicio');
     }

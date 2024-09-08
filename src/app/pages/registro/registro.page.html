@@ -25,6 +25,20 @@
       <p>El nombre de usuario es obligatorio y solo puede contener letras.</p>
     </ion-text>
     <ion-item>
+      <ion-label position="floating">RUT</ion-label>
+      <ion-input 
+        type="text" 
+        [(ngModel)]="rut" 
+        name="rut" 
+        required 
+        pattern="^\d{7,8}-[\dkK]$" 
+        #rutInput="ngModel">
+      </ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="rutInput.invalid && rutInput.touched">
+      <p>Por favor, ingresa un RUT válido (Ej: 12345678-9 o 12345678-K).</p>
+    </ion-text>
+    <ion-item>
       <ion-label position="floating">Correo Electrónico</ion-label>
       <ion-input type="email" [(ngModel)]="email" name="email" required email #emailInput="ngModel"></ion-input>
     </ion-item>
@@ -34,8 +48,15 @@
 
     <ion-item>
       <ion-label position="floating">Contraseña</ion-label>
-      <ion-input type="password" [(ngModel)]="password" name="password" required minlength="8"
-        pattern="^(?=.*[A-Z]).{8,}$" #passwordInput="ngModel"></ion-input>
+      <ion-input 
+        type="password" 
+        [(ngModel)]="password" 
+        name="password" 
+        required 
+        minlength="8" 
+        pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" 
+        #passwordInput="ngModel">
+      </ion-input>
     </ion-item>
     <ion-text color="danger" *ngIf="passwordInput.invalid && passwordInput.touched">
       <p>La contraseña es obligatoria.</p>
@@ -44,7 +65,7 @@
       <p>La contraseña debe tener al menos 8 caracteres.</p>
     </ion-text>
     <ion-text color="danger" *ngIf="passwordInput.errors?.['pattern'] && passwordInput.touched">
-      <p>La contraseña debe tener al menos una letra mayúscula.</p>
+      <p>La contraseña debe tener al menos una letra mayúscula, un número y un carácter especial.</p>
     </ion-text>
 
     <ion-item>
@@ -60,7 +81,11 @@
       <p>Las contraseñas no coinciden</p>
     </ion-text>
 
-    <button mat-raised-button class="custom-register-button" [disabled]="!registerForm.form.valid || !passwordsMatch()">Registrarse</button>
+    <button mat-raised-button class="custom-register-button" 
+      type="submit" 
+     [disabled]="!registerForm.form.valid || !passwordsMatch()">
+     Registrarse
+    </button>
   </form>
 
 </ion-content>
