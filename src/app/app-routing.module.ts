@@ -248,12 +248,18 @@ const routes: Routes = [
     path: 'eliminarproducto',
     loadChildren: () => import('./pages/eliminarproducto/eliminarproducto.module').then( m => m.EliminarproductoPageModule)
   },
+  
+  {
+    path: 'compra',
+    loadChildren: () => import('./pages/compra/compra.module').then( m => m.CompraPageModule)
+  },
   {
 
     path: '**',
     loadChildren: () => import('./pages/notfound/notfound.module').then( m => m.NotfoundPageModule)
  
   },
+
 
 ];
 
