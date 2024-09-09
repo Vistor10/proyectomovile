@@ -1,13 +1,56 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>compra</ion-title>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/paginainicio"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Ingrese sus datos de envio</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">compra</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" color="dark" class="ion-padding">
+  <form (ngSubmit)="onSubmit()" #purchaseForm="ngForm">    
+    <ion-item>
+      <ion-label position="floating">Nombre del destinatario</ion-label>
+      <ion-input 
+        type="text" 
+        [(ngModel)]="recipientName" 
+        name="recipientName" 
+        required 
+        #recipientNameInput="ngModel">
+      </ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="recipientNameInput.invalid && recipientNameInput.touched">
+      <p>Por favor, ingresa el nombre del destinatario.</p>
+    </ion-text>
+    <ion-item>
+      <ion-label position="floating">Dirección(Calle y numero)</ion-label>
+      <ion-input 
+        type="text" 
+        [(ngModel)]="address" 
+        name="address" 
+        required 
+        #addressInput="ngModel">
+      </ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="addressInput.invalid && addressInput.touched">
+      <p>Por favor, ingresa tu dirección.</p>
+    </ion-text>
+    <ion-item>
+      <ion-label position="floating">Ciudad</ion-label>
+      <ion-input 
+        type="text" 
+        [(ngModel)]="city" 
+        name="city" 
+        required 
+        #cityInput="ngModel">
+      </ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="cityInput.invalid && cityInput.touched">
+      <p>Por favor, ingresa tu ciudad.</p>
+    </ion-text>
+    <ion-button expand="block" type="submit" [disabled]="!purchaseForm.form.valid">
+      Ir a pagar
+    </ion-button>
+    
+  </form>
 </ion-content>
