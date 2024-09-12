@@ -258,12 +258,18 @@ const routes: Routes = [
     path: 'modificarcontrasena',
     loadChildren: () => import('./pages/modificarcontrasena/modificarcontrasena.module').then( m => m.ModificarcontrasenaPageModule)
   },
+  
+  {
+    path: 'modificarcorreo',
+    loadChildren: () => import('./pages/modificarcorreo/modificarcorreo.module').then( m => m.ModificarcorreoPageModule)
+  },
   {
 
     path: '**',
     loadChildren: () => import('./pages/notfound/notfound.module').then( m => m.NotfoundPageModule)
  
   },
+
 
 
 
