@@ -32,8 +32,16 @@
   <ion-list>
     <ion-item lines="full">
       <ion-note slot="start">juanitoperez&commat;gmail.com</ion-note>
+      <ion-buttons slot="end">
+        <ion-router-link [routerLink]="['/modificaremail']">
+          <ion-button fill="outline" color="dark">
+            <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+          </ion-button>
+        </ion-router-link>
+      </ion-buttons>
     </ion-item>
   </ion-list>
+  
 
   <ion-button expand="full" color="primary" class="ion-margin-top" routerLink="/agregarproducto">
     Agregar Producto
