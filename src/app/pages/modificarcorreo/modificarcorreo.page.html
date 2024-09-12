@@ -1,13 +1,33 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>modificarcorreo</ion-title>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/perfil"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Modificar Correo</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">modificarcorreo</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" color="dark" class="ion-padding center-content">
+  <div class="form-container">
+    <form (ngSubmit)="onUpdateEmail()" #updateEmailForm="ngForm">
+
+      <!-- Input para el nuevo correo electrónico -->
+      <ion-item>
+        <ion-label position="floating">Nuevo Correo Electrónico</ion-label>
+        <ion-input type="email" [(ngModel)]="newEmail" name="newEmail" required email #newEmailInput="ngModel">
+        </ion-input>
+      </ion-item>
+
+      <!-- Mensaje de error si el correo es inválido -->
+      <ion-text color="danger" *ngIf="newEmailInput.invalid && newEmailInput.touched">
+        <p *ngIf="newEmailInput.errors?.['required']">El correo es obligatorio.</p>
+        <p *ngIf="newEmailInput.errors?.['email']">Por favor ingresa un correo válido.</p>
+      </ion-text>
+
+      <!-- Botón para actualizar el correo -->
+      <ion-button expand="full" type="submit" color="primary" [disabled]="!updateEmailForm.form.valid">
+        Actualizar Correo
+      </ion-button>
+    </form>
+  </div>
 </ion-content>
