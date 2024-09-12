@@ -8,28 +8,20 @@ import { NavController } from '@ionic/angular';
 })
 export class ModificarperfilPage implements OnInit {
   newUsername: string = '';
-  newEmail: string = '';
-  newPassword: string = '';
-  confirmNewPassword: string = '';
 
   constructor(private navCtrl: NavController) { }
 
   ngOnInit() {
   }
-  passwordsMatch(): boolean {
-    return this.newPassword === this.confirmNewPassword;
-  }
-
   onUpdateProfile() {
-    if (this.passwordsMatch() && this.newPassword.length >= 8) {
+    if (this.newUsername.trim() !== '') {
       console.log('Perfil actualizado:', {
-        username: this.newUsername,
-        email: this.newEmail,
-        password: this.newPassword,
+        username: this.newUsername
       });
       this.navCtrl.navigateRoot('/perfil');
     } else {
-      console.log('Las contraseñas no coinciden o no cumplen con los requisitos.');
+      console.log('El nombre de usuario no puede estar vacío.');
     }
   }
-}
+  }
+

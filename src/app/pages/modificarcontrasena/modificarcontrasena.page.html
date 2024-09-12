@@ -1,0 +1,43 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/perfil"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Modificar Contraseña</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" color="dark" class="ion-padding center-content">
+  <div class="form-container">
+    <form (ngSubmit)="onUpdatePassword()" #updatePasswordForm="ngForm">
+      <ion-item>
+        <ion-label position="floating">Nueva Contraseña</ion-label>
+        <ion-input type="password" pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" 
+          [(ngModel)]="newPassword" name="newPassword" required #newPasswordInput="ngModel">
+        </ion-input>
+      </ion-item>
+
+      <ion-text color="danger" *ngIf="newPasswordInput.invalid && newPasswordInput.touched">
+        <p *ngIf="newPasswordInput.errors?.['required']">La contraseña es obligatoria.</p>
+        <p *ngIf="newPasswordInput.errors?.['pattern']">
+          La contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula, un número y un carácter especial.
+        </p>
+      </ion-text>
+
+      <ion-item>
+        <ion-label position="floating">Confirmar Nueva Contraseña</ion-label>
+        <ion-input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" required #confirmPasswordInput="ngModel">
+        </ion-input>
+      </ion-item>
+
+      <ion-text color="danger" *ngIf="confirmPasswordInput.touched && !passwordsMatch()">
+        <p>Las contraseñas no coinciden.</p>
+      </ion-text>
+
+      <ion-button expand="full" type="submit" color="primary"
+        [disabled]="!updatePasswordForm.form.valid || !passwordsMatch()">
+        Actualizar Contraseña
+      </ion-button>
+    </form>
+  </div>
+</ion-content>

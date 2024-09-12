@@ -253,12 +253,18 @@ const routes: Routes = [
     path: 'compra',
     loadChildren: () => import('./pages/compra/compra.module').then( m => m.CompraPageModule)
   },
+  
+  {
+    path: 'modificarcontrasena',
+    loadChildren: () => import('./pages/modificarcontrasena/modificarcontrasena.module').then( m => m.ModificarcontrasenaPageModule)
+  },
   {
 
     path: '**',
     loadChildren: () => import('./pages/notfound/notfound.module').then( m => m.NotfoundPageModule)
  
   },
+
 
 
 ];
