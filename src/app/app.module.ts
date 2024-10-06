@@ -7,12 +7,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatButtonModule } from '@angular/material/button';
 import { NativeStorage } from '@awesome-cordova-plugins/native-storage/ngx';
-import { SQLite, SQLiteObject } from '@awesome-cordova-plugins/sqlite/ngx';
+import { SQLite } from '@awesome-cordova-plugins/sqlite/ngx'; // Correct import
 
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, provideAnimationsAsync(), SQLiteObject, NativeStorage],
+  providers: [
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, 
+    provideAnimationsAsync(), 
+    SQLite, // Use SQLite instead of SQLiteObject
+    NativeStorage
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
