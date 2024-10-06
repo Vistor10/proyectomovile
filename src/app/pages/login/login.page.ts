@@ -10,6 +10,7 @@ import { NgForm } from '@angular/forms';
 export class LoginPage implements OnInit {
   username: string = '';
   password: string = '';
+  isAdmin: boolean = false;
 
   constructor(private navCtrl: NavController, private toastController: ToastController) { }
 
@@ -29,7 +30,14 @@ export class LoginPage implements OnInit {
       console.log('Inicio de sesión con:', {
         username: this.username,
         password: this.password,
+        
       });
+      if (this.username === 'admin') {
+        this.isAdmin = true; 
+      } else {
+        this.isAdmin = false; 
+      }
+      localStorage.setItem('isAdmin', this.isAdmin.toString());
       this.presentToast(`Inicio de sesión exitoso. Bienvenido, ${this.username}!`);
       this.navCtrl.navigateRoot('/paginainicio');
     } else {
