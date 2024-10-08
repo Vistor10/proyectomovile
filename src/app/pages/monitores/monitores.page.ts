@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ServicebdService } from 'src/app/services/servicebd.service'; // Importa tu servicio de carrito
 
 @Component({
   selector: 'app-monitores',
@@ -10,7 +9,7 @@ import { ServicebdService } from 'src/app/services/servicebd.service'; // Import
 export class MonitoresPage {
   searchTerm: string = '';
 
-  constructor(private router: Router, private servicebd: ServicebdService) {}
+  constructor(private router: Router) {}
 
   onSearchInput(event: any) {
     this.searchTerm = event.target.value;
@@ -37,18 +36,5 @@ export class MonitoresPage {
     if (route) {
       this.router.navigate([route]);
     }
-  }
-
-  // Método para añadir el producto al carrito
-  addToCart(nombreproducto: string, precio: number) {
-    const product = {
-      nombreproducto,
-      precio,
-    };
-    this.servicebd.addToCart(product).then(() => {
-      alert('Producto añadido al carrito');
-    }).catch((error) => {
-      console.error('Error al añadir producto al carrito', error);
-    });
   }
 }
