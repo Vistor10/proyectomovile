@@ -12,6 +12,7 @@
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
+
   <div class="ion-page" id="main-content">
     <ion-header [translucent]="true">
       <ion-toolbar color="dark">
@@ -41,7 +42,7 @@
                   <ion-card-subtitle>$129.990 CLP</ion-card-subtitle>
                 </ion-card-header>
               </ion-router-link>
-              <ion-button expand="full" color="primary">Añadir al Carrito</ion-button>
+              <ion-button expand="full" color="primary" (click)="addToCart('Razer Kraken Kitty Quartz', 129990, 'https://media.spdigital.cl/thumbnails/products/sclrc6tz_57cd70db_thumbnail_512.jpg')">Añadir al Carrito</ion-button>
             </ion-card>
           </ion-col>
 
@@ -55,7 +56,7 @@
                   <ion-card-subtitle>$114.150 CLP</ion-card-subtitle>
                 </ion-card-header>
               </ion-router-link>
-              <ion-button expand="full" color="primary">Añadir al Carrito</ion-button>
+              <ion-button expand="full" color="primary" (click)="addToCart('HyperX Cloud Stinger 2', 114150, 'https://media.spdigital.cl/thumbnails/products/22c0wthz_45384651_thumbnail_512.jpg')">Añadir al Carrito</ion-button>
             </ion-card>
           </ion-col>
         </ion-row>
@@ -71,7 +72,7 @@
                   <ion-card-subtitle>$63.990 CLP</ion-card-subtitle>
                 </ion-card-header>
               </ion-router-link>
-              <ion-button expand="full" color="primary">Añadir al Carrito</ion-button>
+              <ion-button expand="full" color="primary" (click)="addToCart('HyperX Cloud 3', 63990, 'https://media.spdigital.cl/thumbnails/products/ypolap0x_dcedc470_thumbnail_512.jpg')">Añadir al Carrito</ion-button>
             </ion-card>
           </ion-col>
 
@@ -85,10 +86,11 @@
                   <ion-card-subtitle>$59.990 CLP</ion-card-subtitle>
                 </ion-card-header>
               </ion-router-link>
-              <ion-button expand="full" color="primary">Añadir al Carrito</ion-button>
+              <ion-button expand="full" color="primary" (click)="addToCart('Logitech G335', 59990, 'https://media.spdigital.cl/thumbnails/products/wvwk9x87_25b20800_thumbnail_512.jpg')">Añadir al Carrito</ion-button>
             </ion-card>
           </ion-col>
         </ion-row>
       </ion-grid>
     </ion-content>
   </div>
+</div>
