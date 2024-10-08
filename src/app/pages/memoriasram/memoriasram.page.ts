@@ -10,8 +10,7 @@ export class MemoriasramPage implements OnInit {
 
   constructor(private servicebd: ServicebdService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   // Método para añadir producto al carrito
   addToCart(nombreproducto: string, precio: number, imagen: string) {

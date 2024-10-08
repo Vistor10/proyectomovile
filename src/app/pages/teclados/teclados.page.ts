@@ -1,28 +1,29 @@
-// teclados.page.ts
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ServicebdService } from 'src/app/services/servicebd.service'; // Importar el servicio
 
 @Component({
   selector: 'app-teclados',
   templateUrl: './teclados.page.html',
   styleUrls: ['./teclados.page.scss'],
 })
-export class TecladosPage {
-  searchTerm: string = '';
+export class TecladosPage implements OnInit {
 
-  constructor(private router: Router) {}
-
-  onSearchInput(event: any) {
-    this.searchTerm = event.target.value;
-  }
-
-  onSearchClear() {
-    this.searchTerm = '';
-  }
+  constructor(private servicebd: ServicebdService) { }
 
   ngOnInit() {
-    if (this.searchTerm.toLowerCase() === 'teclados') {
-      this.router.navigate(['/teclados']);
-    }
+  }
+
+  // Método para añadir producto al carrito
+  addToCart(nombreproducto: string, precio: number, imagen: string) {
+    const product = {
+      nombreproducto,
+      precio,
+      imagen
+    };
+    this.servicebd.addToCart(product).then(() => {
+      alert('Producto añadido al carrito');
+    }).catch((error) => {
+      console.error('Error al añadir producto al carrito', error);
+    });
   }
 }
