@@ -2,7 +2,7 @@
   <ion-header [translucent]="true">
     <ion-toolbar color="dark">
       <ion-buttons slot="start">
-        <ion-back-button defaultHref="/gabinetes"></ion-back-button>
+        <ion-back-button defaultHref="/fuentes de poder"></ion-back-button>
       </ion-buttons>
       <ion-title>CLIO ATX-700</ion-title>
     </ion-toolbar>
@@ -29,7 +29,7 @@
           baja a media. Su diseño compacto y eficiente hace que sea fácil de instalar en cualquier gabinete estándar.
         </p>
       </ion-card-content>
-      <ion-button expand="full" color="primary">Añadir al Carrito</ion-button>
+      <ion-button expand="full" color="primary" (click)="addToCart()">Añadir al Carrito</ion-button>
     </ion-card>
   </ion-content>
 </div>
