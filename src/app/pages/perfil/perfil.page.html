@@ -9,7 +9,17 @@
 
 <ion-content [fullscreen]="true" class="ion-padding" color="dark">
   <div class="profile-header">
-    <ion-icon name="person-circle-outline" class="profile-icon"></ion-icon>
+    <div class="profile-picture-container">
+      <img *ngIf="imagen; else defaultIcon" [src]="imagen" class="profile-icon"/>
+      <ng-template #defaultIcon>
+        <ion-icon name="person-circle-outline" class="profile-icon"></ion-icon>
+      </ng-template>
+  
+      <button class="camera-button" (click)="takePicture()">
+        <ion-icon name="camera-outline"></ion-icon>
+      </button>
+    </div>
+
     <h2 class="user-name">Usuario</h2>
     <p class="user-role">Juan Perez</p>
 
