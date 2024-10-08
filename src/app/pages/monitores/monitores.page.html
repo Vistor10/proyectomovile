@@ -12,6 +12,7 @@
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
+  
   <div class="ion-page" id="main-content">
     <ion-header [translucent]="true">
       <ion-toolbar color="dark">
@@ -34,29 +35,26 @@
           <ion-col size="6" size-md="6">
             <ion-card>
               <ion-router-link [routerLink]="['/monitor-gamer-samsung-odyssey-g6']">
-                <img alt="Monitor Gamer Samsung Odyssey G6, 32 pulgadas WQHD, 240Hz, FreeSync Premium Pro, DisplayHDR
-                600" src="https://media.spdigital.cl/thumbnails/products/fqqvtub3_0cac7e5a_thumbnail_512.jpg" />
+                <img alt="Monitor Gamer Samsung Odyssey G6, 32 pulgadas WQHD, 240Hz, FreeSync Premium Pro, DisplayHDR 600" src="https://media.spdigital.cl/thumbnails/products/fqqvtub3_0cac7e5a_thumbnail_512.jpg" />
                 <ion-card-header>
                   <ion-card-title> Monitor Samsung Odyssey G6 32" </ion-card-title>
                   <ion-card-subtitle>$599.000 CLP</ion-card-subtitle>
                 </ion-card-header>
               </ion-router-link>
-              <ion-button expand="full" color="primary">Añadir al Carrito</ion-button>
+              <ion-button expand="full" color="primary" (click)="addToCart('Monitor Samsung Odyssey G6 32"', 599000)">Añadir al Carrito</ion-button>
             </ion-card>
           </ion-col>
 
           <ion-col size="6" size-md="6">
             <ion-card>
               <ion-router-link [routerLink]="['/monitor-ultrawide-curvo-lg']">
-                <img alt="Monitor Ultrawide Curvo LG 34MP65C-B, Panel VA, 3440 x 1440, 160 hz, 1ms, HDR10, FreeSync
-                Premium" src="https://media.spdigital.cl/thumbnails/products/jyho6xu9_78536bc0_thumbnail_512.jpg" />
+                <img alt="Monitor Ultrawide Curvo LG 34MP65C-B, Panel VA, 3440 x 1440, 160 hz, 1ms, HDR10, FreeSync Premium" src="https://media.spdigital.cl/thumbnails/products/jyho6xu9_78536bc0_thumbnail_512.jpg" />
                 <ion-card-header>
-                  <ion-card-title> Monitor Ultrawide Curvo LG 32"
-                  </ion-card-title>
+                  <ion-card-title> Monitor Ultrawide Curvo LG 34" </ion-card-title>
                   <ion-card-subtitle>$470.750 CLP</ion-card-subtitle>
                 </ion-card-header>
               </ion-router-link>
-              <ion-button expand="full" color="primary">Añadir al Carrito</ion-button>
+              <ion-button expand="full" color="primary" (click)="addToCart('Monitor Ultrawide Curvo LG 34"', 470750)">Añadir al Carrito</ion-button>
             </ion-card>
           </ion-col>
         </ion-row>
@@ -65,33 +63,30 @@
           <ion-col size="6" size-md="6">
             <ion-card>
               <ion-router-link [routerLink]="['/monitor-gamer-curvo-samsung-odyssey-g95-c-49']">
-                <img alt="Monitor Gamer Curvo Samsung Odyssey G95C 49”, QHD, Panel VA, 240Hz, 5120x1440"
-                  src="https://media.spdigital.cl/thumbnails/products/tvlpbdac_aa836e31_thumbnail_512.jpg" />
+                <img alt="Monitor Gamer Curvo Samsung Odyssey G95C 49”, QHD, Panel VA, 240Hz, 5120x1440" src="https://media.spdigital.cl/thumbnails/products/tvlpbdac_aa836e31_thumbnail_512.jpg" />
                 <ion-card-header>
-                  <ion-card-title> Monitor Curvo Samsung Odyssey G95C 49”
-                  </ion-card-title>
-                  <ion-card-subtitle>$991.250</ion-card-subtitle>
+                  <ion-card-title> Monitor Curvo Samsung Odyssey G95C 49” </ion-card-title>
+                  <ion-card-subtitle>$991.250 CLP</ion-card-subtitle>
                 </ion-card-header>
               </ion-router-link>
-              <ion-button expand="full" color="primary">Añadir al Carrito</ion-button>
+              <ion-button expand="full" color="primary" (click)="addToCart('Monitor Curvo Samsung Odyssey G95C 49"', 991250)">Añadir al Carrito</ion-button>
             </ion-card>
           </ion-col>
 
           <ion-col size="6" size-md="6">
             <ion-card>
               <ion-router-link [routerLink]="['/monitor-gamer-curvo-msi-49']">
-                <img alt="Monitor Gamer Curvo MSI 49 pulgadas MPG 491CQP QD-OLED, 0.03ms, 144Hz, DP, HDMI, DisplayHDR, Curve
-                1800R" src="https://media.spdigital.cl/thumbnails/products/pbgyco0j_7ae2c79b_thumbnail_512.jpg" />
+                <img alt="Monitor Gamer Curvo MSI 49 pulgadas MPG 491CQP QD-OLED, 0.03ms, 144Hz, DP, HDMI, DisplayHDR, Curve 1800R" src="https://media.spdigital.cl/thumbnails/products/pbgyco0j_7ae2c79b_thumbnail_512.jpg" />
                 <ion-card-header>
-                  <ion-card-title> Monitor Gamer Curvo MSI 49"
-                  </ion-card-title>
+                  <ion-card-title> Monitor Gamer Curvo MSI 49" </ion-card-title>
                   <ion-card-subtitle>$1.257.180 CLP</ion-card-subtitle>
                 </ion-card-header>
               </ion-router-link>
-              <ion-button expand="full" color="primary">Añadir al Carrito</ion-button>
+              <ion-button expand="full" color="primary" (click)="addToCart('Monitor Gamer Curvo MSI 49"', 1257180)">Añadir al Carrito</ion-button>
             </ion-card>
           </ion-col>
         </ion-row>
       </ion-grid>
     </ion-content>
   </div>
+</div>

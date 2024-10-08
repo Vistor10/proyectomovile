@@ -4,13 +4,14 @@
       <ion-buttons slot="start">
         <ion-back-button defaultHref="/gabinetes"></ion-back-button>
       </ion-buttons>
-      <ion-title>monitor ultrawide curvo LG"</ion-title>
+      <ion-title>Monitor Ultrawide Curvo LG 34"</ion-title>
     </ion-toolbar>
   </ion-header>
+
   <ion-content [fullscreen]="true" color="dark" class="ion-padding">
     <ion-header collapse="condense">
       <ion-toolbar>
-        <ion-title size="large">monitor ultrawide curvo LG</ion-title>
+        <ion-title size="large">Monitor Ultrawide Curvo LG</ion-title>
       </ion-toolbar>
     </ion-header>
 
@@ -27,6 +28,7 @@
           3440 x 1440, frecuencia de 160Hz, 1ms de tiempo de respuesta, HDR10 y FreeSync Premium.
         </p>
       </ion-card-content>
-      <ion-button expand="full" color="primary">Añadir al Carrito</ion-button>
+      <ion-button expand="full" color="primary" (click)="addToCart('Monitor Ultrawide Curvo LG 34MP65C-B', 470750, 'https://media.spdigital.cl/thumbnails/products/jyho6xu9_78536bc0_thumbnail_512.jpg')">Añadir al Carrito</ion-button>
     </ion-card>
   </ion-content>
+</div>
