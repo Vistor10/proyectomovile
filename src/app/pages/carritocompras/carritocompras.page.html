@@ -1,69 +1,38 @@
-<ion-header [translucent]="true">
-  <ion-toolbar color="dark">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/paginainicio"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Carrito de Compras</ion-title>
-  </ion-toolbar>
-</ion-header>
+<div class="ion-page" id="main-content">
+  <ion-header [translucent]="true">
+    <ion-toolbar color="dark">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/carrito"></ion-back-button>
+      </ion-buttons>
+      <ion-title>carrito</ion-title>
+    </ion-toolbar>
+  </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-padding" color="dark">
-  <div class="cart-container">
-    <ion-list class="cart-list">
-      <ion-item class="cart-item">
+  <ion-content [fullscreen]="true" class="ion-padding">
+    <ion-list>
+      <!-- Mostrar productos del carrito -->
+      <ion-item *ngFor="let item of cartItems">
         <ion-thumbnail slot="start">
-          <img src="https://media.spdigital.cl/thumbnails/products/9mtx0k9j_4b2c460e_thumbnail_512.jpg"
-            alt="Cooler Master CMP 520" />
+          <img [src]="item.imagen" />
         </ion-thumbnail>
         <ion-label>
-          <h2>Cooler Master CMP 520</h2>
-          <p>$64.490 CLP</p>
+          <h2>{{ item.nombreproducto }}</h2>
+          <p>Precio: {{ item.precio | currency:'CLP' }}</p>
         </ion-label>
-        <ion-button fill="clear" color="danger" slot="end">
-          <ion-icon name="trash-bin-outline"></ion-icon>
-        </ion-button>
-      </ion-item>
-
-      <ion-item class="cart-item">
-        <ion-thumbnail slot="start">
-          <img src="https://media.spdigital.cl/thumbnails/products/_xiag1e3_7be5c2ae_thumbnail_512.jpg"
-            alt="Memoria Ram DDR4 16GB 3200MHz Kingston FURY Beast, CL16, DIMM, 1.35V" />
-        </ion-thumbnail>
-        <ion-label>
-          <h2>Memoria Ram DDR4 16GB 3200MHz Kingston FURY Beast</h2>
-          <p>$99.990 CLP</p>
-        </ion-label>
-        <ion-button fill="clear" color="danger" slot="end">
-          <ion-icon name="trash-bin-outline"></ion-icon>
-        </ion-button>
-      </ion-item>
-
-      <ion-item class="cart-item">
-        <ion-thumbnail slot="start">
-          <img src="https://media.spdigital.cl/thumbnails/products/ypolap0x_dcedc470_thumbnail_512.jpg"
-            alt="Audífonos Gamer HyperX Cloud 3, 3.5mm, USB, Color Negro/Rojo" />
-        </ion-thumbnail>
-        <ion-label>
-          <h2>Audífonos Gamer HyperX Cloud</h2>
-          <p>$63.990 CLP</p>
-        </ion-label>
-        <ion-button fill="clear" color="danger" slot="end">
-          <ion-icon name="trash-bin-outline"></ion-icon>
+        <ion-button fill="clear" color="danger" slot="end" (click)="removeFromCart(item.idproducto)">
+          Eliminar
         </ion-button>
       </ion-item>
     </ion-list>
 
-    <div class="total-item">
-      <ion-label>
-        <h2>Total:</h2>
-      </ion-label>
-      <ion-note slot="end" color="primary">
-        <h2>$228.470 CLP</h2>
-      </ion-note>
-    </div>
-  </div>
-
-  <ion-button expand="full" color="primary" class="finalize-button" routerLink="/compra">
-    Seguir con la Compra
-  </ion-button>
-</ion-content>
+    <!-- Sección para mostrar el total -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Total</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <h2>{{ getTotal() | currency:'CLP' }}</h2> <!-- Mostrar total del carrito -->
+      </ion-card-content>
+    </ion-card>
+  </ion-content>
+</div>
