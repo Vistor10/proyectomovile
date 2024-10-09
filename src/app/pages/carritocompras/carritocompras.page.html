@@ -4,20 +4,20 @@
       <ion-buttons slot="start">
         <ion-back-button defaultHref="/carrito"></ion-back-button>
       </ion-buttons>
-      <ion-title>carrito</ion-title>
+      <ion-title>Carrito</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <ion-content [fullscreen]="true" class="ion-padding">
     <ion-list>
       <!-- Mostrar productos del carrito -->
-      <ion-item *ngFor="let item of cartItems">
+      <ion-item *ngFor="let item of cartItems" class="cart-item">
         <ion-thumbnail slot="start">
           <img [src]="item.imagen" />
         </ion-thumbnail>
         <ion-label>
-          <h2>{{ item.nombreproducto }}</h2>
-          <p>Precio: {{ item.precio | currency:'CLP' }}</p>
+          <h2 class="product-name">{{ item.nombreproducto }}</h2>
+          <p class="product-price">Precio: {{ item.precio | currency:'CLP' }}</p>
         </ion-label>
         <ion-button fill="clear" color="danger" slot="end" (click)="removeFromCart(item.idproducto)">
           Eliminar
@@ -26,12 +26,12 @@
     </ion-list>
 
     <!-- Sección para mostrar el total -->
-    <ion-card>
+    <ion-card class="total-card">
       <ion-card-header>
         <ion-card-title>Total</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <h2>{{ getTotal() | currency:'CLP' }}</h2> <!-- Mostrar total del carrito -->
+        <h2 class="total-amount">{{ getTotal() | currency:'CLP' }}</h2> <!-- Mostrar total del carrito -->
       </ion-card-content>
     </ion-card>
   </ion-content>
