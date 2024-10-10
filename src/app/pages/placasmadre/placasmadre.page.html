@@ -16,10 +16,9 @@
   <ion-content [fullscreen]="true" color="dark" class="ion-padding">
     <ion-header collapse="condense">
       <ion-toolbar>
-        <ion-title size="large">placas madre</ion-title>
+        <ion-title size="large">Placas Madre</ion-title>
       </ion-toolbar>
     </ion-header>
-
 
     <ion-grid>
       <ion-row>
@@ -29,11 +28,11 @@
               <img alt="placa madre msi M 520 A PRO"
                 src="https://media.spdigital.cl/thumbnails/products/udt3fqxu_27f2e082_thumbnail_512.jpg" />
               <ion-card-header>
-                <ion-card-title>placa madre msi M 520 A PRO</ion-card-title>
+                <ion-card-title>Placa Madre MSI A520 M-A PRO</ion-card-title>
                 <ion-card-subtitle>$61.990 CLP</ion-card-subtitle>
               </ion-card-header>
             </ion-router-link>
-            <ion-button expand="full" color="primary">Añadir al Carrito</ion-button>
+            <ion-button expand="full" color="primary" (click)="addToCart('Placa Madre MSI A520 M-A PRO', 61990, 'https://media.spdigital.cl/thumbnails/products/udt3fqxu_27f2e082_thumbnail_512.jpg')">Añadir al Carrito</ion-button>
           </ion-card>
         </ion-col>
 
@@ -43,11 +42,11 @@
               <img alt="Placa madre gigabyte aorux elite AX"
                 src="https://media.spdigital.cl/thumbnails/products/yb0mzi8o_57a6a515_thumbnail_512.jpg" />
               <ion-card-header>
-                <ion-card-title>Placa madre gigabyte aorux elite AX</ion-card-title>
+                <ion-card-title>Placa Madre Gigabyte AORUX Elite AX</ion-card-title>
                 <ion-card-subtitle>$342.090 CLP</ion-card-subtitle>
               </ion-card-header>
             </ion-router-link>
-            <ion-button expand="full" color="primary">Añadir al Carrito</ion-button>
+            <ion-button expand="full" color="primary" (click)="addToCart('Placa Madre Gigabyte AORUX Elite AX', 342090, 'https://media.spdigital.cl/thumbnails/products/yb0mzi8o_57a6a515_thumbnail_512.jpg')">Añadir al Carrito</ion-button>
           </ion-card>
         </ion-col>
       </ion-row>
@@ -59,11 +58,11 @@
               <img alt="Placa madre MSI PRO Z70 A MAX"
                 src="https://media.spdigital.cl/thumbnails/products/mp6q6_y0_7308a861_thumbnail_512.jpg" />
               <ion-card-header>
-                <ion-card-title>Placa madre MSI PRO Z70 A MAX</ion-card-title>
+                <ion-card-title>Placa Madre MSI PRO Z70 A MAX</ion-card-title>
                 <ion-card-subtitle>$298.080 CLP</ion-card-subtitle>
               </ion-card-header>
             </ion-router-link>
-            <ion-button expand="full" color="primary">Añadir al Carrito</ion-button>
+            <ion-button expand="full" color="primary" (click)="addToCart('Placa Madre MSI PRO Z70 A MAX', 298080, 'https://media.spdigital.cl/thumbnails/products/mp6q6_y0_7308a861_thumbnail_512.jpg')">Añadir al Carrito</ion-button>
           </ion-card>
         </ion-col>
 
@@ -73,12 +72,14 @@
               <img alt="Placa Madre Gigabyte Z790 UD"
                 src="https://media.spdigital.cl/thumbnails/products/pii2vjbr_7316916c_thumbnail_512.jpg" />
               <ion-card-header>
-                <ion-card-title> Placa Madre Gigabyte Z790 UD</ion-card-title>
+                <ion-card-title>Placa Madre Gigabyte Z790 UD</ion-card-title>
                 <ion-card-subtitle>$270.460 CLP</ion-card-subtitle>
               </ion-card-header>
             </ion-router-link>
-            <ion-button expand="full" color="primary">Añadir al Carrito</ion-button>
+            <ion-button expand="full" color="primary" (click)="addToCart('Placa Madre Gigabyte Z790 UD', 270460, 'https://media.spdigital.cl/thumbnails/products/pii2vjbr_7316916c_thumbnail_512.jpg')">Añadir al Carrito</ion-button>
           </ion-card>
         </ion-col>
       </ion-row>
     </ion-grid>
+  </ion-content>
+</div>

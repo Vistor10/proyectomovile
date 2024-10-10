@@ -4,7 +4,7 @@
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
-      <ion-title></ion-title>
+      <ion-title>Teclados</ion-title>
       <ion-buttons slot="end">
         <ion-router-link [routerLink]="['/paginainicio']">
           <img class="icon" src="../../assets/icon/gadgetzone_logo-removebg-preview.png" alt="logo">
@@ -31,7 +31,7 @@
                 <ion-card-subtitle>$239.000 CLP</ion-card-subtitle>
               </ion-card-header>
             </ion-router-link>
-            <ion-button expand="full" color="primary">Añadir al Carrito</ion-button>
+            <ion-button expand="full" color="primary" (click)="addToCart('Teclado Gamer Razer Blackwidow V4', 239000, 'https://media.spdigital.cl/thumbnails/products/3r2pwux4_8665678f_thumbnail_512.jpg')">Añadir al Carrito</ion-button>
           </ion-card>
         </ion-col>
 
@@ -44,7 +44,7 @@
                 <ion-card-subtitle>$109.990 CLP</ion-card-subtitle>
               </ion-card-header>
             </ion-router-link>
-            <ion-button expand="full" color="primary">Añadir al Carrito</ion-button>
+            <ion-button expand="full" color="primary" (click)="addToCart('Teclado Gamer Razer Huntsman Mini', 109990, 'https://media.spdigital.cl/thumbnails/products/snyhppat_a721dfd4_thumbnail_512.jpg')">Añadir al Carrito</ion-button>
           </ion-card>
         </ion-col>
       </ion-row>
@@ -59,7 +59,7 @@
                 <ion-card-subtitle>$95.990 CLP</ion-card-subtitle>
               </ion-card-header>
             </ion-router-link>
-            <ion-button expand="full" color="primary">Añadir al Carrito</ion-button>
+            <ion-button expand="full" color="primary" (click)="addToCart('Teclado Gamer Cougar Attack X3', 95990, 'https://media.spdigital.cl/thumbnails/products/zwy4s9lw_57966fd8_thumbnail_512.png')">Añadir al Carrito</ion-button>
           </ion-card>
         </ion-col>
 
@@ -68,11 +68,11 @@
             <ion-router-link [routerLink]="['/teclado-gamer-logitech-g213']">
               <img alt="Teclado Logitech G213 Prodigy" src="https://media.spdigital.cl/thumbnails/products/ppwci9lq_50a0c365_thumbnail_512.jpg" />
               <ion-card-header>
-                <ion-card-title>Teclado Gamer LOGITECH G213 Prodigy </ion-card-title>
+                <ion-card-title>Teclado Gamer LOGITECH G213 Prodigy</ion-card-title>
                 <ion-card-subtitle>$53.780 CLP</ion-card-subtitle>
               </ion-card-header>
             </ion-router-link>
-            <ion-button expand="full" color="primary">Añadir al Carrito</ion-button>
+            <ion-button expand="full" color="primary" (click)="addToCart('Teclado Gamer LOGITECH G213 Prodigy', 53780, 'https://media.spdigital.cl/thumbnails/products/ppwci9lq_50a0c365_thumbnail_512.jpg')">Añadir al Carrito</ion-button>
           </ion-card>
         </ion-col>
       </ion-row>

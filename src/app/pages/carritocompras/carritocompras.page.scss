@@ -1,77 +1,31 @@
-ion-content {
-  --background: #000;
-}
-
-.cart-container {
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 15px;
-  margin-bottom: 20px;
-}
-
-.cart-list {
-  margin-bottom: 20px;
-}
-
 .cart-item {
-  display: flex;
-  align-items: center;
-  --min-height: 80px;
-  --padding-start: 10px;
-  --padding-end: 10px;
+  background-color: #f9f9f9; /* Fondo claro para los elementos del carrito */
+  border-radius: 8px; /* Bordes redondeados */
+  margin-bottom: 10px; /* Espaciado entre elementos */
+  padding: 10px; /* Espaciado interno */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
 }
 
-.cart-item ion-thumbnail img {
-  width: 100px;
-  height: auto;
-  max-height: 75px;
-  object-fit: contain;
-  border-radius: 5px;
+.product-name {
+  font-size: 1.2rem; /* Aumentar tamaño del nombre del producto */
+  font-weight: bold; /* Texto en negrita */
 }
 
-.cart-item ion-label {
-  margin-left: 10px;
-  font-size: 14px;
+.product-price {
+  color: #666; /* Color gris para el precio */
+  font-size: 1rem; /* Tamaño del texto del precio */
 }
 
-.cart-item h2 {
-  font-size: 16px;
-  font-weight: bold;
-  margin: 0;
+.total-card {
+  margin-top: 20px; /* Espacio arriba del total */
+  padding: 15px; /* Espaciado interno */
+  background-color: #ffffff; /* Fondo blanco */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
 }
 
-.cart-item p {
-  font-size: 14px;
-  margin: 0;
-  color: #777;
-}
-
-.total-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  background-color: #fff;
-  font-size: 14px;
-  border-radius: 10px;
-}
-
-.total-item ion-label h2 {
-  margin: 0;
-  font-size: 16px; 
-  color: #000; 
-}
-
-.total-item ion-note {
-  font-size: 16px; 
-}
-
-.total-item ion-note h2 {
-  margin: 0;
-  font-size: 16px; 
-  color: #000; 
-}
-
-.finalize-button {
-  margin-top: 10px;
+.total-amount {
+  font-size: 1.5rem; /* Tamaño más grande para el total */
+  font-weight: bold; /* Negrita para el total */
+  color: red; /* Color atractivo para el total */
 }

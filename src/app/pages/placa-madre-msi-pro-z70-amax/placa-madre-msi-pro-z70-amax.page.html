@@ -2,9 +2,9 @@
   <ion-header [translucent]="true">
     <ion-toolbar color="dark">
       <ion-buttons slot="start">
-        <ion-back-button defaultHref="/gabinetes"></ion-back-button>
+        <ion-back-button defaultHref="/procesadores"></ion-back-button>
       </ion-buttons>
-      <ion-title>Placa Madre MSI PRO Z70 A MAX</ion-title>
+      <ion-title>placa placa-madre-msi-pro-z70-amax</ion-title>
     </ion-toolbar>
   </ion-header>
 
@@ -16,12 +16,14 @@
     </ion-header>
 
     <ion-card>
-      <img alt="Placa Madre MSI PRO Z70 A MAX"
-        src="https://media.spdigital.cl/thumbnails/products/mp6q6_y0_7308a861_thumbnail_512.jpg" />
-      <ion-card-header>
-        <ion-card-title>Placa Madre MSI PRO Z70 A MAX</ion-card-title>
-        <ion-card-subtitle>$298.080 CLP</ion-card-subtitle>
-      </ion-card-header>
+      <ion-router-link [routerLink]="['/placa-madre-msi-pro-z70-amax']">
+        <img alt="Placa Madre MSI PRO Z70 A MAX"
+          src="https://media.spdigital.cl/thumbnails/products/mp6q6_y0_7308a861_thumbnail_512.jpg" />
+        <ion-card-header>
+          <ion-card-title>Placa Madre MSI PRO Z70 A MAX</ion-card-title>
+          <ion-card-subtitle>$298.080 CLP</ion-card-subtitle>
+        </ion-card-header>
+      </ion-router-link>
       <ion-card-content>
         <p>
           La Placa Madre MSI PRO Z70 A MAX está diseñada para ofrecer una estabilidad excepcional y un rendimiento
@@ -29,7 +31,7 @@
           una excelente elección para cualquier construcción de PC.
         </p>
       </ion-card-content>
-      <ion-button expand="full" color="primary">Añadir al Carrito</ion-button>
+      <ion-button expand="full" color="primary" (click)="addToCart('Placa Madre MSI PRO Z70 A MAX', 298080, 'https://media.spdigital.cl/thumbnails/products/mp6q6_y0_7308a861_thumbnail_512.jpg')">Añadir al Carrito</ion-button>
     </ion-card>
   </ion-content>
 </div>
