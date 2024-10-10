@@ -24,6 +24,7 @@
     <ion-text color="danger" *ngIf="usernameInput.invalid && usernameInput.touched">
       <p>El nombre de usuario es obligatorio y solo puede contener letras.</p>
     </ion-text>
+    
     <ion-item>
       <ion-label position="floating">RUT</ion-label>
       <ion-input 
@@ -38,9 +39,17 @@
     <ion-text color="danger" *ngIf="rutInput.invalid && rutInput.touched">
       <p>Por favor, ingresa un RUT válido (Ej: 12345678-9 o 12345678-K).</p>
     </ion-text>
+
     <ion-item>
       <ion-label position="floating">Correo Electrónico</ion-label>
-      <ion-input type="email" [(ngModel)]="email" name="email" required email #emailInput="ngModel"></ion-input>
+      <ion-input 
+        type="email" 
+        [(ngModel)]="email" 
+        name="email" 
+        required 
+        email 
+        #emailInput="ngModel">
+      </ion-input>
     </ion-item>
     <ion-text color="danger" *ngIf="emailInput.invalid && emailInput.touched">
       <p>Por favor, ingresa un correo válido.</p>
@@ -70,8 +79,13 @@
 
     <ion-item>
       <ion-label position="floating">Repetir Contraseña</ion-label>
-      <ion-input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" required
-        #confirmPasswordInput="ngModel"></ion-input>
+      <ion-input 
+        type="password" 
+        [(ngModel)]="confirmPassword" 
+        name="confirmPassword" 
+        required
+        #confirmPasswordInput="ngModel">
+      </ion-input>
     </ion-item>
     <ion-text color="danger" *ngIf="confirmPasswordInput.invalid && confirmPasswordInput.touched">
       <p>Debes confirmar tu contraseña.</p>
@@ -83,9 +97,8 @@
 
     <button mat-raised-button class="custom-register-button" 
       type="submit" 
-     [disabled]="!registerForm.form.valid || !passwordsMatch()">
-     Registrarse
+      [disabled]="!registerForm.form.valid || !passwordsMatch()">
+      Registrarse
     </button>
   </form>
-
 </ion-content>

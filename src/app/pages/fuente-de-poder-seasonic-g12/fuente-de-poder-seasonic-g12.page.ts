@@ -8,18 +8,30 @@ import { ServicebdService } from 'src/app/services/servicebd.service'; // Import
 })
 export class FuenteDePoderSEASONICG12Page implements OnInit {
 
+  userId: number = 2; // Asegúrate de obtener el ID del usuario autenticado
+  quantity: number = 1; // Define la cantidad que deseas agregar
+
+  // Define los detalles del producto
+  id_producto: number = 18; // Reemplaza con el ID del producto real
+  nombreproducto: string = 'Fuente de Poder Seasonic G12-850GM'; // Nombre del producto
+  precio: number = 114.990; // Precio del producto
+  imagen: string = 'https://media.spdigital.cl/thumbnails/products/_bist34q_687bdc0d_thumbnail_512.png'; // Ruta de la imagen del producto
+
   constructor(private servicebd: ServicebdService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+  }
 
-  // Método para añadir la fuente Seasonic al carrito
+  // Método para añadir producto al carrito
   addToCart() {
     const product = {
-      nombreproducto: 'Seasonic G12-850GM 850W',
-      precio: 114990,
-      imagen: 'https://media.spdigital.cl/thumbnails/products/_bist34q_687bdc0d_thumbnail_512.png'
+      id_producto: this.id_producto,
+      nombreproducto: this.nombreproducto,
+      precio: this.precio,
+      imagen: this.imagen
     };
-    this.servicebd.addToCart(product).then(() => {
+    
+    this.servicebd.addToCart(this.userId, product.id_producto, this.quantity).then(() => {
       alert('Producto añadido al carrito');
     }).catch((error) => {
       console.error('Error al añadir producto al carrito', error);

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ServicebdService } from './services/servicebd.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor() {}
+  constructor(private servicebdService: ServicebdService) {
+    this.initializeApp();
+  }
+
+  async initializeApp() {
+    await this.servicebdService.createDatabase();
+  }
 }

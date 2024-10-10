@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="paginainicio"></ion-back-button>
     </ion-buttons>
-    <ion-title>Inicio de Sesion</ion-title>
+    <ion-title>Inicio de Sesión</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -11,7 +11,12 @@
   <form (ngSubmit)="onLogin(loginForm)" #loginForm="ngForm">
     <ion-item>
       <ion-label position="floating">Usuario</ion-label>
-      <ion-input type="text" [(ngModel)]="username" name="username" required pattern="^[a-zA-Z]+$"
+      <ion-input 
+        type="text" 
+        [(ngModel)]="username" 
+        name="username" 
+        required 
+        pattern="^[a-zA-Z]+$" 
         #usernameInput="ngModel">
       </ion-input>
     </ion-item>
@@ -27,7 +32,7 @@
         name="password" 
         required 
         minlength="8" 
-        pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%#*?&])[A-Za-z\d@$!%#*?&]{8,}$" 
+        pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%#_*?&])[A-Za-z\d@$!%#_*?&]{8,}$" 
         #passwordInput="ngModel">
       </ion-input>
     </ion-item>
@@ -45,11 +50,11 @@
       Entrar
     </button>
   </form>
+  
   <div class="extra-links">
     <ion-text>
       <a routerLink="/recuperarcontrasena">¿Olvidaste tu contraseña?</a>
     </ion-text>
-
     <ion-text>
       <a routerLink="/registro">¿No tienes una cuenta? Regístrate aquí</a>
     </ion-text>

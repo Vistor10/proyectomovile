@@ -1,3 +1,5 @@
+
+
 <div class="ion-page" id="main-content">
   <ion-header [translucent]="true">
     <ion-toolbar color="dark">
@@ -11,15 +13,15 @@
   <ion-content [fullscreen]="true" class="ion-padding">
     <ion-list>
       <!-- Mostrar productos del carrito -->
-      <ion-item *ngFor="let item of cartItems" class="cart-item">
-        <ion-thumbnail slot="start">
-          <img [src]="item.imagen" />
+      <ion-item *ngFor="let item of cartItems" class="cart-item" lines="none">
+        <ion-thumbnail slot="start" class="product-thumbnail">
+          <img [src]="item.imagen" alt="Imagen del producto" />
         </ion-thumbnail>
         <ion-label>
           <h2 class="product-name">{{ item.nombreproducto }}</h2>
           <p class="product-price">Precio: {{ item.precio | currency:'CLP' }}</p>
         </ion-label>
-        <ion-button fill="clear" color="danger" slot="end" (click)="removeFromCart(item.idproducto)">
+        <ion-button fill="clear" color="danger" slot="end" (click)="removeFromCart(item.id_producto)">
           Eliminar
         </ion-button>
       </ion-item>
@@ -31,7 +33,7 @@
         <ion-card-title>Total</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <h2 class="total-amount">{{ getTotal() | currency:'CLP' }}</h2> <!-- Mostrar total del carrito -->
+        <h2 class="total-amount">{{ getTotal() | currency:'CLP' }}</h2>
       </ion-card-content>
     </ion-card>
   </ion-content>

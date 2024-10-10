@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, ToastController } from '@ionic/angular';
 import { NgForm } from '@angular/forms';
+import { ServicebdService } from 'src/app/services/servicebd.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,11 @@ export class LoginPage implements OnInit {
   password: string = '';
   isAdmin: boolean = false;
 
-  constructor(private navCtrl: NavController, private toastController: ToastController) { }
+  constructor(
+    private navCtrl: NavController,
+    private toastController: ToastController,
+    private dbService: ServicebdService // Inyecta el servicio de base de datos
+  ) {}
 
   ngOnInit() {}
 
@@ -27,19 +32,26 @@ export class LoginPage implements OnInit {
 
   async onLogin(form: NgForm) {
     if (form.valid) {
-      console.log('Inicio de sesión con:', {
-        username: this.username,
-        password: this.password,
+      try {
+        // Validar el usuario con la base de datos usando el nombre de usuario
+        const user = await this.dbService.validarUsuario(this.username, this.password);
         
-      });
-      if (this.username === 'admin') {
-        this.isAdmin = true; 
-      } else {
-        this.isAdmin = false; 
+        if (user) {
+          // Si el usuario es admin (id_rol = 1), ajusta el flag de admin
+          this.isAdmin = user.id_rol === 1;
+          
+          // Guarda en localStorage si el usuario es admin
+          localStorage.setItem('isAdmin', this.isAdmin.toString());
+
+          this.presentToast(`Inicio de sesión exitoso. Bienvenido, ${this.username}!`);
+          this.navCtrl.navigateRoot('/paginainicio');
+        } else {
+          this.presentToast('Credenciales incorrectas. Por favor, intenta de nuevo.');
+        }
+      } catch (error) {
+        console.error('Error en el inicio de sesión', error);
+        this.presentToast('Error al iniciar sesión. Intenta nuevamente.');
       }
-      localStorage.setItem('isAdmin', this.isAdmin.toString());
-      this.presentToast(`Inicio de sesión exitoso. Bienvenido, ${this.username}!`);
-      this.navCtrl.navigateRoot('/paginainicio');
     } else {
       this.presentToast('Por favor, completa el formulario correctamente.');
     }

@@ -2,24 +2,19 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 
-
 const routes: Routes = [
   {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
-  },
-  {
     path: '',
-    redirectTo: 'paginainicio',
-    pathMatch: 'full'
+    redirectTo: 'login',
+    pathMatch: 'full' // Redirige a la ruta de login al inicio
   },
   {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   },
   {
-    path: 'paginainicio',
-    loadChildren: () => import('./pages/paginainicio/paginainicio.module').then( m => m.PaginainicioPageModule)
+    path: 'paginainicio', 
+    loadChildren: () => import('./pages/paginainicio/paginainicio.module').then(m => m.PaginainicioPageModule)
   },
   {
     path: 'gabinetes',

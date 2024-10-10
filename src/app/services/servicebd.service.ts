@@ -2,174 +2,328 @@ import { Injectable } from '@angular/core';
 import { SQLite, SQLiteObject } from '@awesome-cordova-plugins/sqlite/ngx';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ServicebdService {
-  public database!: SQLiteObject;
+  private databaseObj: SQLiteObject | null = null; // Inicializar como null
+  readonly db_name: string = "gadgetzone_db.db";
+  readonly table_rol: string = "rol";
+  readonly table_usuario: string = "usuario";
+  readonly table_categoria: string = "categoria";
+  readonly table_producto: string = "producto";
+  readonly table_carrito: string = "carrito";
 
-  // Definición de tablas
-  tablaRol: string = `CREATE TABLE IF NOT EXISTS rol (
-    idrol INTEGER PRIMARY KEY AUTOINCREMENT, 
-    nombrerol VARCHAR(100) NOT NULL
-  );`;
+  constructor(private sqlite: SQLite) { }
 
-  tablaEstado: string = `CREATE TABLE IF NOT EXISTS estado (
-    idestado INTEGER PRIMARY KEY AUTOINCREMENT, 
-    nombre VARCHAR(50) NOT NULL
-  );`;
-
-  tablaCategoria: string = `CREATE TABLE IF NOT EXISTS categoria (
-    idcategoria INTEGER PRIMARY KEY AUTOINCREMENT, 
-    nombrecat VARCHAR(100) NOT NULL
-  );`;
-
-  tablaUsuario: string = `CREATE TABLE IF NOT EXISTS usuario (
-    iduser INTEGER PRIMARY KEY AUTOINCREMENT, 
-    rut VARCHAR(20) NOT NULL, 
-    nombres VARCHAR(30) NOT NULL, 
-    correo VARCHAR(30) NOT NULL
-  );`;
-
-  tablaVenta: string = `CREATE TABLE IF NOT EXISTS venta (
-    idventa INTEGER PRIMARY KEY AUTOINCREMENT, 
-    fecventa DATE NOT NULL, 
-    total INTEGER NOT NULL
-  );`;
-
-  tablaProducto: string = `CREATE TABLE IF NOT EXISTS producto (
-    idproducto INTEGER PRIMARY KEY AUTOINCREMENT, 
-    nombreproducto VARCHAR(100) NOT NULL, 
-    categoria VARCHAR(50) NOT NULL, 
-    descripcion TEXT NOT NULL, 
-    precio INTEGER
-  );`;
-
-  tablaDetalle: string = `CREATE TABLE IF NOT EXISTS detalle (
-    iddetalle INTEGER PRIMARY KEY AUTOINCREMENT, 
-    cantidad INTEGER NOT NULL, 
-    subtotal INTEGER NOT NULL
-  );`;
-
-  tablaResena: string = `CREATE TABLE IF NOT EXISTS resena (
-    idresena INTEGER PRIMARY KEY AUTOINCREMENT, 
-    descripcion TEXT NOT NULL, 
-    puntos INTEGER NOT NULL, 
-    fecresena DATE NOT NULL
-  );`;
-
-  // Tabla para gestionar el carrito de compras
-  tablaCarrito: string = `CREATE TABLE IF NOT EXISTS carrito (
-    idproducto INTEGER PRIMARY KEY AUTOINCREMENT, 
-    nombreproducto VARCHAR(100) NOT NULL, 
-    precio INTEGER NOT NULL, 
-    imagen TEXT NOT NULL
-  );`;
-
-  // Variables de insert en las tablas de registro iniciales
-  registroRol: string = `INSERT OR IGNORE INTO rol (idrol, nombrerol) VALUES (1, 'Administrador');`;
-  registroRol1: string = `INSERT OR IGNORE INTO rol (idrol, nombrerol) VALUES (2, 'Cliente');`;
-  registroCategoria: string = `INSERT OR IGNORE INTO categoria (idcategoria, nombrecat) VALUES (1, 'Gabinetes');`;
-  registroCategoria1: string = `INSERT OR IGNORE INTO categoria (idcategoria, nombrecat) VALUES (2, 'Teclados');`;
-  registroCategoria2: string = `INSERT OR IGNORE INTO categoria (idcategoria, nombrecat) VALUES (3, 'Audífonos gamer');`;
-  registroCategoria3: string = `INSERT OR IGNORE INTO categoria (idcategoria, nombrecat) VALUES (4, 'Placas madre');`;
-  registroCategoria4: string = `INSERT OR IGNORE INTO categoria (idcategoria, nombrecat) VALUES (5, 'Fuentes de poder');`;
-  registroCategoria5: string = `INSERT OR IGNORE INTO categoria (idcategoria, nombrecat) VALUES (6, 'Memorias RAM');`;
-  registroCategoria6: string = `INSERT OR IGNORE INTO categoria (idcategoria, nombrecat) VALUES (7, 'Procesadores');`;
-  registroCategoria7: string = `INSERT OR IGNORE INTO categoria (idcategoria, nombrecat) VALUES (8, 'Tarjetas de video');`;
-  registroCategoria8: string = `INSERT OR IGNORE INTO categoria (idcategoria, nombrecat) VALUES (9, 'Monitores');`;
-  registroUsuario: string = `INSERT OR IGNORE INTO usuario (iduser, rut, nombres, correo) VALUES (1, '123456789', 'Josefa', 'jose@gmail.cl');`;
-
-  constructor(private sqlite: SQLite) { 
-    this.initializeDatabase();
-  }
-
-  // Inicializar la base de datos y crear tablas
-  async initializeDatabase() {
+  // Crear o abrir la base de datos
+  async createDatabase() {
     try {
-      this.database = await this.sqlite.create({
-        name: 'gadgetzone.db', // Nombre de la base de datos
-        location: 'default' // Ubicación de la base de datos
-      });
-
-      // Crear tablas
-      await this.database.executeSql(this.tablaRol, []);
-      await this.database.executeSql(this.tablaEstado, []);
-      await this.database.executeSql(this.tablaCategoria, []);
-      await this.database.executeSql(this.tablaUsuario, []);
-      await this.database.executeSql(this.tablaVenta, []);
-      await this.database.executeSql(this.tablaProducto, []);
-      await this.database.executeSql(this.tablaDetalle, []);
-      await this.database.executeSql(this.tablaResena, []);
-      await this.database.executeSql(this.tablaCarrito, []); // Crear tabla del carrito
-
-      // Ejecutar inserts iniciales
-      await this.database.executeSql(this.registroRol, []);
-      await this.database.executeSql(this.registroRol1, []);
-      await this.database.executeSql(this.registroCategoria, []);
-      await this.database.executeSql(this.registroCategoria1, []);
-      await this.database.executeSql(this.registroCategoria2, []);
-      await this.database.executeSql(this.registroCategoria3, []);
-      await this.database.executeSql(this.registroCategoria4, []);
-      await this.database.executeSql(this.registroCategoria5, []);
-      await this.database.executeSql(this.registroCategoria6, []);
-      await this.database.executeSql(this.registroCategoria7, []);
-      await this.database.executeSql(this.registroCategoria8, []);
-      await this.database.executeSql(this.registroUsuario, []);
-
-      console.log('Tablas y registros iniciales creados con éxito');
-      
-    } catch (error) {
-      console.error('Error al inicializar la base de datos', error);
-    }
-  }
-
-  // Método para insertar productos en el carrito
-  async addToCart(producto: any) {
-    const query = `INSERT INTO carrito (nombreproducto, precio, imagen) VALUES (?, ?, ?)`;
-    const values = [producto.nombreproducto, producto.precio, producto.imagen];
-    try {
-      await this.database.executeSql(query, values);
-      console.log('Producto añadido al carrito');
-    } catch (error) {
-      console.error('Error al añadir producto al carrito', error);
-    }
-  }
-
-  // Método para obtener productos del carrito
-  async getCartItems() {
-    const query = `SELECT * FROM carrito`;
-    try {
-      const result = await this.database.executeSql(query, []);
-      let cartItems = [];
-      for (let i = 0; i < result.rows.length; i++) {
-        cartItems.push(result.rows.item(i));
+      if (!this.databaseObj) {
+        this.databaseObj = await this.sqlite.create({
+          name: this.db_name,
+          location: 'default',
+        });
+        console.log('Database created/opened');
       }
-      return cartItems;
-    } catch (error) {
-      console.error('Error al obtener productos del carrito', error);
+      await this.createTables();  // Crear las tablas después de abrir la base de datos
+      await this.createInitialData();  // Insertar los roles iniciales y el usuario admin
+      await this.createInitialCategories(); // Insertar categorías iniciales
+      await this.createInitialProducts();   // Insertar productos iniciales
+    } catch (e) {
+      console.error("Error creating/opening database", e);
+    }
+  }
+
+  // Crear las tablas
+  async createTables() {
+    try {
+      if (this.databaseObj) {
+        // Crear tabla rol
+        await this.databaseObj.executeSql(`CREATE TABLE IF NOT EXISTS ${this.table_rol} (id_rol INTEGER PRIMARY KEY AUTOINCREMENT, nombre_rol TEXT UNIQUE);`, []);
+
+        // Crear tabla usuario
+        await this.databaseObj.executeSql(`CREATE TABLE IF NOT EXISTS ${this.table_usuario} (id_usuario INTEGER PRIMARY KEY AUTOINCREMENT, nombre_usuario TEXT, correo TEXT UNIQUE, contraseña TEXT, id_rol INTEGER, FOREIGN KEY (id_rol) REFERENCES ${this.table_rol}(id_rol));`, []);
+
+        // Crear tabla categoría
+        await this.databaseObj.executeSql(`CREATE TABLE IF NOT EXISTS ${this.table_categoria} (id_categoria INTEGER PRIMARY KEY AUTOINCREMENT, nombre_categoria TEXT UNIQUE);`, []);
+
+        // Crear tabla producto
+        await this.databaseObj.executeSql(`CREATE TABLE IF NOT EXISTS ${this.table_producto} (id_producto INTEGER PRIMARY KEY AUTOINCREMENT, nombre_producto TEXT, precio REAL, stock INTEGER, id_categoria INTEGER, FOREIGN KEY (id_categoria) REFERENCES ${this.table_categoria}(id_categoria));`, []);
+
+        // Crear tabla carrito
+        await this.databaseObj.executeSql(`CREATE TABLE IF NOT EXISTS ${this.table_carrito} (id_carrito INTEGER PRIMARY KEY AUTOINCREMENT, id_usuario INTEGER, id_producto INTEGER, cantidad INTEGER, total REAL, FOREIGN KEY (id_usuario) REFERENCES ${this.table_usuario}(id_usuario), FOREIGN KEY (id_producto) REFERENCES ${this.table_producto}(id_producto));`, []);
+
+        console.log('Tables created');
+      } else {
+        console.error("Database object is not initialized.");
+      }
+    } catch (e) {
+      console.error('Error creating tables', e);
+    }
+  }
+
+  // Método para insertar datos iniciales
+  async createInitialData() {
+    try {
+      if (this.databaseObj) {
+        // Insert roles
+        await this.addRole('admin');
+        await this.addRole('usuario');
+
+        // Insert admin user with predefined credentials
+        const hashedPassword = '#Ff12345678'; // Puedes implementar hashing para mejor seguridad
+        await this.addUser('admin', 'admin@admin.com', hashedPassword, 1); // '1' refiere al rol admin
+        console.log('Initial roles and admin user created');
+      } else {
+        console.error("Database object is not initialized.");
+      }
+    } catch (e) {
+      console.error('Error creating initial data', e);
+    }
+  }
+
+  // Método para insertar categorías iniciales
+  async createInitialCategories() {
+    try {
+      if (this.databaseObj) {
+        await this.addCategory('Teclados');
+        await this.addCategory('Gabinetes');
+        await this.addCategory('Audifonos Gamer');
+        await this.addCategory('Placas Madre');
+        await this.addCategory('Fuentes de Poder');
+        await this.addCategory('Memorias RAM');
+        await this.addCategory('Procesadores');
+        await this.addCategory('Tarjetas de Video');
+        await this.addCategory('Monitores');
+        console.log('Initial categories created');
+      } else {
+        console.error("Database object is not initialized.");
+      }
+    } catch (e) {
+      console.error('Error creating initial categories', e);
+    }
+  }
+
+  // Método para insertar productos iniciales
+  async createInitialProducts() {
+    try {
+      if (this.databaseObj) {
+        // Asumir que la categoría 'Teclados' tiene id_categoria = 1
+        await this.addProduct('Teclado Gamer Razer Huntsman Mini', 109990, 10, 1);
+        await this.addProduct('Teclado Gamer Razer Blackwidow V4', 239000, 10, 1);
+        await this.addProduct('Teclado Gamer Cougar Attack X3', 95990, 10, 1);
+        await this.addProduct('Teclado Gamer LOGITECH G213 Prodigy', 53780, 10, 1);
+
+        // Asumir que la categoría 'Gabinetes' tiene id_categoria = 2
+        await this.addProduct('Gabinete Corsair iCue 4000X', 119000, 10, 2);
+        await this.addProduct('Gabinete Kolink Void RGB', 49570, 10, 2);
+        await this.addProduct('Gabinete Aerocool Shard', 89990, 10, 2);
+        await this.addProduct('Gabinete Cooler Master CMP 520', 64490, 10, 2);
+
+        // Asumir que la categoría 'Audífonos Gamer' tiene id_categoria = 3
+        await this.addProduct('Audífonos Gamer Razer Kraken Kitty Quartz', 129990, 10, 3);
+        await this.addProduct('Audífonos Gamer HyperX Cloud Stinger 2', 114150, 10, 3);
+        await this.addProduct('Audífonos Gamer HyperX Cloud 3', 63990, 10, 3);
+        await this.addProduct('Audífonos Gamer Logitech G335', 59990, 10, 3);
+
+        // Asumir que la categoría 'Placas Madre' tiene id_categoria = 4
+        await this.addProduct('Placa Madre MSI A520 M-A PRO', 61990, 10, 4);
+        await this.addProduct('Placa Madre Gigabyte AORUX Elite AX', 342090, 10, 4);
+        await this.addProduct('Placa Madre MSI PRO Z70 A MAX', 298080, 10, 4);
+        await this.addProduct('Placa Madre Gigabyte Z790 UD', 270460, 10, 4);
+
+        // Asumir que la categoría 'Fuentes de Poder' tiene id_categoria = 5
+        await this.addProduct('Fuente de Poder VERTEX PX-1000', 254990, 10, 5);
+        await this.addProduct('Fuente de Poder Seasonic G12-850GM', 114990, 10, 5);
+        await this.addProduct('Fuente de Poder Thermaltake Smart 700W', 64990, 10, 5);
+        await this.addProduct('Fuente de Poder CLIO ATX-700', 51040, 10, 5);
+
+        // Asumir que la categoría 'Memorias RAM' tiene id_categoria = 6
+        await this.addProduct('Memoria Ram Kingston FURY Renegade', 414990, 10, 6);
+        await this.addProduct('Memoria Ram DDR4 XPG SPECTRIX D35G', 38990, 10, 6);
+        await this.addProduct('Memoria Ram DDR4 Kingston FURY Beast', 99990, 10, 6);
+        await this.addProduct('Memoria Ram DDR4 Corsair Vengeance', 25990, 10, 6);
+
+        // Asumir que la categoría 'Procesadores' tiene id_categoria = 7
+        await this.addProduct('Procesador AMD Ryzen™ 7 5800XT', 399990, 10, 7);
+        await this.addProduct('Procesador Intel® Core™ i5-10400', 162770, 10, 7);
+        await this.addProduct('Procesador Intel® Core™ i9-14900', 914560, 10, 7);
+        await this.addProduct('Procesador AMD Ryzen™ 7 8700G', 514990, 10, 7);
+
+        // Asumir que la categoría 'Tarjetas de Video' tiene id_categoria = 7
+        await this.addProduct('ASUS Dual Nvidia GeForce RTX 4070', 899990, 10, 7);
+        await this.addProduct('Gigabyte Nvidia GeForce RTX 4070 Ti', 1049990, 10, 7);
+        await this.addProduct('Zotac Gaming Nvidia GeForce RTX 4070 Ti', 1063654, 10, 7);
+        await this.addProduct('ASUS TUF Nvidia GeForce RTX 4080 SUPER', 1399990, 10, 7);
+
+        // Asumir que la categoría 'Monitores' tiene id_categoria = 9
+        await this.addProduct('Monitor Samsung Odyssey G6 32', 599000, 10, 9);
+        await this.addProduct('Monitor Ultrawide Curvo LG 32', 470750, 10, 9);
+        await this.addProduct('Monitor Curvo Samsung Odyssey G95C 49', 991250, 10, 9);
+        await this.addProduct('Monitor Gamer Curvo MSI 49', 1257180, 10, 9);
+
+        console.log('Initial products created');
+      } else {
+        console.error("Database object is not initialized.");
+      }
+    } catch (e) {
+      console.error('Error creating initial products', e);
+    }
+  }
+
+
+
+  // Método para insertar datos en la tabla rol
+  async addRole(nombre_rol: string) {
+    try {
+      if (this.databaseObj) {
+        await this.databaseObj.executeSql(`INSERT INTO ${this.table_rol} (nombre_rol) VALUES (?)`, [nombre_rol]);
+        console.log('Role added');
+      } else {
+        console.error("Database object is not initialized.");
+      }
+    } catch (e) {
+      console.error('Error adding role', e);
+    }
+  }
+
+  // Método para insertar datos en la tabla usuario
+  async addUser(nombre_usuario: string, correo: string, contraseña: string, id_rol: number) {
+    try {
+      if (this.databaseObj) {
+        await this.databaseObj.executeSql(`INSERT INTO ${this.table_usuario} (nombre_usuario, correo, contraseña, id_rol) VALUES (?, ?, ?, ?)`, [nombre_usuario, correo, contraseña, id_rol]);
+        console.log('User added');
+      } else {
+        console.error("Database object is not initialized.");
+      }
+    } catch (e) {
+      console.error('Error adding user', e);
+    }
+  }
+
+  // Método para insertar datos en la tabla categoría
+  async addCategory(nombre_categoria: string) {
+    try {
+      if (this.databaseObj) {
+        await this.databaseObj.executeSql(`INSERT INTO ${this.table_categoria} (nombre_categoria) VALUES (?)`, [nombre_categoria]);
+        console.log('Category added');
+      } else {
+        console.error("Database object is not initialized.");
+      }
+    } catch (e) {
+      console.error('Error adding category', e);
+    }
+  }
+
+  // Método para insertar datos en la tabla producto
+  async addProduct(nombre_producto: string, precio: number, stock: number, id_categoria: number) {
+    try {
+      if (this.databaseObj) {
+        await this.databaseObj.executeSql(`INSERT INTO ${this.table_producto} (nombre_producto, precio, stock, id_categoria) VALUES (?, ?, ?, ?)`, [nombre_producto, precio, stock, id_categoria]);
+        console.log('Product added');
+      } else {
+        console.error("Database object is not initialized.");
+      }
+    } catch (e) {
+      console.error('Error adding product', e);
+    }
+  }
+
+  // Validar usuario para el login
+  async validarUsuario(nombre_usuario: string, contraseña: string): Promise<any> {
+    try {
+      if (this.databaseObj) {
+        const res = await this.databaseObj.executeSql(`SELECT * FROM ${this.table_usuario} WHERE nombre_usuario = ? AND contraseña = ?`, [nombre_usuario, contraseña]);
+
+        if (res.rows.length > 0) {
+          return res.rows.item(0); // Usuario encontrado
+        }
+        return null; // Usuario no encontrado
+      } else {
+        console.error("Database object is not initialized.");
+      }
+    } catch (e) {
+      console.error('Error validando usuario', e);
+      return null;
+    }
+  }
+
+  // Método para agregar productos al carrito
+  async addToCart(userId: number, productId: number, quantity: number) {
+    try {
+      if (this.databaseObj) {
+        const product = await this.getProductById(productId);
+        if (product) {
+          const total = product.precio * quantity;
+          await this.databaseObj.executeSql(`INSERT INTO ${this.table_carrito} (id_usuario, id_producto, cantidad, total) VALUES (?, ?, ?, ?)`, [userId, productId, quantity, total]);
+          console.log('Producto agregado al carrito');
+        } else {
+          console.error('Producto no encontrado');
+        }
+      } else {
+        console.error("Database object is not initialized.");
+      }
+    } catch (e) {
+      console.error('Error adding product to cart', e);
+    }
+  }
+  // Método para eliminar productos del carrito
+async removeFromCart(userId: number, productId: number) {
+  try {
+    if (this.databaseObj) {
+      // Eliminar el producto del carrito donde coincidan el ID del usuario y el ID del producto
+      const result = await this.databaseObj.executeSql(
+        `DELETE FROM ${this.table_carrito} WHERE id_usuario = ? AND id_producto = ?`,
+        [userId, productId]
+      );
+
+      if (result.rowsAffected > 0) {
+        console.log('Producto eliminado del carrito');
+      } else {
+        console.log('No se encontró el producto en el carrito');
+      }
+    } else {
+      console.error("Database object is not initialized.");
+    }
+  } catch (e) {
+    console.error('Error removing product from cart', e);
+  }
+}
+  
+
+  // Método para obtener un producto por ID
+  async getProductById(productId: number): Promise<any> {
+    try {
+      if (this.databaseObj) {
+        const res = await this.databaseObj.executeSql(`SELECT * FROM ${this.table_producto} WHERE id_producto = ?`, [productId]);
+        return res.rows.length > 0 ? res.rows.item(0) : null; // Devuelve el producto si se encuentra
+      } else {
+        console.error("Database object is not initialized.");
+        return null;
+      }
+    } catch (e) {
+      console.error('Error getting product by ID', e);
+      return null;
+    }
+  }
+
+  // Método para obtener los productos del carrito
+  async getCartItems(userId: number): Promise<any[]> {
+    try {
+      if (this.databaseObj) {
+        const res = await this.databaseObj.executeSql(`SELECT c.*, p.nombre_producto, p.precio FROM ${this.table_carrito} c JOIN ${this.table_producto} p ON c.id_producto = p.id_producto WHERE c.id_usuario = ?`, [userId]);
+        let cartItems = [];
+        for (let i = 0; i < res.rows.length; i++) {
+          cartItems.push(res.rows.item(i));
+        }
+        return cartItems;
+      } else {
+        console.error("Database object is not initialized.");
+        return [];
+      }
+    } catch (e) {
+      console.error('Error getting cart items', e);
       return [];
-    }
-  }
-
-  // Método para eliminar un producto del carrito
-  async removeFromCart(idproducto: number) {
-    const query = `DELETE FROM carrito WHERE idproducto = ?`;
-    try {
-      await this.database.executeSql(query, [idproducto]);
-      console.log('Producto eliminado del carrito');
-    } catch (error) {
-      console.error('Error al eliminar producto del carrito', error);
-    }
-  }
-
-  // Método para vaciar el carrito
-  async clearCart() {
-    const query = `DELETE FROM carrito`;
-    try {
-      await this.database.executeSql(query, []);
-      console.log('Carrito vacío');
-    } catch (error) {
-      console.error('Error al vaciar el carrito', error);
     }
   }
 }
