@@ -3,12 +3,13 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/paginainicio"></ion-back-button>
     </ion-buttons>
-    <ion-title>Ingrese sus datos de envio</ion-title>
+    <ion-title>Ingrese sus datos de envío</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" color="dark" class="ion-padding">
-  <form (ngSubmit)="onSubmit()" #purchaseForm="ngForm">    
+  <form (ngSubmit)="onSubmit()" #purchaseForm="ngForm">
+    
     <ion-item>
       <ion-label position="floating">Nombre del destinatario</ion-label>
       <ion-input 
@@ -22,8 +23,9 @@
     <ion-text color="danger" *ngIf="recipientNameInput.invalid && recipientNameInput.touched">
       <p>Por favor, ingresa el nombre del destinatario.</p>
     </ion-text>
+    
     <ion-item>
-      <ion-label position="floating">Dirección(Calle y numero)</ion-label>
+      <ion-label position="floating">Dirección (Calle y número)</ion-label>
       <ion-input 
         type="text" 
         [(ngModel)]="address" 
@@ -35,6 +37,11 @@
     <ion-text color="danger" *ngIf="addressInput.invalid && addressInput.touched">
       <p>Por favor, ingresa tu dirección.</p>
     </ion-text>
+
+    <ion-button expand="block" (click)="getCurrentLocation()">
+      Usar mi ubicación actual
+    </ion-button>
+    
     <ion-item>
       <ion-label position="floating">Ciudad</ion-label>
       <ion-input 
@@ -48,9 +55,11 @@
     <ion-text color="danger" *ngIf="cityInput.invalid && cityInput.touched">
       <p>Por favor, ingresa tu ciudad.</p>
     </ion-text>
+
+    <!-- Botón para enviar el formulario -->
     <ion-button expand="block" type="submit" [disabled]="!purchaseForm.form.valid">
       Ir a pagar
     </ion-button>
-    
+
   </form>
 </ion-content>
