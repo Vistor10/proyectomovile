@@ -75,10 +75,10 @@ export class ServicebdService {
         await this.addUser('admin', 'admin@admin.com', hashedPassword, 1); // '1' refiere al rol admin
         console.log('Initial roles and admin user created');
       } else {
-        console.error("Database object is not initialized.");
+        console.error("Database object no fue inicializada.");
       }
     } catch (e) {
-      console.error('Error creating initial data', e);
+      console.error('Error creando el data inicial', e);
     }
   }
 
@@ -97,10 +97,10 @@ export class ServicebdService {
         await this.addCategory('Monitores');
         console.log('Initial categories created');
       } else {
-        console.error("Database object is not initialized.");
+        console.error("Database object no fue inicializada.");
       }
     } catch (e) {
-      console.error('Error creating initial categories', e);
+      console.error('Error creando la categoría inicial', e);
     }
   }
 
@@ -164,10 +164,10 @@ export class ServicebdService {
 
         console.log('Initial products created');
       } else {
-        console.error("Database object is not initialized.");
+        console.error("Database object no fue inicializada.");
       }
     } catch (e) {
-      console.error('Error creating initial products', e);
+      console.error('Error creando los productos iniciales', e);
     }
   }
 
@@ -178,12 +178,12 @@ export class ServicebdService {
     try {
       if (this.databaseObj) {
         await this.databaseObj.executeSql(`INSERT INTO ${this.table_rol} (nombre_rol) VALUES (?)`, [nombre_rol]);
-        console.log('Role added');
+        console.log('Role agregado');
       } else {
-        console.error("Database object is not initialized.");
+        console.error("Database object no fue inicializada.");
       }
     } catch (e) {
-      console.error('Error adding role', e);
+      console.error('Error anadiendo el rol', e);
     }
   }
 
@@ -192,12 +192,12 @@ export class ServicebdService {
     try {
       if (this.databaseObj) {
         await this.databaseObj.executeSql(`INSERT INTO ${this.table_usuario} (nombre_usuario, correo, contraseña, id_rol) VALUES (?, ?, ?, ?)`, [nombre_usuario, correo, contraseña, id_rol]);
-        console.log('User added');
+        console.log('Usuario agregado');
       } else {
-        console.error("Database object is not initialized.");
+        console.error("Database object no fue inicializada.");
       }
     } catch (e) {
-      console.error('Error adding user', e);
+      console.error('Error anadiendo al usuario', e);
     }
   }
 
@@ -206,12 +206,12 @@ export class ServicebdService {
     try {
       if (this.databaseObj) {
         await this.databaseObj.executeSql(`INSERT INTO ${this.table_categoria} (nombre_categoria) VALUES (?)`, [nombre_categoria]);
-        console.log('Category added');
+        console.log('Category anadida');
       } else {
-        console.error("Database object is not initialized.");
+        console.error("Database object no fue inicializada.");
       }
     } catch (e) {
-      console.error('Error adding category', e);
+      console.error('Error anadiendo la categoria', e);
     }
   }
 
@@ -222,10 +222,10 @@ export class ServicebdService {
         await this.databaseObj.executeSql(`INSERT INTO ${this.table_producto} (nombre_producto, precio, stock, id_categoria) VALUES (?, ?, ?, ?)`, [nombre_producto, precio, stock, id_categoria]);
         console.log('Product added');
       } else {
-        console.error("Database object is not initialized.");
+        console.error("Database object no fue inicializada.");
       }
     } catch (e) {
-      console.error('Error adding product', e);
+      console.error('Error anadiendo el producto', e);
     }
   }
 
@@ -240,7 +240,7 @@ export class ServicebdService {
         }
         return null; // Usuario no encontrado
       } else {
-        console.error("Database object is not initialized.");
+        console.error("la base de datos no fue inicializada.");
       }
     } catch (e) {
       console.error('Error validando usuario', e);
@@ -248,26 +248,94 @@ export class ServicebdService {
     }
   }
 
-  // Método para agregar productos al carrito
-  async addToCart(userId: number, productId: number, quantity: number) {
-    try {
-      if (this.databaseObj) {
-        const product = await this.getProductById(productId);
-        if (product) {
-          const total = product.precio * quantity;
-          await this.databaseObj.executeSql(`INSERT INTO ${this.table_carrito} (id_usuario, id_producto, cantidad, total) VALUES (?, ?, ?, ?)`, [userId, productId, quantity, total]);
-          console.log('Producto agregado al carrito');
+ // Método para agregar productos al carrito
+ async addToCart(userId: number, productId: number, quantity: number) {
+  try {
+    if (this.databaseObj) {
+      const product = await this.getProductById(productId);
+      if (product) {
+        const total = product.precio * quantity;
+        
+        // Verificar si el producto ya está en el carrito
+        const existingItem = await this.getCartItem(userId, productId);
+        if (existingItem) {
+          // Si ya existe, actualizar la cantidad
+          const newQuantity = existingItem.cantidad + quantity;
+          await this.updateCartItem(userId, productId, newQuantity);
+          console.log('Cantidad actualizada en el carrito');
         } else {
-          console.error('Producto no encontrado');
+          // Si no existe, agregarlo al carrito
+          await this.databaseObj.executeSql(
+            `INSERT INTO ${this.table_carrito} (id_usuario, id_producto, cantidad, total) VALUES (?, ?, ?, ?)`,
+            [userId, productId, quantity, total]
+          );
+          console.log('Producto agregado al carrito');
         }
       } else {
-        console.error("Database object is not initialized.");
+        console.error('Producto no encontrado');
       }
-    } catch (e) {
-      console.error('Error adding product to cart', e);
+    } else {
+      console.error("Database object no fue inicializada.");
     }
+  } catch (e) {
+    console.error('Error añadiendo el producto', e);
   }
-  // Método para eliminar productos del carrito
+}
+
+// Método para obtener un producto por ID
+async getProductById(productId: number): Promise<any> {
+  try {
+    if (this.databaseObj) {
+      const res = await this.databaseObj.executeSql(
+        `SELECT * FROM ${this.table_producto} WHERE id_producto = ?`,
+        [productId]
+      );
+      return res.rows.length > 0 ? res.rows.item(0) : null; // Devuelve el producto si se encuentra
+    } else {
+      console.error("Database object no fue inicializada.");
+      return null;
+    }
+  } catch (e) {
+    console.error('Error encontrando el producto por id', e);
+    return null;
+  }
+}
+
+// Método para obtener un item específico del carrito
+async getCartItem(userId: number, productId: number): Promise<any> {
+  try {
+    if (this.databaseObj) {
+      const res = await this.databaseObj.executeSql(
+        `SELECT * FROM ${this.table_carrito} WHERE id_usuario = ? AND id_producto = ?`,
+        [userId, productId]
+      );
+      return res.rows.length > 0 ? res.rows.item(0) : null; // Devuelve el item si se encuentra
+    } else {
+      console.error("Database object no fue inicializada.");
+      return null;
+    }
+  } catch (e) {
+    console.error('Error encontrando el item del carrito', e);
+    return null;
+  }
+}
+
+// Método para actualizar la cantidad de un producto en el carrito
+async updateCartItem(userId: number, productId: number, quantity: number): Promise<void> {
+  try {
+    if (this.databaseObj) {
+      const query = `UPDATE ${this.table_carrito} SET cantidad = ? WHERE id_usuario = ? AND id_producto = ?`;
+      await this.databaseObj.executeSql(query, [quantity, userId, productId]);
+      console.log('Cantidad actualizada en el carrito');
+    } else {
+      console.error("Database object no fue inicializada.");
+    }
+  } catch (e) {
+    console.error('Error actualizando la cantidad del carrito', e);
+  }
+}
+
+// Método para eliminar productos del carrito
 async removeFromCart(userId: number, productId: number) {
   try {
     if (this.databaseObj) {
@@ -283,47 +351,33 @@ async removeFromCart(userId: number, productId: number) {
         console.log('No se encontró el producto en el carrito');
       }
     } else {
-      console.error("Database object is not initialized.");
+      console.error("Database object no fue inicializada.");
     }
   } catch (e) {
-    console.error('Error removing product from cart', e);
+    console.error('Error eliminando el producto del carrito', e);
   }
 }
-  
 
-  // Método para obtener un producto por ID
-  async getProductById(productId: number): Promise<any> {
-    try {
-      if (this.databaseObj) {
-        const res = await this.databaseObj.executeSql(`SELECT * FROM ${this.table_producto} WHERE id_producto = ?`, [productId]);
-        return res.rows.length > 0 ? res.rows.item(0) : null; // Devuelve el producto si se encuentra
-      } else {
-        console.error("Database object is not initialized.");
-        return null;
+// Método para obtener los productos del carrito
+async getCartItems(userId: number): Promise<any[]> {
+  try {
+    if (this.databaseObj) {
+      const res = await this.databaseObj.executeSql(
+        `SELECT c.*, p.nombre_producto, p.precio FROM ${this.table_carrito} c JOIN ${this.table_producto} p ON c.id_producto = p.id_producto WHERE c.id_usuario = ?`,
+        [userId]
+      );
+      let cartItems = [];
+      for (let i = 0; i < res.rows.length; i++) {
+        cartItems.push(res.rows.item(i));
       }
-    } catch (e) {
-      console.error('Error getting product by ID', e);
-      return null;
-    }
-  }
-
-  // Método para obtener los productos del carrito
-  async getCartItems(userId: number): Promise<any[]> {
-    try {
-      if (this.databaseObj) {
-        const res = await this.databaseObj.executeSql(`SELECT c.*, p.nombre_producto, p.precio FROM ${this.table_carrito} c JOIN ${this.table_producto} p ON c.id_producto = p.id_producto WHERE c.id_usuario = ?`, [userId]);
-        let cartItems = [];
-        for (let i = 0; i < res.rows.length; i++) {
-          cartItems.push(res.rows.item(i));
-        }
-        return cartItems;
-      } else {
-        console.error("Database object is not initialized.");
-        return [];
-      }
-    } catch (e) {
-      console.error('Error getting cart items', e);
+      return cartItems;
+    } else {
+      console.error("Database object no fue inicializada.");
       return [];
     }
+  } catch (e) {
+    console.error('Error encontrando el item del carrito', e);
+    return [];
   }
+}
 }

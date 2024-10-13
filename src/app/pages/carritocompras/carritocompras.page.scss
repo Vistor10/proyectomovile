@@ -1,39 +1,119 @@
+/* Fondo negro para todo el contenido */
+ion-content {
+  --background: #000; /* Fondo negro */
+}
+
+/* Estilo para los ítems del carrito */
 .cart-item {
   background-color: #f9f9f9;
   border-radius: 10px;
   margin-bottom: 15px;
   padding: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  min-height: 120px; /* Aumentar el tamaño mínimo del card */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
+/* Imagen más grande */
 .product-thumbnail {
-  width: 80px;
-  height: 80px; /* Tamaño más grande de las imágenes */
+  width: 70px;
+  height: 70px;
 }
 
+/* Estilo del bloque de información del producto */
+.product-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 10px;
+  flex-grow: 1;
+}
+
+/* Ajuste del tamaño del botón de Eliminar */
+.remove-btn {
+  --padding: 4px 8px; /* Reduce el padding del botón */
+  font-size: 0.8rem; /* Tamaño de fuente más pequeño */
+  height: 30px; /* Altura del botón */
+  width: 80px; /* Ancho ajustado del botón */
+  text-align: center; /* Alineación del texto */
+}
+
+/* Nombre del producto más visible */
 .product-name {
-  font-size: 1.4rem; /* Aumentar el tamaño del nombre del producto */
-  font-weight: bold;
-  color: #333; /* Mejor visibilidad */
-  margin-bottom: 5px; /* Separar el nombre del precio */
-}
-
-.product-price {
-  color: #666;
   font-size: 1.2rem;
-}
-
-.total-card {
-  margin-top: 20px;
-  padding: 20px;
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.total-amount {
-  font-size: 1.6rem;
   font-weight: bold;
-  color: red;
+  color: #fff; /* Mejor visibilidad en el fondo negro */
+  margin-bottom: 5px;
+}
+
+/* Precio del producto */
+.product-price {
+  color: #bbb; /* Ajuste de color para contraste en fondo oscuro */
+  font-size: 1.1rem;
+}
+
+/* Card del total */
+.total-item {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  margin-top: 20px;
+  padding: 15px;
+}
+
+/* Total en rojo y más grande */
+.total-amount {
+  font-size: 2rem; /* Tamaño más grande para el total */
+  font-weight: bold;
+  color: red; /* Texto en rojo */
+}
+
+/* Estilo para el botón de Confirmar compra */
+ion-footer ion-button {
+  --background: #007bff; /* Botón azul */
+  --border-radius: 10px;
+  --padding: 15px;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+/* Estilos para los botones de cantidad (+ y -) */
+.quantity-controls ion-button {
+  background-color: transparent !important;  /* Fondo transparente por defecto */
+  color: white !important;  /* El texto (los símbolos) serán blancos por defecto */
+  border-radius: 50% !important;  /* Botones redondeados */
+  width: 40px !important;  /* Ajuste de tamaño */
+  height: 40px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  font-size: 1.5rem !important;  /* Tamaño del símbolo (+/-) */
+}
+
+/* Estilo para el botón de aumentar (+) */
+.quantity-controls ion-button:nth-of-type(3) {
+  background-color: #28a745 !important; /* Fondo verde */
+  color: white !important; /* El símbolo "+" será blanco */
+  border: 2px solid #28a745 !important; /* Bordes verdes */
+}
+
+/* Estilo para el botón de disminuir (-) */
+.quantity-controls ion-button:nth-of-type(1) {
+  background-color: #dc3545 !important; /* Fondo rojo */
+  color: white !important; /* El símbolo "-" será blanco */
+  border: 2px solid #dc3545 !important; /* Bordes rojos */
+}
+
+/* Cambiar el tamaño de la cantidad */
+.quantity-controls ion-button:nth-of-type(2) {
+  color: white !important; /* La cantidad sigue siendo blanca */
+  font-size: 1.2rem !important;  /* Tamaño del número de cantidad */
+  background-color: transparent !important; /* Sin fondo */
+  border: none !important; /* Sin borde */
+}
+.price-value {
+  color: red; /* Cambia el color a rojo */
+}
+.product-price {
+  color: black; /* Asegúrate de que el texto 'Precio:' sea negro */
 }

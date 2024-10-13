@@ -1,39 +1,52 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/paginainicio"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Carrito de compras</ion-title>
+  </ion-toolbar>
+</ion-header>
 
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let item of cartItems" class="cart-item">
+      <ion-thumbnail slot="start" class="product-thumbnail">
+        <img [src]="item.imagen" alt="Producto">
+      </ion-thumbnail>
+      <ion-label class="product-info">
+        <p class="product-name">{{ item.nombre }}</p>
+        <p class="product-quantity">Cantidad: {{ item.cantidad }}</p>
+        <p class="product-price">
+          Precio: <span class="price-value">${{ item.precio }}</span>
+        </p>
+      </ion-label>
+      
+      
+      
+      <div class="quantity-controls">
+        <ion-button size="small" (click)="decreaseQuantity(item)">-</ion-button>
+        <ion-button size="small">{{ item.cantidad }}</ion-button>
+        <ion-button size="small" (click)="increaseQuantity(item)">+</ion-button>
+      </div>
 
-<div class="ion-page" id="main-content">
-  <ion-header [translucent]="true">
-    <ion-toolbar color="dark">
-      <ion-buttons slot="start">
-        <ion-back-button defaultHref="/carrito"></ion-back-button>
-      </ion-buttons>
-      <ion-title>Carrito</ion-title>
-    </ion-toolbar>
-  </ion-header>
+      <ion-button size="small" color="danger" slot="end" class="remove-btn" (click)="removeFromCart(item.id_producto)">
+        Eliminar
+      </ion-button>
+    </ion-item>
 
-  <ion-content [fullscreen]="true" class="ion-padding">
-    <ion-list>
-      <!-- Mostrar productos del carrito -->
-      <ion-item *ngFor="let item of cartItems" class="cart-item" lines="none">
-        <ion-thumbnail slot="start" class="product-thumbnail">
-          <img [src]="item.imagen" alt="Imagen del producto" />
-        </ion-thumbnail>
-        <ion-label>
-          <h2 class="product-name">{{ item.nombreproducto }}</h2>
-          <p class="product-price">Precio: {{ item.precio | currency:'CLP' }}</p>
-        </ion-label>
-        <ion-button fill="clear" color="danger" slot="end" (click)="removeFromCart(item.id_producto)">
-          Eliminar
-        </ion-button>
-      </ion-item>
-    </ion-list>
+    <!-- Mostrar el total dentro del mismo card, al fondo -->
+    <ion-item class="total-item">
+      <ion-label>
+        <h2>Total</h2>
+      </ion-label>
+      <ion-note slot="end" class="total-amount">${{ getTotal() }}</ion-note>
+    </ion-item>
+  </ion-list>
 
-    <!-- Sección para mostrar el total -->
-    <ion-card class="total-card" (click)="goToShippingPage()">
-      <ion-card-header>
-        <ion-card-title>Total</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <h2 class="total-amount">{{ getTotal() | currency:'CLP' }}</h2>
-      </ion-card-content>
-    </ion-card>
-    
+<!-- Botón de Confirmar Compra -->
+<ion-footer>
+  <ion-button expand="block" color="primary" (click)="goTocomprapage()">
+    Confirmar Compra
+  </ion-button>
+</ion-footer>
+

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ServicebdService } from 'src/app/services/servicebd.service';
-import { NavController } from '@ionic/angular'; // Importar NavController
+import { NavController } from '@ionic/angular'; 
 
 @Component({
   selector: 'app-carritocompras',
@@ -50,34 +50,61 @@ export class CarritocomprasPage {
       case 5:
         return 'https://media.spdigital.cl/thumbnails/products/88txvj8i_200d227b_thumbnail_512.png';
       case 6:
-        return ''
-
+        return '';
       default:
         return 'assets/images/default.jpg'; 
     }
   }
 
-  addToCart(productId: number, quantity: number) {
-    this.servicebd.addToCart(this.userId, productId, quantity)
+  addToCart(productId: number) {
+    const existingItem = this.cartItems.find(item => item.id_producto === productId);
+    
+    if (existingItem) {
+      // Si el producto ya está en el carrito, aumentamos la cantidad
+      existingItem.cantidad += 1;
+      this.servicebd.updateCartItem(this.userId, productId, existingItem.cantidad)
+        .then(() => this.loadCartItems())
+        .catch(err => console.error('Error al actualizar la cantidad en el carrito', err));
+    } else {
+      // Si el producto no está en el carrito, lo agregamos
+      this.servicebd.addToCart(this.userId, productId, 1)
+        .then(() => this.loadCartItems())
+        .catch(err => console.error('Error al añadir al carrito', err));
+    }
+  }
+  
+  // Método para aumentar la cantidad
+  increaseQuantity(item: any) {
+    item.cantidad += 1;
+    this.servicebd.updateCartItem(this.userId, item.id_producto, item.cantidad)
       .then(() => this.loadCartItems())
-      .catch(err => console.error('Error al anadir al carrito', err));
+      .catch(err => console.error('Error al actualizar la cantidad en el carrito', err));
+  }
+  
+  // Método para disminuir la cantidad
+  decreaseQuantity(item: any) {
+    if (item.cantidad > 1) {
+      item.cantidad -= 1;
+      this.servicebd.updateCartItem(this.userId, item.id_producto, item.cantidad)
+        .then(() => this.loadCartItems())
+        .catch(err => console.error('Error al actualizar la cantidad en el carrito', err));
+    }
   }
 
-  removeFromCart(productId: number) {
-    this.servicebd.removeFromCart(this.userId, productId)
-      .then(() => {
-        alert('Producto eliminado del carrito');
-        this.loadCartItems(); // Actualizar la lista de productos en el carrito
-      })
-      .catch(err => console.error('Error eliminando del carrito', err));
+  // Método para eliminar un producto del carrito
+  async removeFromCart(productId: number) {
+    await this.servicebd.removeFromCart(this.userId, productId);
+    this.loadCartItems(); // Recarga los items del carrito después de eliminar
   }
 
+  // Método para calcular el total del carrito
   getTotal(): number {
-    return this.cartItems.reduce((acc, item) => acc + item.precio * item.cantidad, 0); // Multiplicar por la cantidad en caso de ser relevante
+    return this.cartItems.reduce((total, item) => total + (item.precio * item.cantidad), 0);
   }
 
-  // Método para redirigir a la página de datos de envío
-  goToShippingPage() {
-    this.navCtrl.navigateForward('compra'); // Reemplaza con la ruta correcta de tu página de envío
+  // Método para ir a la página de envío 
+  goTocomprapage() {
+    console.log('Navegando a la página de envío...');
+    this.navCtrl.navigateForward('/compra'); 
   }
 }

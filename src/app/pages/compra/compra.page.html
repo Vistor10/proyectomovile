@@ -11,7 +11,7 @@
   <form (ngSubmit)="onSubmit()" #purchaseForm="ngForm">
     
     <ion-item>
-      <ion-label position="floating">Nombre del destinatario</ion-label>
+      <ion-label position="floating">Nombre del que recibe</ion-label>
       <ion-input 
         type="text" 
         [(ngModel)]="recipientName" 
@@ -21,7 +21,7 @@
       </ion-input>
     </ion-item>
     <ion-text color="danger" *ngIf="recipientNameInput.invalid && recipientNameInput.touched">
-      <p>Por favor, ingresa el nombre del destinatario.</p>
+      <p>Por favor, ingresa el nombre del que recibe</p>
     </ion-text>
     
     <ion-item>
