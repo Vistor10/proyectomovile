@@ -1,12 +1,8 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="dark">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="paginainicio"></ion-back-button>
-    </ion-buttons>
     <ion-title>Inicio de Sesión</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content [fullscreen]="true" color="dark" class="ion-padding center-content">
   <form (ngSubmit)="onLogin(loginForm)" #loginForm="ngForm">
     <ion-item>

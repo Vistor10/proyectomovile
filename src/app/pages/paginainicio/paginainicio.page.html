@@ -139,7 +139,16 @@
             </ion-button>
           </ion-col>
         </ion-row>
+        <!-- Mostrar el valor del dólar -->
+        <ion-row class="footer-dollar">
+          <ion-col text-center>
+            <ion-text color="light" *ngIf="dolarValue">
+              Valor del dólar hoy: {{ dolarValue | number:'1.2-2' }} CLP
+            </ion-text>
+          </ion-col>
+        </ion-row>
       </ion-grid>
     </ion-footer>
   </div>
+  
 </ion-content>

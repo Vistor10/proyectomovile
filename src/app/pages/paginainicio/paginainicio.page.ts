@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-paginainicio',
   templateUrl: './paginainicio.page.html',
@@ -20,8 +20,22 @@ export class PaginainicioPage {
   ];
 
   searchTerm: string = '';
+  dolarValue: number | undefined;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private http: HttpClient) {}
+  ngOnInit() {
+    this.getDolarValue(); // Llamamos a la API para obtener el valor del dólar al iniciar
+  }
+  getDolarValue() {
+    this.http.get<any>('https://mindicador.cl/api/dolar').subscribe(
+      (data) => {
+        this.dolarValue = data.serie[0].valor; // Guardamos el valor del dólar
+      },
+      (error) => {
+        console.error('Error al obtener el valor del dólar', error);
+      }
+    );
+  }
 
   onSearchInput(event: any) {
     this.searchTerm = event.target.value;
