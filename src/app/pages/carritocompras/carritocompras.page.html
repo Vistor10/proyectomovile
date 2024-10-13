@@ -28,7 +28,7 @@
     </ion-list>
 
     <!-- Sección para mostrar el total -->
-    <ion-card class="total-card">
+    <ion-card class="total-card" (click)="goToShippingPage()">
       <ion-card-header>
         <ion-card-title>Total</ion-card-title>
       </ion-card-header>
@@ -36,5 +36,4 @@
         <h2 class="total-amount">{{ getTotal() | currency:'CLP' }}</h2>
       </ion-card-content>
     </ion-card>
-  </ion-content>
-</div>
+    

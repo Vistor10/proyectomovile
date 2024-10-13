@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ServicebdService } from 'src/app/services/servicebd.service';
+import { NavController } from '@ionic/angular'; // Importar NavController
 
 @Component({
   selector: 'app-carritocompras',
@@ -8,9 +9,12 @@ import { ServicebdService } from 'src/app/services/servicebd.service';
 })
 export class CarritocomprasPage {
   cartItems: any[] = [];
-  userId: number = 2; // Asegúrate de obtener el userId del usuario autenticado
+  userId: number = 2; // userId del usuario autenticado
 
-  constructor(private servicebd: ServicebdService) { }
+  constructor(
+    private servicebd: ServicebdService,
+    private navCtrl: NavController // Inyectar NavController en el constructor
+  ) { }
 
   ionViewWillEnter() {
     this.loadCartItems();
@@ -26,9 +30,9 @@ export class CarritocomprasPage {
         item.imagen = this.getProductImage(item.id_producto); // Asignar imagen
       });
 
-      console.log('Cart items loaded:', this.cartItems);
+      console.log('imagen cargada:', this.cartItems);
     } catch (error) {
-      console.error('Error loading cart items', error);
+      console.error('Error al cargar la imagen', error);
     }
   }
 
@@ -38,7 +42,7 @@ export class CarritocomprasPage {
       case 1:
         return 'https://media.spdigital.cl/thumbnails/products/snyhppat_a721dfd4_thumbnail_512.jpg';
       case 2:
-        return 'https://media.spdigital.cl/thumbnails/products/3r2pwux4_8665678f_thumbnail_512.jpg'; // Imagen del producto 2
+        return 'https://media.spdigital.cl/thumbnails/products/3r2pwux4_8665678f_thumbnail_512.jpg'; 
       case 3:
         return 'https://media.spdigital.cl/thumbnails/products/zwy4s9lw_57966fd8_thumbnail_512.png';
       case 4:
@@ -49,14 +53,14 @@ export class CarritocomprasPage {
         return ''
 
       default:
-        return 'assets/images/default.jpg'; // Imagen por defecto si no coincide
+        return 'assets/images/default.jpg'; 
     }
   }
 
   addToCart(productId: number, quantity: number) {
     this.servicebd.addToCart(this.userId, productId, quantity)
       .then(() => this.loadCartItems())
-      .catch(err => console.error('Error adding to cart', err));
+      .catch(err => console.error('Error al anadir al carrito', err));
   }
 
   removeFromCart(productId: number) {
@@ -65,10 +69,15 @@ export class CarritocomprasPage {
         alert('Producto eliminado del carrito');
         this.loadCartItems(); // Actualizar la lista de productos en el carrito
       })
-      .catch(err => console.error('Error removing from cart', err));
+      .catch(err => console.error('Error eliminando del carrito', err));
   }
 
   getTotal(): number {
-    return this.cartItems.reduce((acc, item) => acc + item.precio * item.cantidad, 0); // Multiplica por la cantidad si es relevante
+    return this.cartItems.reduce((acc, item) => acc + item.precio * item.cantidad, 0); // Multiplicar por la cantidad en caso de ser relevante
+  }
+
+  // Método para redirigir a la página de datos de envío
+  goToShippingPage() {
+    this.navCtrl.navigateForward('compra'); // Reemplaza con la ruta correcta de tu página de envío
   }
 }
