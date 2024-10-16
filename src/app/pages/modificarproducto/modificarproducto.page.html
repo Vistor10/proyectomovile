@@ -102,17 +102,23 @@
     </ion-text>
 
     <ion-item>
-      <ion-label position="floating">Imagen del Producto (URL)</ion-label>
-      <ion-input type="url" name="imagen" [(ngModel)]="producto.imagen" required pattern="https?://.+" #imagenInput="ngModel"></ion-input>
+      <ion-label position="floating">Imagen del Producto</ion-label>
     </ion-item>
-    <ion-text color="danger" *ngIf="imagenInput.invalid && imagenInput.touched">
-      <p *ngIf="imagenInput.errors?.['required']">La URL de la imagen es obligatoria.</p>
-      <p *ngIf="imagenInput.errors?.['pattern']">La URL no es válida.</p>
+    <ion-button expand="block" color="medium" (click)="takePicture()">Tomar Foto / Seleccionar de Galería</ion-button>
+    
+    <!-- Mostrar la imagen seleccionada -->
+    <div *ngIf="producto.imagen">
+      <img [src]="producto.imagen" alt="Imagen del Producto" style="width: 100%; height: auto; margin-top: 15px;">
+    </div>
+    
+    <ion-text color="danger" *ngIf="!producto.imagen">
+      <p>Es necesario seleccionar una imagen para modificar el producto.</p>
     </ion-text>
-
-    <ion-button expand="full" color="primary" class="ion-margin-top" [disabled]="!modificarProductoForm.form.valid" type="submit">
+    
+    <ion-button expand="full" color="primary" class="ion-margin-top" [disabled]="!modificarProductoForm.form.valid || !producto.imagen" type="submit">
       Guardar Cambios
     </ion-button>
+    
   </form>
 </ion-content>
 

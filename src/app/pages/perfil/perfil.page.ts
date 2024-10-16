@@ -17,13 +17,17 @@ export class PerfilPage implements OnInit {
   }
   takePicture = async () => {
     const image = await Camera.getPhoto({
-      quality: 90, // Calidad de la imagen
-      allowEditing: false, // No permitir edición
-      resultType: CameraResultType.Uri, // Retornar la URI de la imagen
+      quality: 90,
+      allowEditing: false,
+      resultType: CameraResultType.DataUrl, // Obtener la imagen en formato base64
     });
-
-    // Asignar la imagen al campo "imagen"
-    this.imagen = image.webPath;
+    if (image.dataUrl) {
+      const imageBlob = await fetch(image.dataUrl).then(res => res.blob());
+      console.log(imageBlob); 
+      this.imagen = image.dataUrl;
+    } else {
+      console.error('No se pudo obtener la imagen correctamente.');
+    }
   };
 }
 

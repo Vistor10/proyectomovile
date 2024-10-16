@@ -10,10 +10,19 @@ export class GabinetesPage implements OnInit {
 
   userId: number = 2; // Asegúrate de obtener el ID del usuario autenticado
   quantity: number = 1; // Define la cantidad que deseas agregar
+  products: any[] = [];
 
   constructor(private servicebd: ServicebdService) { }
 
   ngOnInit() {
+    this.loadProducts();
+  }
+  async loadProducts() {
+    try {
+      this.products = await this.servicebd.getProductsByCategory(2);  // Obtener los productos de la categoría 'Gabinetes'
+    } catch (error) {
+      console.error('Error al cargar los productos:', error);
+    }
   }
 
   // Método para añadir producto al carrito
@@ -30,6 +39,9 @@ export class GabinetesPage implements OnInit {
     }).catch((error) => {
       console.error('Error al añadir producto al carrito', error);
     });
+  }
+  convertBlobToUrl(blob: Blob): string {
+    return URL.createObjectURL(blob);
   }
 
   // Método auxiliar para obtener el ID del producto según el nombre

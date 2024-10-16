@@ -48,7 +48,7 @@ export class ServicebdService {
         await this.databaseObj.executeSql(`CREATE TABLE IF NOT EXISTS ${this.table_categoria} (id_categoria INTEGER PRIMARY KEY AUTOINCREMENT, nombre_categoria TEXT UNIQUE);`, []);
 
         // Crear tabla producto
-        await this.databaseObj.executeSql(`CREATE TABLE IF NOT EXISTS ${this.table_producto} (id_producto INTEGER PRIMARY KEY AUTOINCREMENT, nombre_producto TEXT, precio REAL, stock INTEGER, id_categoria INTEGER, FOREIGN KEY (id_categoria) REFERENCES ${this.table_categoria}(id_categoria));`, []);
+        await this.databaseObj.executeSql(`CREATE TABLE IF NOT EXISTS ${this.table_producto} (id_producto INTEGER PRIMARY KEY AUTOINCREMENT, nombre_producto TEXT, precio REAL, stock INTEGER, id_categoria INTEGER, imagen BLOB, FOREIGN KEY (id_categoria) REFERENCES ${this.table_categoria}(id_categoria));`, []);
 
         // Crear tabla carrito
         await this.databaseObj.executeSql(`CREATE TABLE IF NOT EXISTS ${this.table_carrito} (id_carrito INTEGER PRIMARY KEY AUTOINCREMENT, id_usuario INTEGER, id_producto INTEGER, cantidad INTEGER, total REAL, FOREIGN KEY (id_usuario) REFERENCES ${this.table_usuario}(id_usuario), FOREIGN KEY (id_producto) REFERENCES ${this.table_producto}(id_producto));`, []);
@@ -103,64 +103,115 @@ export class ServicebdService {
       console.error('Error creando la categoría inicial', e);
     }
   }
+  async urlToBlob(url: string): Promise<Blob> {
+    const response = await fetch(url);  // Realiza la solicitud para obtener la imagen
+    const blob = await response.blob(); // Convierte la imagen a Blob
+    return blob;                        // Retorna el Blob
+  }
 
   // Método para insertar productos iniciales
   async createInitialProducts() {
     try {
       if (this.databaseObj) {
+        const TecladoRazerBlackwidowV4 = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/3r2pwux4_8665678f_thumbnail_512.jpg');
+        const TecladoRazerHuntsmanMini = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/snyhppat_a721dfd4_thumbnail_512.jpg');
+        const TecladoCougarAttackX3 = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/zwy4s9lw_57966fd8_thumbnail_512.png');
+        const TecladoLogitechG213Prodigy = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/ppwci9lq_50a0c365_thumbnail_512.jpg');
+
+        const GabineteCorsairiCue = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/88txvj8i_200d227b_thumbnail_512.png');
+        const GabineteKolinkVoid = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/6h2lh1by_22f3ee6b_thumbnail_512.jpg');
+        const GabineteAerocoolShard = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/_wq4_3_m_0d4a84e2_thumbnail_512.jpg');
+        const CoolerMasterCMP520 = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/9mtx0k9j_4b2c460e_thumbnail_512.jpg');
+
+        const AudífonosRazerKrakenKittyQuartz = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/sclrc6tz_57cd70db_thumbnail_512.jpg');
+        const AudífonosHyperXCloudStinger2 = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/22c0wthz_45384651_thumbnail_512.jpg');
+        const AudífonosHyperXCloud3 = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/ypolap0x_dcedc470_thumbnail_512.jpg');
+        const AudífonosLogitechG335 = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/wvwk9x87_25b20800_thumbnail_512.jpg');
+
+        const PlacaMadreMSIA520M_APRO = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/udt3fqxu_27f2e082_thumbnail_512.jpg');
+        const PlacaMadreGigabyteAORUXEliteAX = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/yb0mzi8o_57a6a515_thumbnail_512.jpg');
+        const PlacaMadreMSI_PRO_Z70_A_MAX = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/mp6q6_y0_7308a861_thumbnail_512.jpg');
+        const PlacaMadreGigabyteZ790UD = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/pii2vjbr_7316916c_thumbnail_512.jpg');
+
+        const FuentedePoderVERTEXPX_1000 = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/2wmybndr_f314bfdd_thumbnail_512.png');
+        const FuentedePoderSeasonicG12_850GM = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/_bist34q_687bdc0d_thumbnail_512.png');
+        const FuentedePoderThermaltakeSmart700W = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/maw61p4d_0b867802_thumbnail_512.jpg');
+        const FuentedePoderCLIOATX_700 = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/lf6fjhhg_018eb41a_thumbnail_512.png');
+
+        const MemoriaRamKingstonFURYRenegade = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/bmnbqq4b_89223714_thumbnail_512.png');
+        const MemoriaRamDDR4XPG_SPECTRIX_D35G = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/ngcwptyq_563b09c2_thumbnail_512.png');
+        const MemoriaRamDDR4KingstonFURYBeast = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/_xiag1e3_7be5c2ae_thumbnail_512.jpg');
+        const MemoriaRamDDR4CorsairVengeance = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/r6wg8h5d_806087bc_thumbnail_512.jpg');
+
+        const ProcesadorAMDRyzen7_5800XT = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/1sew7rqf_79eaae73_thumbnail_512.jpg');
+        const ProcesadorIntelCorei5_10400 = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/ispzb71k_2e51a77b_thumbnail_512.jpg');
+        const ProcesadorIntelCorei9_14900 = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/jyc8ynv8_f836da9b_thumbnail_512.jpg');
+        const ProcesadorAMDRyzen7_8700G = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/c725qtut_80d80dd3_thumbnail_512.jpg');
+
+        const ASUSDualNvidiaGeForceRTX407 = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/z4gsemrj_d8c06639_thumbnail_512.png');
+        const GigabyteNvidiaGeForceRTX4070Ti = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/rwddzmal_161d7a72_thumbnail_512.png');
+        const ZotacNvidiaGeForceRTX4070Ti = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/tuebyjvo_72ce1e1d_thumbnail_512.jpg');
+        const ASUSTUFNvidiaGeForceRTX4080SUPER = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/ehvdu6al_fedd27dd_thumbnail_512.png');
+
+        const MonitorSamsungOdysseyG632 = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/fqqvtub3_0cac7e5a_thumbnail_512.jpg');
+        const MonitorUltrawideCurvoLG32 = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/jyho6xu9_78536bc0_thumbnail_512.jpg');
+        const MonitorCurvoSamsungOdysseyG95C49 = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/tvlpbdac_aa836e31_thumbnail_512.jpg');
+        const MonitorGamerCurvoMSI49 = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/pbgyco0j_7ae2c79b_thumbnail_512.jpg');
+
+
         // Asumir que la categoría 'Teclados' tiene id_categoria = 1
-        await this.addProduct('Teclado Gamer Razer Huntsman Mini', 109990, 10, 1);
-        await this.addProduct('Teclado Gamer Razer Blackwidow V4', 239000, 10, 1);
-        await this.addProduct('Teclado Gamer Cougar Attack X3', 95990, 10, 1);
-        await this.addProduct('Teclado Gamer LOGITECH G213 Prodigy', 53780, 10, 1);
+        await this.addProduct('Teclado Gamer Razer Huntsman Mini', 109990, 10, 1, TecladoRazerHuntsmanMini);
+        await this.addProduct('Teclado Gamer Razer Blackwidow V4', 239000, 10, 1, TecladoRazerBlackwidowV4);
+        await this.addProduct('Teclado Gamer Cougar Attack X3', 95990, 10, 1, TecladoCougarAttackX3);
+        await this.addProduct('Teclado Gamer LOGITECH G213 Prodigy', 53780, 10, 1, TecladoLogitechG213Prodigy);
 
         // Asumir que la categoría 'Gabinetes' tiene id_categoria = 2
-        await this.addProduct('Gabinete Corsair iCue 4000X', 119000, 10, 2);
-        await this.addProduct('Gabinete Kolink Void RGB', 49570, 10, 2);
-        await this.addProduct('Gabinete Aerocool Shard', 89990, 10, 2);
-        await this.addProduct('Gabinete Cooler Master CMP 520', 64490, 10, 2);
+        await this.addProduct('Gabinete Corsair iCue 4000X', 119000, 10, 2, GabineteCorsairiCue);
+        await this.addProduct('Gabinete Kolink Void RGB', 49570, 10, 2, GabineteKolinkVoid);
+        await this.addProduct('Gabinete Aerocool Shard', 89990, 10, 2, GabineteAerocoolShard);
+        await this.addProduct('Gabinete Cooler Master CMP 520', 64490, 10, 2, CoolerMasterCMP520);
 
         // Asumir que la categoría 'Audífonos Gamer' tiene id_categoria = 3
-        await this.addProduct('Audífonos Gamer Razer Kraken Kitty Quartz', 129990, 10, 3);
-        await this.addProduct('Audífonos Gamer HyperX Cloud Stinger 2', 114150, 10, 3);
-        await this.addProduct('Audífonos Gamer HyperX Cloud 3', 63990, 10, 3);
-        await this.addProduct('Audífonos Gamer Logitech G335', 59990, 10, 3);
+        await this.addProduct('Audífonos Gamer Razer Kraken Kitty Quartz', 129990, 10, 3, AudífonosRazerKrakenKittyQuartz);
+        await this.addProduct('Audífonos Gamer HyperX Cloud Stinger 2', 114150, 10, 3, AudífonosHyperXCloudStinger2);
+        await this.addProduct('Audífonos Gamer HyperX Cloud 3', 63990, 10, 3, AudífonosHyperXCloud3);
+        await this.addProduct('Audífonos Gamer Logitech G335', 59990, 10, 3, AudífonosLogitechG335);
 
         // Asumir que la categoría 'Placas Madre' tiene id_categoria = 4
-        await this.addProduct('Placa Madre MSI A520 M-A PRO', 61990, 10, 4);
-        await this.addProduct('Placa Madre Gigabyte AORUX Elite AX', 342090, 10, 4);
-        await this.addProduct('Placa Madre MSI PRO Z70 A MAX', 298080, 10, 4);
-        await this.addProduct('Placa Madre Gigabyte Z790 UD', 270460, 10, 4);
+        await this.addProduct('Placa Madre MSI A520 M-A PRO', 61990, 10, 4, PlacaMadreMSIA520M_APRO);
+        await this.addProduct('Placa Madre Gigabyte AORUX Elite AX', 342090, 10, 4, PlacaMadreGigabyteAORUXEliteAX);
+        await this.addProduct('Placa Madre MSI PRO Z70 A MAX', 298080, 10, 4, PlacaMadreMSI_PRO_Z70_A_MAX);
+        await this.addProduct('Placa Madre Gigabyte Z790 UD', 270460, 10, 4, PlacaMadreGigabyteZ790UD);
 
         // Asumir que la categoría 'Fuentes de Poder' tiene id_categoria = 5
-        await this.addProduct('Fuente de Poder VERTEX PX-1000', 254990, 10, 5);
-        await this.addProduct('Fuente de Poder Seasonic G12-850GM', 114990, 10, 5);
-        await this.addProduct('Fuente de Poder Thermaltake Smart 700W', 64990, 10, 5);
-        await this.addProduct('Fuente de Poder CLIO ATX-700', 51040, 10, 5);
+        await this.addProduct('Fuente de Poder VERTEX PX-1000', 254990, 10, 5, FuentedePoderVERTEXPX_1000);
+        await this.addProduct('Fuente de Poder Seasonic G12-850GM', 114990, 10, 5, FuentedePoderSeasonicG12_850GM);
+        await this.addProduct('Fuente de Poder Thermaltake Smart 700W', 64990, 10, 5, FuentedePoderThermaltakeSmart700W);
+        await this.addProduct('Fuente de Poder CLIO ATX-700', 51040, 10, 5, FuentedePoderCLIOATX_700);
 
         // Asumir que la categoría 'Memorias RAM' tiene id_categoria = 6
-        await this.addProduct('Memoria Ram Kingston FURY Renegade', 414990, 10, 6);
-        await this.addProduct('Memoria Ram DDR4 XPG SPECTRIX D35G', 38990, 10, 6);
-        await this.addProduct('Memoria Ram DDR4 Kingston FURY Beast', 99990, 10, 6);
-        await this.addProduct('Memoria Ram DDR4 Corsair Vengeance', 25990, 10, 6);
+        await this.addProduct('Memoria Ram Kingston FURY Renegade', 414990, 10, 6, MemoriaRamKingstonFURYRenegade);
+        await this.addProduct('Memoria Ram DDR4 XPG SPECTRIX D35G', 38990, 10, 6, MemoriaRamDDR4XPG_SPECTRIX_D35G);
+        await this.addProduct('Memoria Ram DDR4 Kingston FURY Beast', 99990, 10, 6, MemoriaRamDDR4KingstonFURYBeast);
+        await this.addProduct('Memoria Ram DDR4 Corsair Vengeance', 25990, 10, 6, MemoriaRamDDR4CorsairVengeance);
 
         // Asumir que la categoría 'Procesadores' tiene id_categoria = 7
-        await this.addProduct('Procesador AMD Ryzen™ 7 5800XT', 399990, 10, 7);
-        await this.addProduct('Procesador Intel® Core™ i5-10400', 162770, 10, 7);
-        await this.addProduct('Procesador Intel® Core™ i9-14900', 914560, 10, 7);
-        await this.addProduct('Procesador AMD Ryzen™ 7 8700G', 514990, 10, 7);
+        await this.addProduct('Procesador AMD Ryzen™ 7 5800XT', 399990, 10, 7, ProcesadorAMDRyzen7_5800XT);
+        await this.addProduct('Procesador Intel® Core™ i5-10400', 162770, 10, 7, ProcesadorIntelCorei5_10400);
+        await this.addProduct('Procesador Intel® Core™ i9-14900', 914560, 10, 7, ProcesadorIntelCorei9_14900);
+        await this.addProduct('Procesador AMD Ryzen™ 7 8700G', 514990, 10, 7, ProcesadorAMDRyzen7_8700G);
 
         // Asumir que la categoría 'Tarjetas de Video' tiene id_categoria = 7
-        await this.addProduct('ASUS Dual Nvidia GeForce RTX 4070', 899990, 10, 7);
-        await this.addProduct('Gigabyte Nvidia GeForce RTX 4070 Ti', 1049990, 10, 7);
-        await this.addProduct('Zotac Gaming Nvidia GeForce RTX 4070 Ti', 1063654, 10, 7);
-        await this.addProduct('ASUS TUF Nvidia GeForce RTX 4080 SUPER', 1399990, 10, 7);
+        await this.addProduct('ASUS Dual Nvidia GeForce RTX 4070', 899990, 10, 8, ASUSDualNvidiaGeForceRTX407);
+        await this.addProduct('Gigabyte Nvidia GeForce RTX 4070 Ti', 1049990, 10, 8, GigabyteNvidiaGeForceRTX4070Ti);
+        await this.addProduct('Zotac Gaming Nvidia GeForce RTX 4070 Ti', 1063654, 10, 8, ZotacNvidiaGeForceRTX4070Ti);
+        await this.addProduct('ASUS TUF Nvidia GeForce RTX 4080 SUPER', 1399990, 10, 8, ASUSTUFNvidiaGeForceRTX4080SUPER);
 
         // Asumir que la categoría 'Monitores' tiene id_categoria = 9
-        await this.addProduct('Monitor Samsung Odyssey G6 32', 599000, 10, 9);
-        await this.addProduct('Monitor Ultrawide Curvo LG 32', 470750, 10, 9);
-        await this.addProduct('Monitor Curvo Samsung Odyssey G95C 49', 991250, 10, 9);
-        await this.addProduct('Monitor Gamer Curvo MSI 49', 1257180, 10, 9);
+        await this.addProduct('Monitor Samsung Odyssey G6 32', 599000, 10, 9, MonitorSamsungOdysseyG632);
+        await this.addProduct('Monitor Ultrawide Curvo LG 32', 470750, 10, 9, MonitorUltrawideCurvoLG32);
+        await this.addProduct('Monitor Curvo Samsung Odyssey G95C 49', 991250, 10, 9, MonitorCurvoSamsungOdysseyG95C49);
+        await this.addProduct('Monitor Gamer Curvo MSI 49', 1257180, 10, 9, MonitorGamerCurvoMSI49);
 
         console.log('Initial products created');
       } else {
@@ -168,6 +219,28 @@ export class ServicebdService {
       }
     } catch (e) {
       console.error('Error creando los productos iniciales', e);
+    }
+  }
+  
+  async getProductsByCategory(id_categoria: number): Promise<any[]> {
+    try {
+      if (this.databaseObj) {
+        const res = await this.databaseObj.executeSql(
+          `SELECT * FROM ${this.table_producto} WHERE id_categoria = ?`, 
+          [id_categoria]
+        );
+        const products = [];
+        for (let i = 0; i < res.rows.length; i++) {
+          products.push(res.rows.item(i));
+        }
+        return products;
+      } else {
+        console.error("Database object is not initialized.");
+        return [];
+      }
+    } catch (e) {
+      console.error('Error obteniendo productos', e);
+      return [];
     }
   }
 
@@ -216,16 +289,19 @@ export class ServicebdService {
   }
 
   // Método para insertar datos en la tabla producto
-  async addProduct(nombre_producto: string, precio: number, stock: number, id_categoria: number) {
+  async addProduct(nombre_producto: string, precio: number, stock: number, id_categoria: number, imagen: Blob | null) {
     try {
       if (this.databaseObj) {
-        await this.databaseObj.executeSql(`INSERT INTO ${this.table_producto} (nombre_producto, precio, stock, id_categoria) VALUES (?, ?, ?, ?)`, [nombre_producto, precio, stock, id_categoria]);
-        console.log('Product added');
+        await this.databaseObj.executeSql(
+          `INSERT INTO ${this.table_producto} (nombre_producto, precio, stock, id_categoria, imagen) VALUES (?, ?, ?, ?, ?)`,
+          [nombre_producto, precio, stock, id_categoria, imagen]
+        );
+        console.log('Producto agregado con éxito');
       } else {
         console.error("Database object no fue inicializada.");
       }
     } catch (e) {
-      console.error('Error anadiendo el producto', e);
+      console.error('Error al agregar producto', e);
     }
   }
 
