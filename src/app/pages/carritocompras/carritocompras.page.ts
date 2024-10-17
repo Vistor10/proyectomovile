@@ -171,9 +171,15 @@ export class CarritocomprasPage {
     return this.cartItems.reduce((total, item) => total + (item.precio * item.cantidad), 0);
   }
 
-  // Método para ir a la página de envío 
-  goTocomprapage() {
-    console.log('Navegando a la página de envío...');
+// Método para ir a la página de compra, con validación del carrito
+goTocomprapage() {
+  if (this.cartItems.length === 0) {
+    console.log('El carrito está vacío. No se puede continuar con la compra.');
+    // Aquí puedes mostrar una alerta o un mensaje informativo al usuario
+    alert('No tienes productos en el carrito. Agrega productos antes de continuar.');
+  } else {
+    console.log('Navegando a la página de compra...');
     this.navCtrl.navigateForward('/compra'); 
   }
+}
 }
