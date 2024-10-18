@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SQLite, SQLiteObject } from '@awesome-cordova-plugins/sqlite/ngx';
-
+import { BehaviorSubject, Observable } from 'rxjs'; // Asegúrate de que Observable está importado
 @Injectable({
   providedIn: 'root',
 })
@@ -12,7 +12,8 @@ export class ServicebdService {
   readonly table_categoria: string = "categoria";
   readonly table_producto: string = "producto";
   readonly table_carrito: string = "carrito";
-
+  
+  private currentUserSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   constructor(private sqlite: SQLite) { }
 
   // Crear o abrir la base de datos
@@ -213,15 +214,6 @@ export class ServicebdService {
     return blob;
   }
   
-  
-
-  
-  
-  
-
-  
-  
-  
   async getProductsByCategory(id_categoria: number): Promise<any[]> {
     try {
       if (this.databaseObj) {
@@ -246,7 +238,7 @@ export class ServicebdService {
 
 
 
-// Método para insertar datos en la tabla rol
+
 // Método para insertar datos en la tabla rol
 async addRole(nombre_rol: string) {
   try {
@@ -509,4 +501,28 @@ async getCartItems(userId: number): Promise<any[]> {
     return [];
   }
 }
+async getCurrentUser(email: string): Promise<void> {
+  try {
+    if (this.databaseObj) {
+      const result = await this.databaseObj.executeSql(
+        `SELECT * FROM ${this.table_usuario} WHERE correo = ?`, [email]
+      );
+
+      if (result.rows.length > 0) {
+        const user = result.rows.item(0);
+        this.currentUserSubject.next(user); // Emite el usuario actual
+      } else {
+        console.error('Usuario no encontrado');
+      }
+    }
+  } catch (e) {
+    console.error('Error obteniendo usuario', e);
+  }
 }
+
+getCurrentUserObservable(): Observable<any> {
+  return this.currentUserSubject.asObservable();
+}
+}
+
+
