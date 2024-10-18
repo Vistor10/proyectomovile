@@ -16,75 +16,31 @@
   <ion-content [fullscreen]="true" color="dark" class="ion-padding">
     <ion-header collapse="condense">
       <ion-toolbar>
-        <ion-title size="large">Gabinetes</ion-title>
+        <ion-title size="large">Productos</ion-title>
       </ion-toolbar>
     </ion-header>
 
     <ion-grid>
-      <ion-row>
+      <ion-row *ngFor="let product of products">
         <ion-col size="6" size-md="6">
           <ion-card>
-            <ion-router-link [routerLink]="['/gabinete-gamercorsair-icue-4000']">
-              <img alt="Gabinete Corsair iCue"
-                src="https://media.spdigital.cl/thumbnails/products/88txvj8i_200d227b_thumbnail_512.png" />
-              <ion-card-header>
-                <ion-card-title>Gabinete Gamer Corsair iCue 4000X</ion-card-title>
-                <ion-card-subtitle>$119.000 CLP</ion-card-subtitle>
-              </ion-card-header>
-            </ion-router-link>
-            <ion-button expand="full" color="primary"
-              (click)="addToCart('Gabinete Corsair iCue 4000X', 119000, 'https://media.spdigital.cl/thumbnails/products/88txvj8i_200d227b_thumbnail_512.png')">Añadir
-              al Carrito</ion-button>
-          </ion-card>
-        </ion-col>
+            <!--<img [src]="convertBlobToUrl(product.imagen)" alt="{{ product.nombre_producto }}" />
+            -->
+            <img [src]="product.imagen" alt="Sin foto" />
+            
+            <ion-card-header>
+              <ion-card-title>{{ product.nombre_producto }}</ion-card-title>
+              <ion-card-subtitle>{{ product.precio | currency:'CLP' }}</ion-card-subtitle>
+            </ion-card-header>
 
-        <ion-col size="6" size-md="6">
-          <ion-card>
-            <ion-router-link [routerLink]="['/gabinete-gamer-kolink']">
-              <img alt="Gabinete Kolink Void"
-                src="https://media.spdigital.cl/thumbnails/products/6h2lh1by_22f3ee6b_thumbnail_512.jpg" />
-              <ion-card-header>
-                <ion-card-title>Gabinete Gamer Kolink Void RGB</ion-card-title>
-                <ion-card-subtitle>$49.570 CLP</ion-card-subtitle>
-              </ion-card-header>
-            </ion-router-link>
-            <ion-button expand="full" color="primary"
-              (click)="addToCart('Gabinete Kolink Void RGB', 49570, 'https://media.spdigital.cl/thumbnails/products/6h2lh1by_22f3ee6b_thumbnail_512.jpg')">Añadir
-              al Carrito</ion-button>
-          </ion-card>
-        </ion-col>
-      </ion-row>
+            <ion-card-content>
+              <p>{{ product.descripcion_producto }}</p>
+            </ion-card-content>
 
-      <ion-row>
-        <ion-col size="6" size-md="6">
-          <ion-card>
-            <ion-router-link [routerLink]="['/gabinete-gamer-aerocool-shard']">
-              <img alt="Gabinete Aerocool Shard"
-                src="https://media.spdigital.cl/thumbnails/products/_wq4_3_m_0d4a84e2_thumbnail_512.jpg" />
-              <ion-card-header>
-                <ion-card-title>Gabinete Gamer Aerocool Shard</ion-card-title>
-                <ion-card-subtitle>$89.990 CLP</ion-card-subtitle>
-              </ion-card-header>
-            </ion-router-link>
-            <ion-button expand="full" color="primary"
-              (click)="addToCart('Gabinete Aerocool Shard', 89990, 'https://media.spdigital.cl/thumbnails/products/_wq4_3_m_0d4a84e2_thumbnail_512.jpg')">Añadir
-              al Carrito</ion-button>
-          </ion-card>
-        </ion-col>
-
-        <ion-col size="6" size-md="6">
-          <ion-card>
-            <ion-router-link [routerLink]="['/gabinete-gamer-cooler-master-cmp520']">
-              <img alt="Cooler Master CMP 520"
-                src="https://media.spdigital.cl/thumbnails/products/9mtx0k9j_4b2c460e_thumbnail_512.jpg" />
-              <ion-card-header>
-                <ion-card-title>Gabinete Gamer Cooler Master CMP 520</ion-card-title>
-                <ion-card-subtitle>$64.490 CLP</ion-card-subtitle>
-              </ion-card-header>
-            </ion-router-link>
-            <ion-button expand="full" color="primary"
-              (click)="addToCart('Gabinete Cooler Master CMP 520', 64490, 'https://media.spdigital.cl/thumbnails/products/9mtx0k9j_4b2c460e_thumbnail_512.jpg')">Añadir
-              al Carrito</ion-button>
+            <ion-button expand="full" color="primary" (click)="addToCart(product)">
+              Añadir al Carrito
+            </ion-button>
+            
           </ion-card>
         </ion-col>
       </ion-row>
