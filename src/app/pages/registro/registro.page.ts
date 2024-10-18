@@ -45,7 +45,10 @@ export class RegistroPage implements OnInit {
       try {
         // Inserta el usuario en la base de datos (rol 'usuario' tiene id 2)
         await this.dbService.addUser(this.username, this.email, this.password, 2);
-
+        
+        // Guarda el correo en localStorage
+        localStorage.setItem('correoUsuario', this.email);
+        
         console.log('Registro exitoso:', {
           username: this.username,
           email: this.email,

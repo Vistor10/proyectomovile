@@ -20,9 +20,9 @@
       </button>
     </div>
 
-    <h2 class="user-name">Usuario</h2>
-    <p class="user-role">Juan Perez</p>
-
+    <h2 class="user-name">{{ usuario?.nombre_usuario }}</h2>
+    <p class="user-role">{{ usuario?.correo }}</p>
+    
     <ion-buttons>
       <ion-router-link [routerLink]="['/modificarperfil']">
         <ion-button color="light">
@@ -41,7 +41,7 @@
 
   <ion-list>
     <ion-item lines="full">
-      <ion-note slot="start">juanitoperez&commat;gmail.com</ion-note>
+      <ion-note slot="start">{{ usuario?.correo }}</ion-note>
       <ion-buttons slot="end">
         <ion-router-link [routerLink]="['/modificarcorreo']">
           <ion-button fill="outline" color="dark">
@@ -51,17 +51,4 @@
       </ion-buttons>
     </ion-item>
   </ion-list>
-  
-  <div *ngIf="isAdmin">
-    <ion-button expand="full" color="primary" class="ion-margin-top" routerLink="/agregarproducto">
-      Agregar Producto
-    </ion-button>
-
-    <ion-button expand="full" color="secondary" class="ion-margin-top" routerLink="/modificarproducto">
-      Modificar Producto
-    </ion-button>
-    <ion-button expand="full" color="danger" class="ion-margin-top" routerLink="/eliminarproducto">
-      Eliminar Producto
-    </ion-button>
-  </div>
 </ion-content>
