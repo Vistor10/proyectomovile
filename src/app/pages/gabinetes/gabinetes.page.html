@@ -4,7 +4,6 @@
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
-      <ion-title></ion-title>
       <ion-buttons slot="end">
         <ion-router-link [routerLink]="['/paginainicio']">
           <img class="icon" src="../../assets/icon/gadgetzone_logo-removebg-preview.png" alt="logo">
@@ -12,38 +11,29 @@
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
-
   <ion-content [fullscreen]="true" color="dark" class="ion-padding">
-    <ion-header collapse="condense">
-      <ion-toolbar>
-        <ion-title size="large">Productos</ion-title>
-      </ion-toolbar>
-    </ion-header>
+    
 
     <ion-grid>
-      <ion-row *ngFor="let product of products">
-        <ion-col size="6" size-md="6">
+      <ion-row>
+        <ion-col size="6" size-md="6" *ngFor="let product of products">
           <ion-card>
-            <!--<img [src]="convertBlobToUrl(product.imagen)" alt="{{ product.nombre_producto }}" />
-            -->
             <img [src]="product.imagen" alt="Sin foto" />
             
             <ion-card-header>
               <ion-card-title>{{ product.nombre_producto }}</ion-card-title>
               <ion-card-subtitle>{{ product.precio | currency:'CLP' }}</ion-card-subtitle>
             </ion-card-header>
-
-            <ion-card-content>
-              <p>{{ product.descripcion_producto }}</p>
-            </ion-card-content>
-
+            
+            <ion-button expand="full" color="secondary" (click)="verDetalles(product)">
+              Ver más
+            </ion-button>
+            
             <ion-button expand="full" color="primary" (click)="addToCart(product)">
               Añadir al Carrito
             </ion-button>
-            
           </ion-card>
         </ion-col>
       </ion-row>
     </ion-grid>
-  </ion-content>
-</div>
+    

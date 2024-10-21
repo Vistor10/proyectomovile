@@ -12,12 +12,12 @@
     <ion-item>
       <ion-label position="floating">Nombre del Producto</ion-label>
       <ion-input type="text" name="nombre" [(ngModel)]="nombre" required minlength="3"
-        pattern="^[a-zA-ZÀ-ÿ\s]+$" #nombreInput="ngModel"></ion-input>
+         #nombreInput="ngModel"></ion-input>
     </ion-item>
     <ion-text color="danger" *ngIf="nombreInput.invalid && nombreInput.touched">
       <p *ngIf="nombreInput.errors?.['required']">El nombre del producto es obligatorio.</p>
       <p *ngIf="nombreInput.errors?.['minlength']">El nombre debe tener al menos 3 caracteres.</p>
-      <p *ngIf="nombreInput.errors?.['pattern']">El nombre no puede contener números ni caracteres especiales.</p>
+      
     </ion-text>
     <ion-item>
       <ion-label position="floating">Descripción del Producto</ion-label>

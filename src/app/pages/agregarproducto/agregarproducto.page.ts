@@ -56,11 +56,11 @@ export class AgregarproductoPage implements OnInit {
     toast.present();
   }
   async onSubmit(form: NgForm) {
-    this.presentToast("4");
+   // this.presentToast("4");
     if (form.valid && this.imagen) {
-      this.presentToast("3");
+     // this.presentToast("3");
       this.dbService.addProduct(this.nombre,this.descrip,this.precio,this.idcat,this.imagen);
-      this.navCtrl.navigateRoot('/perfil');
+      this.navCtrl.navigateRoot('/paginainicio');
     } else {
       this.presentToast('Por favor, completa el formulario correctamente.');
     }

@@ -14,27 +14,22 @@
         <img [src]="item.imagen" alt="Producto">
       </ion-thumbnail>
       <ion-label class="product-info">
-        <p class="product-name">{{ item.nombre }}</p>
+        <p class="product-name">{{ item.nombre_producto }}</p>
         <p class="product-quantity">Cantidad: {{ item.cantidad }}</p>
         <p class="product-price">
           Precio: <span class="price-value">${{ item.precio }}</span>
         </p>
       </ion-label>
-      
-      
-      
       <div class="quantity-controls">
         <ion-button size="small" (click)="decreaseQuantity(item)">-</ion-button>
         <ion-button size="small">{{ item.cantidad }}</ion-button>
         <ion-button size="small" (click)="increaseQuantity(item)">+</ion-button>
       </div>
-
       <ion-button size="small" color="danger" slot="end" class="remove-btn" (click)="removeFromCart(item.id_producto)">
         Eliminar
       </ion-button>
     </ion-item>
 
-    <!-- Mostrar el total dentro del mismo card, al fondo -->
     <ion-item class="total-item">
       <ion-label>
         <h2>Total</h2>
@@ -43,10 +38,9 @@
     </ion-item>
   </ion-list>
 
-<!-- Botón de Confirmar Compra -->
-<ion-footer>
-  <ion-button expand="block" color="primary" (click)="goTocomprapage()">
-    Confirmar Compra
-  </ion-button>
-</ion-footer>
-
+  <ion-footer>
+    <ion-button expand="block" color="primary" (click)="goTocomprapage()">
+      Confirmar Compra
+    </ion-button>
+  </ion-footer>
+</ion-content>

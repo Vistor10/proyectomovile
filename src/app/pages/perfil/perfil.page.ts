@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ServicebdService } from 'src/app/services/servicebd.service';
 import { Camera, CameraResultType } from '@capacitor/camera';
 
@@ -16,33 +17,38 @@ export class PerfilPage implements OnInit {
     rol: ''
   };
 
-  constructor(private serviceBD: ServicebdService) {}
+  constructor(private serviceBD: ServicebdService, private router: Router) {}
 
   ngOnInit() {
     const adminStatus = localStorage.getItem('isAdmin');
     this.isAdmin = adminStatus === 'true';
 
-    const correoUsuario = localStorage.getItem('correoUsuario');
-    
-    if (correoUsuario) {
-      this.obtenerDatosUsuario(correoUsuario);
+    if (this.isAdmin) {
+      this.usuario.nombre_usuario = 'Admin';
+      this.usuario.correo = 'admin@gmail.com';
     } else {
-      console.error('No se encontró un correo en localStorage');
-    }
+      const correoUsuario = localStorage.getItem('correoUsuario');
 
-    // Suscribirse a los cambios del usuario
-    this.serviceBD.getCurrentUserObservable().subscribe((user) => {
-      if (user) {
-        this.usuario = user;
-        console.log('Datos del usuario actual:', user);
+      if (correoUsuario) {
+        this.obtenerDatosUsuario(correoUsuario);
       } else {
-        console.error('No se ha encontrado el usuario en la base de datos.');
+        console.error('No se encontró un correo en localStorage');
+        this.router.navigate(['/login']); // Redirigir al login si no hay correo
       }
-    });
+    }
   }
 
   obtenerDatosUsuario(correo: string) {
-    this.serviceBD.getCurrentUser(correo);
+    this.serviceBD.getCurrentUser(correo).then((user) => {
+      if (user) {
+        this.usuario = user;
+        console.log('Datos del usuario:', user);
+      } else {
+        console.error('No se encontró el usuario en la base de datos.');
+      }
+    }).catch(error => {
+      console.error('Error al obtener los datos del usuario:', error);
+    });
   }
 
   takePicture = async () => {
@@ -59,4 +65,10 @@ export class PerfilPage implements OnInit {
       console.error('No se pudo obtener la imagen correctamente.');
     }
   };
+
+  cerrarSesion() {
+    localStorage.removeItem('correoUsuario');
+    localStorage.removeItem('isAdmin');
+    this.router.navigate(['/login']);
+  }
 }

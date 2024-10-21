@@ -4,8 +4,16 @@
       <ion-back-button defaultHref="paginainicio"></ion-back-button>
     </ion-buttons>
     <ion-title>Perfil</ion-title>
+    <!-- Botón de cerrar sesión en la esquina superior derecha -->
+    <ion-buttons slot="end">
+      <ion-button color="light" (click)="cerrarSesion()">
+        <ion-icon slot="start" name="log-out-outline"></ion-icon>
+        Cerrar Sesión
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
+
 
 <ion-content [fullscreen]="true" class="ion-padding" color="dark">
   <div class="profile-header">
@@ -52,3 +60,19 @@
     </ion-item>
   </ion-list>
 </ion-content>
+
+  
+  <div *ngIf="isAdmin">
+    <ion-button expand="full" color="primary" class="ion-margin-top" routerLink="/agregarproducto">
+      Agregar Producto
+    </ion-button>
+
+    <ion-button expand="full" color="secondary" class="ion-margin-top" routerLink="/modificarproducto">
+      Modificar Producto
+    </ion-button>
+    <ion-button expand="full" color="danger" class="ion-margin-top" routerLink="/eliminarproducto">
+      Eliminar Producto
+    </ion-button>
+  </div>
+
+  

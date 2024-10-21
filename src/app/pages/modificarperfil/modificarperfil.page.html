@@ -18,7 +18,6 @@
       </ion-item>
 
       <ion-text color="danger" *ngIf="newUsernameInput.invalid && newUsernameInput.touched">
-
         <p *ngIf="newUsernameInput.errors?.['pattern']">Solo se permiten letras.</p>
         <p *ngIf="newUsernameInput.errors?.['minlength']">El nombre de usuario debe tener más de 5 caracteres.</p>
         <p *ngIf="newUsernameInput.errors?.['required']">El nombre de usuario es obligatorio.</p>

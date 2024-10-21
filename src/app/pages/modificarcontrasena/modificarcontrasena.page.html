@@ -12,7 +12,8 @@
     <form (ngSubmit)="onUpdatePassword()" #updatePasswordForm="ngForm">
       <ion-item>
         <ion-label position="floating">Nueva Contraseña</ion-label>
-        <ion-input type="password" pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" 
+        <ion-input type="password" 
+          pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[#.@$!%*?&])[A-Za-z\d#.@$!%*?&]{8,}$" 
           [(ngModel)]="newPassword" name="newPassword" required #newPasswordInput="ngModel">
         </ion-input>
       </ion-item>

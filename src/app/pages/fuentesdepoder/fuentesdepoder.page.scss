@@ -6,7 +6,7 @@
 }
 
 ion-card {
-  height: 350px; 
+  height: 800px; 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -16,7 +16,7 @@ ion-card {
 ion-card img {
   width: 100%; 
   height: auto;
-  max-height: 120px; 
+  max-height: 350px; 
   object-fit: contain; 
 }
 

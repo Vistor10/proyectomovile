@@ -44,7 +44,7 @@ export class RegistroPage implements OnInit {
     if (this.username && this.email && this.passwordsMatch() && this.isValidRUT(this.rut)) {
       try {
         // Inserta el usuario en la base de datos (rol 'usuario' tiene id 2)
-        await this.dbService.addUser(this.username, this.email, this.password, 2);
+        await this.dbService.addUser(this.username, this.email, this.password, 2,);
         
         // Guarda el correo en localStorage
         localStorage.setItem('correoUsuario', this.email);
@@ -55,9 +55,9 @@ export class RegistroPage implements OnInit {
           password: this.password,
           rut: this.rut,
         });
-
+  
         this.presentToast(`Registro exitoso.`);
-        this.navCtrl.navigateRoot('/login');
+        this.navCtrl.navigateRoot('/login'); // Asegúrate de que la redirección sea correcta
       } catch (error) {
         console.error('Error registrando usuario', error);
         this.presentToast('Error al registrar usuario. Intenta nuevamente.');
@@ -66,4 +66,4 @@ export class RegistroPage implements OnInit {
       this.presentToast('Por favor, completa todos los campos correctamente.');
     }
   }
-}
+}  

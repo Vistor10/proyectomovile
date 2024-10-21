@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ServicebdService } from 'src/app/services/servicebd.service'; // Importar el servicio
-
+import { NavController, ToastController } from '@ionic/angular';
 @Component({
   selector: 'app-gabinetes',
   templateUrl: './gabinetes.page.html',
@@ -14,9 +14,10 @@ export class GabinetesPage implements OnInit {
   products: any;
   //17-10
 
-  constructor(private servicebd: ServicebdService) { }
+  constructor(private servicebd: ServicebdService, private navCtrl: NavController, private toastController: ToastController) { }
 
   ngOnInit() {
+    
     //17-10
     //this.servicebd.getProductsByCategory(1);
     //this.servicebd.loadProducts()
@@ -24,7 +25,15 @@ export class GabinetesPage implements OnInit {
      // this.servicebd.presentToast(data+"");
       this.products = data;
     });
+    
+    
   }   
+  verDetalles(product: any) {
+    // Navegar a la página de detalles y pasar el producto completo
+    this.navCtrl.navigateForward('/fuentesdepoder', {
+      state: { producto: product }  // Aquí pasamos el producto seleccionado
+    });
+  }
   //17-10
 
 
@@ -43,14 +52,4 @@ export class GabinetesPage implements OnInit {
     return URL.createObjectURL(blob);
   }
 
-  // Método auxiliar para obtener el ID del producto según el nombre
-  getProductIdByName(nombre: string): number {
-    const productMap: { [key: string]: number } = {
-      'Gabinete Corsair iCue 4000X': 5, // Reemplaza con el ID real del producto
-      'Gabinete Kolink Void RGB': 6,    // Reemplaza con el ID real del producto
-      'Gabinete Aerocool Shard': 7, // Reemplaza con el ID real del producto
-      'Gabinete Cooler Master CMP 520': 8  // Reemplaza con el ID real del producto
-    };
-    return productMap[nombre] || 0; // Retorna 0 si no se encuentra el producto
-  }
 }

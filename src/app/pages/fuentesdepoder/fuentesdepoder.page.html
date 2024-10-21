@@ -1,89 +1,45 @@
-<div class="ion-page" id="main-content">
-  <ion-header [translucent]="true">
-    <ion-toolbar color="dark">
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title></ion-title>
-      <ion-buttons slot="end">
-        <ion-router-link [routerLink]="['/paginainicio']">
-          <img class="icon" src="../../assets/icon/gadgetzone_logo-removebg-preview.png" alt="logo">
-        </ion-router-link>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="paginainicio"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ product?.nombre_producto }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-router-link [routerLink]="['/paginainicio']">
+        <img class="icon" src="../../assets/icon/gadgetzone_logo-removebg-preview.png" alt="logo">
+      </ion-router-link>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
-  <ion-content [fullscreen]="true" color="dark" class="ion-padding">
-    <ion-header collapse="condense">
-      <ion-toolbar>
-        <ion-title size="large">Fuentes de Poder</ion-title>
-      </ion-toolbar>
-    </ion-header>
+<ion-content color="dark" class="ion-padding">
+  <ion-card *ngIf="product">
+    <img [src]="product.imagen" alt="{{ product.nombre_producto }}" />
+    <ion-card-header>
+      <ion-card-title>{{ product.nombre_producto }}</ion-card-title>
+      <ion-card-subtitle>{{ product.precio | currency:'CLP' }}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{ product.descripcion_producto }}</p>
+    </ion-card-content>
+  </ion-card>
 
-    <ion-grid>
-      <!-- Primer producto -->
-      <ion-row>
-        <ion-col size="6" size-md="6">
-          <ion-card>
-            <ion-router-link [routerLink]="['/fuente-de-poder-seasonic-vertexpx']">
-              <img alt="Fuente de Poder Seasonic SEASONIC VERTEX PX-1000"
-                src="https://media.spdigital.cl/thumbnails/products/2wmybndr_f314bfdd_thumbnail_512.png" />
-              <ion-card-header>
-                <ion-card-title>Fuente de Poder VERTEX PX-1000</ion-card-title>
-                <ion-card-subtitle>$254.990 CLP</ion-card-subtitle>
-              </ion-card-header>
-            </ion-router-link>
-            <ion-button expand="full" color="primary" (click)="addToCart('Seasonic VERTEX PX-1000', 254990, 'https://media.spdigital.cl/thumbnails/products/2wmybndr_f314bfdd_thumbnail_512.png')">Añadir al Carrito</ion-button>
-          </ion-card>
-        </ion-col>
+  <!-- Botón dentro del contenedor para alinearse con el card -->
+  <div class="full-width-button">
+    <ion-button expand="block" color="primary" (click)="addToCart(product)">
+      Añadir al Carrito
+    </ion-button>
+  </div>
+</ion-content>
 
-        <!-- Segundo producto -->
-        <ion-col size="6" size-md="6">
-          <ion-card>
-            <ion-router-link [routerLink]="['/fuente-de-poder-seasonic-g12']">
-              <img alt="Fuente de Poder Seasonic G12-850GM 850W"
-                src="https://media.spdigital.cl/thumbnails/products/_bist34q_687bdc0d_thumbnail_512.png" />
-              <ion-card-header>
-                <ion-card-title>Fuente de Poder Seasonic G12-850GM</ion-card-title>
-                <ion-card-subtitle>$114.990 CLP</ion-card-subtitle>
-              </ion-card-header>
-            </ion-router-link>
-            <ion-button expand="full" color="primary" (click)="addToCart('Seasonic G12-850GM', 114990, 'https://media.spdigital.cl/thumbnails/products/_bist34q_687bdc0d_thumbnail_512.png')">Añadir al Carrito</ion-button>
-          </ion-card>
-        </ion-col>
-      </ion-row>
+<!-- Añadir este estilo para que el botón ocupe todo el ancho del card -->
+<style>
+  .full-width-button {
+    display: flex;
+    justify-content: center;
+  }
 
-      <!-- Tercer producto -->
-      <ion-row>
-        <ion-col size="6" size-md="6">
-          <ion-card>
-            <ion-router-link [routerLink]="['/fuente-de-poder-thermaltake-smart700']">
-              <img alt="Fuente de Poder Thermaltake Smart 700W"
-                src="https://media.spdigital.cl/thumbnails/products/maw61p4d_0b867802_thumbnail_512.jpg" />
-              <ion-card-header>
-                <ion-card-title>Fuente de Poder Thermaltake Smart 700W</ion-card-title>
-                <ion-card-subtitle>$64.990 CLP</ion-card-subtitle>
-              </ion-card-header>
-            </ion-router-link>
-            <ion-button expand="full" color="primary" (click)="addToCart('Thermaltake Smart 700W', 64990, 'https://media.spdigital.cl/thumbnails/products/maw61p4d_0b867802_thumbnail_512.jpg')">Añadir al Carrito</ion-button>
-          </ion-card>
-        </ion-col>
-
-        <!-- Cuarto producto -->
-        <ion-col size="6" size-md="6">
-          <ion-card>
-            <ion-router-link [routerLink]="['/fuente-de-poder-clio-atx-700']">
-              <img alt="Fuente de Poder CLIO ATX-700"
-                src="https://media.spdigital.cl/thumbnails/products/lf6fjhhg_018eb41a_thumbnail_512.png" />
-              <ion-card-header>
-                <ion-card-title>Fuente de Poder CLIO ATX-700</ion-card-title>
-                <ion-card-subtitle>$51.040 CLP</ion-card-subtitle>
-              </ion-card-header>
-            </ion-router-link>
-            <ion-button expand="full" color="primary" (click)="addToCart('CLIO ATX-700', 51040, 'https://media.spdigital.cl/thumbnails/products/lf6fjhhg_018eb41a_thumbnail_512.png')">Añadir al Carrito</ion-button>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-content>
-</div>
+  ion-button {
+    width: 100%;
+  }
+</style>

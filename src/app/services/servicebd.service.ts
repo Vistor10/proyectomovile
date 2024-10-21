@@ -8,7 +8,7 @@ import { Producto } from './producto';
 })
 export class ServicebdService {
   private databaseObj: SQLiteObject | null = null; // Inicializar como null
-  readonly db_name: string = "gadgetzone_db2.db";
+  readonly db_name: string = "gadgetzone_db3.db";
   readonly table_rol: string = "rol";
   readonly table_usuario: string = "usuario";
   readonly table_categoria: string = "categoria";
@@ -22,7 +22,7 @@ export class ServicebdService {
   productos$ = this.productosSubject.asObservable();
   //17-10
   listaProductos = new BehaviorSubject([]);
-
+  private currentUserSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   constructor(private sqlite: SQLite, private toastController: ToastController, private platform: Platform, private alertController: AlertController) { }
 
   fetchProductos(): Observable<Producto[]>{
@@ -73,7 +73,7 @@ export class ServicebdService {
         await this.databaseObj.executeSql(`CREATE TABLE IF NOT EXISTS ${this.table_categoria} (id_categoria INTEGER PRIMARY KEY AUTOINCREMENT, nombre_categoria TEXT UNIQUE);`, []);
 
  
-        await this.databaseObj.executeSql(`CREATE TABLE IF NOT EXISTS ${this.table_producto} (id_producto INTEGER PRIMARY KEY AUTOINCREMENT, nombre_producto TEXT, descripcion_producto TEXT, precio REAL, stock INTEGER, id_categoria INTEGER, imagen BLOB, FOREIGN KEY (id_categoria) REFERENCES ${this.table_categoria}(id_categoria));`, []
+        await this.databaseObj.executeSql(`CREATE TABLE IF NOT EXISTS ${this.table_producto} (id_producto INTEGER PRIMARY KEY AUTOINCREMENT, nombre_producto TEXT, descripcion_producto TEXT, precio REAL, stock INTEGER, id_categoria INTEGER, imagen BLOB, status INTEGER DEFAULT 1, FOREIGN KEY (id_categoria) REFERENCES ${this.table_categoria}(id_categoria));`, []
 );
 
    
@@ -280,17 +280,17 @@ export class ServicebdService {
   async getProductsByCategory(id_categoria: number): Promise<any[]> {
     try {
       if (this.databaseObj) {
-        this.presentToast("1");
+        
         const res = await this.databaseObj.executeSql(
           `SELECT * FROM ${this.table_producto} WHERE id_categoria = ?`, 
           [id_categoria]
         );
         const products = [];
-        this.presentToast("2");
+        
         for (let i = 0; i < res.rows.length; i++) {
           products.push(res.rows.item(i));
         }
-        this.presentToast("3");
+       // this.presentToast("3");
         this.listaProductos.next(products as any);
         return products;
       } else {
@@ -302,6 +302,45 @@ export class ServicebdService {
       return [];
     }
   }
+  async getAllProducts(): Promise<any[]> {
+    try {
+      if (this.databaseObj) {
+        // Solo obtener productos con status = 1 (activos)
+        const res = await this.databaseObj.executeSql('SELECT * FROM producto WHERE status = ?', [1]);
+        const products = [];
+        for (let i = 0; i < res.rows.length; i++) {
+          products.push(res.rows.item(i));
+        }
+        return products;
+      } else {
+        this.presentAlert("Error", "Database object no fue inicializada.");
+        return [];
+      }
+    } catch (e) {
+      this.presentAlert('Error', 'Error obteniendo productos: ' + JSON.stringify(e));
+      return [];
+    }
+  }
+  
+ /* async getAllProducts(): Promise<any[]> {
+    try {
+      if (this.databaseObj) {
+        const res = await this.databaseObj.executeSql('SELECT * FROM producto', []);
+        const products = [];
+        for (let i = 0; i < res.rows.length; i++) {
+          products.push(res.rows.item(i));
+        }
+        return products;
+      } else {
+        this.presentAlert("Error", "Database object no fue inicializada.");
+        return [];
+      }
+    } catch (e) {
+      this.presentAlert('Error', 'Error obteniendo productos: ' + JSON.stringify(e));
+      return [];
+    }
+  }
+    */
 
 
 
@@ -387,19 +426,32 @@ export class ServicebdService {
     }
   }
 
- async modificarProducto(id_producto: string, nombre_producto: string, descripcion_producto: string, precio: number, id_categoria: number, imagen: Blob | null) {
-  
-    if (this.databaseObj) {
-      await this.databaseObj.executeSql(
-      'UPDATE producto SET nombre_producto = ?, descripcion_producto = ?, precio = ?, id_categoria = ? WHERE //id_producto = ?', 
-      [nombre_producto, descripcion_producto, precio, id_categoria, id_producto]
-      
-    ).then(() => {
-      this.presentAlert("Modificar", "Producto Modificado");
-      this.loadProducts(); 
-    }).catch((e: any) => {
+  async modificarProducto(id_producto: number, nombre_producto: string, descripcion_producto: string, precio: number, id_categoria: number, imagen: Blob | null) {
+    try {
+      if (this.databaseObj) {
+        await this.databaseObj.executeSql(
+          `UPDATE ${this.table_producto} SET nombre_producto = ?, descripcion_producto = ?, precio = ?, id_categoria = ?, imagen = ? WHERE id_producto = ?`,
+          [nombre_producto, descripcion_producto, precio, id_categoria, imagen, id_producto]
+        );
+        this.presentAlert("Modificar", "Producto Modificado con éxito");
+        this.loadProducts(); // Si tienes un método para cargar productos actualizados
+      } else {
+        this.presentAlert("Modificar", "Error: La base de datos no fue inicializada");
+      }
+    } catch (e) {
       this.presentAlert("Modificar", "Error: " + JSON.stringify(e));
-    });
+    }
+  }
+  async eliminarProducto(idProducto: number): Promise<void> {
+  try {
+    if (this.databaseObj) {
+      // Cambiar el status del producto a 2 (eliminado)
+      await this.databaseObj.executeSql('UPDATE producto SET status = ? WHERE id_producto = ?', [2, idProducto]);
+    } else {
+      this.presentAlert("Error", "Database object no fue inicializada.");
+    }
+  } catch (e) {
+    this.presentAlert('Error', 'Error eliminando producto: ' + JSON.stringify(e));
   }
 }
   
@@ -439,16 +491,17 @@ export class ServicebdService {
  async addToCart(userId: number, productId: number, quantity: number) {
   try {
     if (this.databaseObj) {
-      const product = await this.getProductById(productId);
+      const product = await this.getProductById(productId); // Implementa esta función para obtener el producto
       if (product) {
         const total = product.precio * quantity;
-        
+
         // Verificar si el producto ya está en el carrito
         const existingItem = await this.getCartItem(userId, productId);
         if (existingItem) {
-          // Si ya existe, actualizar la cantidad
+          // Si ya existe, actualizar la cantidad y el total
           const newQuantity = existingItem.cantidad + quantity;
-          await this.updateCartItem(userId, productId, newQuantity);
+          const newTotal = product.precio * newQuantity; // Actualiza el total basado en la nueva cantidad
+          await this.updateCartItem(userId, productId, newQuantity, newTotal);
           console.log('Cantidad actualizada en el carrito');
         } else {
           // Si no existe, agregarlo al carrito
@@ -468,6 +521,25 @@ export class ServicebdService {
     console.error('Error añadiendo el producto', e);
   }
 }
+
+// Método para actualizar un item en el carrito
+async updateCartItem(userId: number, productId: number, quantity: number, total: number) {
+  try {
+    if (this.databaseObj) {
+      await this.databaseObj.executeSql(
+        `UPDATE ${this.table_carrito} SET cantidad = ?, total = ? WHERE id_usuario = ? AND id_producto = ?`,
+        [quantity, total, userId, productId]
+      );
+      console.log('Item actualizado en el carrito');
+    } else {
+      console.error("Database object no fue inicializada.");
+    }
+  } catch (e) {
+    console.error('Error actualizando el item del carrito', e);
+  }
+}
+
+
 //17-10
 async getCategories(): Promise<any[]> {
   try {
@@ -509,8 +581,8 @@ async getProductById(productId: number): Promise<any> {
   }
 }
 
-// Método para obtener un item específico del carrito
-async getCartItem(userId: number, productId: number): Promise<any> {
+ // Método para obtener un item específico del carrito
+ async getCartItem(userId: number, productId: number): Promise<any> {
   try {
     if (this.databaseObj) {
       const res = await this.databaseObj.executeSql(
@@ -528,20 +600,6 @@ async getCartItem(userId: number, productId: number): Promise<any> {
   }
 }
 
-// Método para actualizar la cantidad de un producto en el carrito
-async updateCartItem(userId: number, productId: number, quantity: number): Promise<void> {
-  try {
-    if (this.databaseObj) {
-      const query = `UPDATE ${this.table_carrito} SET cantidad = ? WHERE id_usuario = ? AND id_producto = ?`;
-      await this.databaseObj.executeSql(query, [quantity, userId, productId]);
-      console.log('Cantidad actualizada en el carrito');
-    } else {
-      console.error("Database object no fue inicializada.");
-    }
-  } catch (e) {
-    console.error('Error actualizando la cantidad del carrito', e);
-  }
-}
 
 // Método para eliminar productos del carrito
 async removeFromCart(userId: number, productId: number) {
@@ -571,7 +629,7 @@ async getCartItems(userId: number): Promise<any[]> {
   try {
     if (this.databaseObj) {
       const res = await this.databaseObj.executeSql(
-        `SELECT c.*, p.nombre_producto, p.precio FROM ${this.table_carrito} c JOIN ${this.table_producto} p ON c.id_producto = p.id_producto WHERE c.id_usuario = ?`,
+        `SELECT c.*, p.nombre_producto, p.precio, p.imagen FROM ${this.table_carrito} c JOIN ${this.table_producto} p ON c.id_producto = p.id_producto WHERE c.id_usuario = ?`,
         [userId]
       );
       let cartItems = [];
@@ -589,4 +647,73 @@ async getCartItems(userId: number): Promise<any[]> {
   }
 }
 
+
+
+async getCurrentUser(email: string): Promise<any> {
+  try {
+    if (this.databaseObj) {
+      const result = await this.databaseObj.executeSql(
+        `SELECT * FROM ${this.table_usuario} WHERE correo = ?`, [email]
+      );
+
+      if (result.rows.length > 0) {
+        const user = result.rows.item(0);
+        return user; // Devuelve el usuario encontrado
+      } else {
+        console.error('Usuario no encontrado');
+        return null;
+      }
+    }
+  } catch (e) {
+    console.error('Error obteniendo usuario', e);
+    return null;
+  }
 }
+getCurrentUserObservable(): Observable<any> {
+  return this.currentUserSubject.asObservable();
+}
+
+async updatePassword(username: string, newPassword: string): Promise<void> {
+  if (!this.databaseObj) {
+    throw new Error('Database not initialized');
+  }
+
+  // Cambia 'password' por 'contraseña'
+  const query = `UPDATE usuario SET contraseña = ? WHERE correo = ?`;
+  const result = await this.databaseObj.executeSql(query, [newPassword, username]);
+  
+  if (result.rowsAffected === 0) {
+    throw new Error('No se pudo actualizar la contraseña. Verifica si el usuario existe.');
+  }
+}
+async updateUsername(email: string, newUsername: string): Promise<void> {
+  if (!this.databaseObj) {
+    throw new Error('Database not initialized');
+  }
+
+  const query = `UPDATE usuario SET nombre_usuario = ? WHERE correo = ?`; // Cambia el nombre de la columna si es necesario
+  const result = await this.databaseObj.executeSql(query, [newUsername, email]);
+  
+  if (result.rowsAffected === 0) {
+    throw new Error('No se pudo actualizar el perfil. Verifica si el usuario existe.');
+  }
+}
+async updateEmail(currentEmail: string, newEmail: string): Promise<void> {
+  if (!this.databaseObj) {
+    throw new Error('Database not initialized');
+  }
+
+  const query = `UPDATE usuario SET correo = ? WHERE correo = ?`; // Asegúrate de que las columnas sean correctas
+  const result = await this.databaseObj.executeSql(query, [newEmail, currentEmail]);
+
+  if (result.rowsAffected === 0) {
+    throw new Error('No se pudo actualizar el correo. Verifica si el usuario existe.');
+  }
+}
+
+
+
+
+
+}
+
