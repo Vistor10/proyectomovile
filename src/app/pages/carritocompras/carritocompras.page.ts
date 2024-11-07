@@ -9,47 +9,63 @@ import { NavController } from '@ionic/angular';
 })
 export class CarritocomprasPage {
   cartItems: any[] = [];
-  userId: number; // Cambia esto para obtener el userId del sistema de autenticación
+  userId: number | null = null;
 
   constructor(
     private servicebd: ServicebdService,
     private navCtrl: NavController
-  ) {
-    // Aquí debes obtener el userId del usuario autenticado
-    this.userId = 2; // Cambia esto para que sea dinámico según la autenticación
-  }
+  ) {}
 
-  ionViewWillEnter() {
-    this.loadCartItems();
+  async ionViewWillEnter() {
+    // Obtener el correo del usuario autenticado desde localStorage
+    const userEmail = localStorage.getItem('correoUsuario');
+    if (userEmail) {
+      // Buscar el `userId` usando el correo
+      const user = await this.servicebd.getCurrentUser(userEmail);
+      this.userId = user ? user.id_usuario : null;
+      if (this.userId) {
+        this.loadCartItems();
+      } else {
+        console.error('Usuario no encontrado o no autenticado');
+      }
+    } else {
+      console.error('Correo de usuario no encontrado en localStorage');
+    }
   }
 
   async loadCartItems() {
     try {
-      this.cartItems = await this.servicebd.getCartItems(this.userId);
-      console.log('Items del carrito cargados:', this.cartItems);
+      if (this.userId) {
+        this.cartItems = await this.servicebd.getCartItems(this.userId);
+        console.log('Items del carrito cargados:', this.cartItems);
+      }
     } catch (error) {
       console.error('Error al cargar los items del carrito', error);
     }
   }
 
   addToCart(productId: number) {
-    this.servicebd.addToCart(this.userId, productId, 1)
-      .then(() => this.loadCartItems())
-      .catch(err => console.error('Error al añadir al carrito', err));
+    if (this.userId) {
+      this.servicebd.addToCart(this.userId, productId, 1)
+        .then(() => this.loadCartItems())
+        .catch(err => console.error('Error al añadir al carrito', err));
+    }
   }
 
   increaseQuantity(item: any) {
-    item.cantidad += 1;
-    const newTotal = item.precio * item.cantidad; // Calcula el nuevo total
-    this.servicebd.updateCartItem(this.userId, item.id_producto, item.cantidad, newTotal)
-      .then(() => this.loadCartItems())
-      .catch(err => console.error('Error al actualizar la cantidad en el carrito', err));
+    if (this.userId) {
+      item.cantidad += 1;
+      const newTotal = item.precio * item.cantidad;
+      this.servicebd.updateCartItem(this.userId, item.id_producto, item.cantidad, newTotal)
+        .then(() => this.loadCartItems())
+        .catch(err => console.error('Error al actualizar la cantidad en el carrito', err));
+    }
   }
 
   decreaseQuantity(item: any) {
-    if (item.cantidad > 1) {
+    if (this.userId && item.cantidad > 1) {
       item.cantidad -= 1;
-      const newTotal = item.precio * item.cantidad; // Calcula el nuevo total
+      const newTotal = item.precio * item.cantidad;
       this.servicebd.updateCartItem(this.userId, item.id_producto, item.cantidad, newTotal)
         .then(() => this.loadCartItems())
         .catch(err => console.error('Error al actualizar la cantidad en el carrito', err));
@@ -57,8 +73,10 @@ export class CarritocomprasPage {
   }
 
   async removeFromCart(productId: number) {
-    await this.servicebd.removeFromCart(this.userId, productId);
-    this.loadCartItems(); // Recarga los items del carrito después de eliminar
+    if (this.userId) {
+      await this.servicebd.removeFromCart(this.userId, productId);
+      this.loadCartItems();
+    }
   }
 
   getTotal(): number {

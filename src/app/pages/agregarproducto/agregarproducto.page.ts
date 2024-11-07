@@ -14,39 +14,37 @@ export class AgregarproductoPage implements OnInit {
   descrip: string = "";
   precio: number = 0;
   idcat: number = 0;
+  stock: number = 0;  // Nueva propiedad para el stock
   imagen: any;
-  //17-10
   categorias: any[] = [];
-  //17-10
-  constructor(private navCtrl: NavController, private toastController: ToastController, private dbService: ServicebdService) { }
+
+  constructor(
+    private navCtrl: NavController,
+    private toastController: ToastController,
+    private dbService: ServicebdService
+  ) { }
 
   ngOnInit() {
-    //17-10
     this.loadCategories();
-    //this.dbService.getProductsByCategory(1);
-    //17-10
-    
   }
-  //17-10
+
   async loadCategories() {
     try {
-      this.categorias = await this.dbService.getCategories(); // Obtener categorías desde el servicio
+      this.categorias = await this.dbService.getCategories();
     } catch (error) {
-      this.presentToast('Error al obtener categoria:');
+      this.presentToast('Error al obtener categoría');
     }
   }
-  //17-10
+
   async takePicture() {
     const image = await Camera.getPhoto({
       quality: 90,
       allowEditing: false,
       resultType: CameraResultType.Uri  
     });
-
-    
-      this.imagen = image.webPath; // Guardar la imagen en el producto
-    
+    this.imagen = image.webPath;
   }
+
   async presentToast(message: string) {
     const toast = await this.toastController.create({
       message: message,
@@ -55,15 +53,15 @@ export class AgregarproductoPage implements OnInit {
     });
     toast.present();
   }
+
   async onSubmit(form: NgForm) {
-   // this.presentToast("4");
     if (form.valid && this.imagen) {
-     // this.presentToast("3");
-      this.dbService.addProduct(this.nombre,this.descrip,this.precio,this.idcat,this.imagen);
+      await this.dbService.addProduct(this.nombre, this.descrip, this.precio, this.idcat, this.stock, this.imagen);
       this.navCtrl.navigateRoot('/paginainicio');
     } else {
       this.presentToast('Por favor, completa el formulario correctamente.');
     }
   }
 }
+
 

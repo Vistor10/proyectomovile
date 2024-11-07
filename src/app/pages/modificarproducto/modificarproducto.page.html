@@ -1,15 +1,6 @@
-<ion-header [translucent]="true">
-  <ion-toolbar color="dark">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/perfil"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Modificar Producto</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true" color="dark" class="ion-padding">
   <form (ngSubmit)="onSubmit(modificarProductoForm)" #modificarProductoForm="ngForm">
-    
+
     <!-- Selección de producto -->
     <ion-item>
       <ion-label>Selecciona un producto</ion-label>
@@ -17,50 +8,42 @@
         <ion-select-option *ngFor="let prod of productos" [value]="prod.id_producto">{{ prod.nombre_producto }}</ion-select-option>
       </ion-select>
     </ion-item>
-    <ion-text color="danger" *ngIf="productoInput.invalid && productoInput.touched">
-      <p>Debe seleccionar un producto.</p>
-    </ion-text>
 
     <!-- Campos del producto para modificar -->
     <ion-item>
-      <ion-label position="floating">Ingresa el nombre nuevo del producto</ion-label>
+      <ion-label position="floating">Nombre del producto</ion-label>
       <ion-input type="text" name="nombre" [(ngModel)]="productoSeleccionado.nombre_producto" required minlength="3" #nombreInput="ngModel"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">Ingresa el precio del producto</ion-label>
+      <ion-label position="floating">Precio</ion-label>
       <ion-input type="number" name="precio" [(ngModel)]="productoSeleccionado.precio" required min="1" #precioInput="ngModel"></ion-input>
     </ion-item>
-    <!-- Campo de descripción -->
+
     <ion-item>
-     <ion-label position="floating">Ingresa la descripción del producto</ion-label>
-     <ion-textarea name="descripcion" [(ngModel)]="productoSeleccionado.descripcion_producto" required minlength="10" #descripcionInput="ngModel"></ion-textarea>
+      <ion-label position="floating">Descripción</ion-label>
+      <ion-textarea name="descripcion" [(ngModel)]="productoSeleccionado.descripcion_producto" required minlength="10" #descripcionInput="ngModel"></ion-textarea>
     </ion-item>
-    <ion-text color="danger" *ngIf="descripcionInput.invalid && descripcionInput.touched">
-      <p>La descripción debe tener al menos 10 caracteres.</p>
-    </ion-text>
-    
-
-    
 
     <ion-item>
-      <ion-label>Selecciona una categoría</ion-label>
+      <ion-label position="floating">Stock</ion-label>
+      <ion-input type="number" name="stock" [(ngModel)]="productoSeleccionado.stock" required min="0" #stockInput="ngModel"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Categoría</ion-label>
       <ion-select name="categoria" [(ngModel)]="productoSeleccionado.id_categoria" required #categoriaInput="ngModel">
         <ion-select-option *ngFor="let cat of categorias" [value]="cat.id_categoria">{{ cat.nombre_categoria }}</ion-select-option>
       </ion-select>
     </ion-item>
 
-    <!-- Mostrar imagen actual -->
+    <!-- Imagen -->
     <ion-item>
       <ion-label>Imagen actual del producto</ion-label>
     </ion-item>
-    
-    <!-- Mostrar la imagen actual o la nueva imagen seleccionada -->
     <div *ngIf="imagen; else showCurrentImage">
       <img [src]="imagen" alt="Imagen seleccionada" style="width: 100%; height: auto; margin-top: 15px;">
     </div>
-    
-    <!-- Mostrar la imagen actual del producto si no se ha seleccionado una nueva -->
     <ng-template #showCurrentImage>
       <div *ngIf="productoSeleccionado?.imagen">
         <img [src]="productoSeleccionado.imagen" alt="Imagen del Producto" style="width: 100%; height: auto; margin-top: 15px;">
@@ -73,6 +56,9 @@
     <ion-button expand="full" color="primary" class="ion-margin-top" [disabled]="!modificarProductoForm.form.valid" type="submit">
       Guardar Cambios
     </ion-button>
+        <!-- Botón de Eliminar Producto -->
+        <ion-button expand="full" color="danger" class="ion-margin-top" (click)="eliminarProducto()">
+          Eliminar Producto
+        </ion-button>
   </form>
 </ion-content>
-

@@ -406,56 +406,62 @@ export class ServicebdService {
     }
   }
 
-  // Método para insertar datos en la tabla producto
-  async addProduct(nombre_producto: string, descripcion_producto: string, precio: number, id_categoria: number, imagen: Blob | null) {
-    try {
-      this.presentToast("1");
-      if (this.databaseObj) {
-        this.presentToast("2");
-        await this.databaseObj.executeSql(
-          `INSERT INTO ${this.table_producto} (nombre_producto,descripcion_producto, precio, id_categoria, imagen) VALUES (?, ?, ?, ?, ?)`,
-          [nombre_producto,descripcion_producto, precio, id_categoria, imagen]
-        );
-        this.loadProducts();
-        this.presentToast('Producto agregado con éxito');
-      } else {
-        this.presentToast("Database object no fue inicializada.");
-      }
-    } catch (e) {
-      this.presentToast('Error al agregar producto:'+ JSON.stringify(e));
-    }
-  }
-
-  async modificarProducto(id_producto: number, nombre_producto: string, descripcion_producto: string, precio: number, id_categoria: number, imagen: Blob | null) {
-    try {
-      if (this.databaseObj) {
-        await this.databaseObj.executeSql(
-          `UPDATE ${this.table_producto} SET nombre_producto = ?, descripcion_producto = ?, precio = ?, id_categoria = ?, imagen = ? WHERE id_producto = ?`,
-          [nombre_producto, descripcion_producto, precio, id_categoria, imagen, id_producto]
-        );
-        this.presentAlert("Modificar", "Producto Modificado con éxito");
-        this.loadProducts(); // Si tienes un método para cargar productos actualizados
-      } else {
-        this.presentAlert("Modificar", "Error: La base de datos no fue inicializada");
-      }
-    } catch (e) {
-      this.presentAlert("Modificar", "Error: " + JSON.stringify(e));
-    }
-  }
-  async eliminarProducto(idProducto: number): Promise<void> {
+// Método para insertar datos en la tabla producto
+async addProduct(nombre_producto: string, descripcion_producto: string, precio: number, id_categoria: number, stock: number, imagen: Blob | null) {
   try {
     if (this.databaseObj) {
-      // Cambiar el status del producto a 2 (eliminado)
-      await this.databaseObj.executeSql('UPDATE producto SET status = ? WHERE id_producto = ?', [2, idProducto]);
+      await this.databaseObj.executeSql(
+        `INSERT INTO ${this.table_producto} (nombre_producto, descripcion_producto, precio, id_categoria, stock, imagen) VALUES (?, ?, ?, ?, ?, ?)`,
+        [nombre_producto, descripcion_producto, precio, id_categoria, stock, imagen]
+      );
+      this.loadProducts();
+      this.presentToast('Producto agregado con éxito');
     } else {
-      this.presentAlert("Error", "Database object no fue inicializada.");
+      this.presentToast("Database object no fue inicializada.");
     }
   } catch (e) {
-    this.presentAlert('Error', 'Error eliminando producto: ' + JSON.stringify(e));
+    this.presentToast('Error al agregar producto: ' + JSON.stringify(e));
   }
 }
-  
-  
+
+
+
+async modificarProducto(id_producto: number, nombre_producto: string, descripcion_producto: string, precio: number, id_categoria: number, stock: number, imagen: Blob | null) {
+  try {
+      if (this.databaseObj) {
+          await this.databaseObj.executeSql(
+              `UPDATE ${this.table_producto} SET nombre_producto = ?, descripcion_producto = ?, precio = ?, id_categoria = ?, stock = ?, imagen = ? WHERE id_producto = ?`,
+              [nombre_producto, descripcion_producto, precio, id_categoria, stock, imagen, id_producto]
+          );
+          this.presentAlert("Modificar", "Producto modificado con éxito");
+          this.loadProducts(); // Cargar productos actualizados, si tienes este método
+      } else {
+          this.presentAlert("Modificar", "Error: La base de datos no fue inicializada");
+      }
+  } catch (e) {
+      this.presentAlert("Modificar", "Error: " + JSON.stringify(e));
+  }
+}
+
+
+async eliminarProducto(id_producto: number) {
+  try {
+      if (this.databaseObj) {
+          await this.databaseObj.executeSql(
+              `DELETE FROM ${this.table_producto} WHERE id_producto = ?`,
+              [id_producto]
+          );
+          this.presentAlert("Eliminar", "Producto eliminado con éxito");
+          this.loadProducts(); // Refresca la lista de productos si tienes este método
+      } else {
+          this.presentAlert("Eliminar", "Error: La base de datos no fue inicializada");
+      }
+  } catch (e) {
+      this.presentAlert("Eliminar", "Error: " + JSON.stringify(e));
+  }
+}
+
+
   
 
   async presentToast(message: string) {
@@ -649,6 +655,7 @@ async getCartItems(userId: number): Promise<any[]> {
 
 
 
+// Método para obtener el ID del usuario autenticado
 async getCurrentUser(email: string): Promise<any> {
   try {
     if (this.databaseObj) {
@@ -658,7 +665,7 @@ async getCurrentUser(email: string): Promise<any> {
 
       if (result.rows.length > 0) {
         const user = result.rows.item(0);
-        return user; // Devuelve el usuario encontrado
+        return user; // Devuelve el usuario encontrado con `id_usuario`
       } else {
         console.error('Usuario no encontrado');
         return null;
@@ -669,6 +676,8 @@ async getCurrentUser(email: string): Promise<any> {
     return null;
   }
 }
+
+
 getCurrentUserObservable(): Observable<any> {
   return this.currentUserSubject.asObservable();
 }

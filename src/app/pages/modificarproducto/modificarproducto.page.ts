@@ -86,30 +86,57 @@ export class ModificarproductoPage implements OnInit {
   }
   async onSubmit(form: NgForm) {
     if (form.valid) {
-      const imagenFinal = this.imagen || this.productoSeleccionado.imagen;
-  
-      try {
-        await this.dbService.modificarProducto(
-          this.idProductoSeleccionado,
-          this.productoSeleccionado.nombre_producto,
-          this.productoSeleccionado.descripcion_producto,  // Ahora incluimos la descripción
-          this.productoSeleccionado.precio,
-          this.productoSeleccionado.id_categoria,
-          imagenFinal
-        );
-        this.presentToast('Producto modificado con éxito');
-        
-        // Navega a la página de gabinetes y recarga los productos
-        this.navCtrl.navigateRoot('/paginainicio').then(() => {
-          window.location.reload();
-        });
-      } catch (error) {
-        this.presentToast('Error al modificar el producto');
-      }
+        const imagenFinal = this.imagen || this.productoSeleccionado.imagen;
+
+        try {
+            await this.dbService.modificarProducto(
+                this.idProductoSeleccionado,
+                this.productoSeleccionado.nombre_producto,
+                this.productoSeleccionado.descripcion_producto,
+                this.productoSeleccionado.precio,
+                this.productoSeleccionado.id_categoria,
+                this.productoSeleccionado.stock, // Incluimos el stock en la modificación
+                imagenFinal
+            );
+            this.presentToast('Producto modificado con éxito');
+            this.navCtrl.navigateRoot('/paginainicio').then(() => {
+                window.location.reload();
+            });
+        } catch (error) {
+            this.presentToast('Error al modificar el producto');
+        }
     } else {
-      this.presentToast('Por favor, completa el formulario correctamente.');
+        this.presentToast('Por favor, completa el formulario correctamente.');
     }
-  }
+}
+async eliminarProducto() {
+  const alert = await this.alertController.create({
+      header: 'Confirmar Eliminación',
+      message: '¿Estás seguro de que deseas eliminar este producto?',
+      buttons: [
+          {
+              text: 'Cancelar',
+              role: 'cancel',
+              cssClass: 'secondary',
+          }, {
+              text: 'Eliminar',
+              handler: async () => {
+                  try {
+                      await this.dbService.eliminarProducto(this.idProductoSeleccionado);
+                      this.presentToast('Producto eliminado con éxito');
+                      this.navCtrl.navigateRoot('/paginainicio').then(() => {
+                          window.location.reload();
+                      });
+                  } catch (error) {
+                      this.presentToast('Error al eliminar el producto');
+                  }
+              }
+          }
+      ]
+  });
+  await alert.present();
+}
+
   
   
   async presentAlert(message: string) {
