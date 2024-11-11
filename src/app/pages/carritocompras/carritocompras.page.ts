@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ServicebdService } from 'src/app/services/servicebd.service';
-import { NavController } from '@ionic/angular';
+import { NavController, AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-carritocompras',
@@ -13,23 +13,22 @@ export class CarritocomprasPage {
 
   constructor(
     private servicebd: ServicebdService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private alertController: AlertController
   ) {}
 
   async ionViewWillEnter() {
-    // Obtener el correo del usuario autenticado desde localStorage
-    const userEmail = localStorage.getItem('correoUsuario');
-    if (userEmail) {
-      // Buscar el `userId` usando el correo
-      const user = await this.servicebd.getCurrentUser(userEmail);
-      this.userId = user ? user.id_usuario : null;
-      if (this.userId) {
-        this.loadCartItems();
-      } else {
-        console.error('Usuario no encontrado o no autenticado');
+    const storedUserId = localStorage.getItem('userId');
+    this.userId = storedUserId ? parseInt(storedUserId) : null;
+
+    if (this.userId) {
+      try {
+        await this.loadCartItems();
+      } catch (error) {
+        console.error('Error al cargar los items del carrito:', error);
       }
     } else {
-      console.error('Correo de usuario no encontrado en localStorage');
+      console.error('ID de usuario no encontrado en localStorage o el usuario no está autenticado');
     }
   }
 
@@ -38,44 +37,60 @@ export class CarritocomprasPage {
       if (this.userId) {
         this.cartItems = await this.servicebd.getCartItems(this.userId);
         console.log('Items del carrito cargados:', this.cartItems);
+      } else {
+        console.warn('ID de usuario no disponible');
       }
     } catch (error) {
       console.error('Error al cargar los items del carrito', error);
     }
   }
 
-  addToCart(productId: number) {
+  async increaseQuantity(item: any) {
     if (this.userId) {
-      this.servicebd.addToCart(this.userId, productId, 1)
-        .then(() => this.loadCartItems())
-        .catch(err => console.error('Error al añadir al carrito', err));
+      // Obtener el producto para verificar su stock
+      const product = await this.servicebd.getProductById(item.id_producto);
+      if (product && item.cantidad < product.stock) {
+        item.cantidad += 1;
+        const newTotal = item.precio * item.cantidad;
+        try {
+          await this.servicebd.updateCartItem(this.userId, item.id_producto, item.cantidad, newTotal);
+          await this.loadCartItems();
+        } catch (err) {
+          console.error('Error al actualizar la cantidad en el carrito', err);
+        }
+      } else if (product) {
+        // Si excede el stock, mostrar alerta
+        const alert = await this.alertController.create({
+          header: 'Stock insuficiente',
+          message: `Productos sobrepasan el stock. Solamente hay ${product.stock} productos en stock.`,
+          buttons: ['OK']
+        });
+        await alert.present();
+      }
     }
   }
 
-  increaseQuantity(item: any) {
-    if (this.userId) {
-      item.cantidad += 1;
-      const newTotal = item.precio * item.cantidad;
-      this.servicebd.updateCartItem(this.userId, item.id_producto, item.cantidad, newTotal)
-        .then(() => this.loadCartItems())
-        .catch(err => console.error('Error al actualizar la cantidad en el carrito', err));
-    }
-  }
-
-  decreaseQuantity(item: any) {
+  async decreaseQuantity(item: any) {
     if (this.userId && item.cantidad > 1) {
       item.cantidad -= 1;
       const newTotal = item.precio * item.cantidad;
-      this.servicebd.updateCartItem(this.userId, item.id_producto, item.cantidad, newTotal)
-        .then(() => this.loadCartItems())
-        .catch(err => console.error('Error al actualizar la cantidad en el carrito', err));
+      try {
+        await this.servicebd.updateCartItem(this.userId, item.id_producto, item.cantidad, newTotal);
+        await this.loadCartItems();
+      } catch (err) {
+        console.error('Error al actualizar la cantidad en el carrito', err);
+      }
     }
   }
 
   async removeFromCart(productId: number) {
     if (this.userId) {
-      await this.servicebd.removeFromCart(this.userId, productId);
-      this.loadCartItems();
+      try {
+        await this.servicebd.removeFromCart(this.userId, productId);
+        await this.loadCartItems();
+      } catch (err) {
+        console.error('Error al eliminar el producto del carrito', err);
+      }
     }
   }
 

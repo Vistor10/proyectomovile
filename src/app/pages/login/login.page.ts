@@ -16,8 +16,8 @@ export class LoginPage implements OnInit {
   constructor(
     private navCtrl: NavController,
     private toastController: ToastController,
-    private dbService: ServicebdService, // Inyecta el servicio de base de datos
-    private menuCtrl: MenuController // Inyectar el controlador del menú
+    private dbService: ServicebdService, 
+    private menuCtrl: MenuController 
   ) {}
 
   ngOnInit() {
@@ -44,16 +44,16 @@ export class LoginPage implements OnInit {
       try {
         // Validar el usuario con la base de datos usando el nombre de usuario
         const user = await this.dbService.validarUsuario(this.username, this.password);
-        
+  
         if (user) {
-          // Si el usuario es admin (id_rol = 1), ajusta el flag de admin
           this.isAdmin = user.id_rol === 1;
-          
+  
           // Guarda en localStorage si el usuario es admin
           localStorage.setItem('isAdmin', this.isAdmin.toString());
   
-          // Aquí guardamos el correo del usuario
-          localStorage.setItem('correoUsuario', user.correo); // Asegúrate de que `correo` existe en el objeto `user`
+          // Guarda el userId y el correo en localStorage
+          localStorage.setItem('userId', user.id_usuario.toString());
+          localStorage.setItem('correoUsuario', user.correo);
   
           this.presentToast(`Inicio de sesión exitoso. Bienvenido, ${this.username}!`);
           this.navCtrl.navigateRoot('/paginainicio');
@@ -68,4 +68,4 @@ export class LoginPage implements OnInit {
       this.presentToast('Por favor, completa el formulario correctamente.');
     }
   }
-}
+}  

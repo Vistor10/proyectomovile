@@ -20,16 +20,20 @@
           Precio: <span class="price-value">${{ item.precio }}</span>
         </p>
       </ion-label>
+
+      <!-- Controles de cantidad -->
       <div class="quantity-controls">
         <ion-button size="small" (click)="decreaseQuantity(item)">-</ion-button>
         <ion-button size="small">{{ item.cantidad }}</ion-button>
         <ion-button size="small" (click)="increaseQuantity(item)">+</ion-button>
       </div>
+
       <ion-button size="small" color="danger" slot="end" class="remove-btn" (click)="removeFromCart(item.id_producto)">
         Eliminar
       </ion-button>
     </ion-item>
 
+    <!-- Total de la compra -->
     <ion-item class="total-item">
       <ion-label>
         <h2>Total</h2>

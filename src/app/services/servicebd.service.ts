@@ -443,7 +443,6 @@ async modificarProducto(id_producto: number, nombre_producto: string, descripcio
   }
 }
 
-
 async eliminarProducto(id_producto: number) {
   try {
       if (this.databaseObj) {
@@ -460,8 +459,8 @@ async eliminarProducto(id_producto: number) {
       this.presentAlert("Eliminar", "Error: " + JSON.stringify(e));
   }
 }
-
-
+  
+  
   
 
   async presentToast(message: string) {
@@ -493,29 +492,32 @@ async eliminarProducto(id_producto: number) {
     }
   }
 
- // Método para agregar productos al carrito
- async addToCart(userId: number, productId: number, quantity: number) {
+// Método para agregar productos al carrito
+async addToCart(userId: number, productId: number, quantity: number) {
   try {
     if (this.databaseObj) {
-      const product = await this.getProductById(productId); // Implementa esta función para obtener el producto
+      const product = await this.getProductById(productId);
       if (product) {
+        if (quantity > product.stock) {
+          console.error(`Stock insuficiente. Solo hay ${product.stock} productos disponibles.`);
+          return;
+        }
         const total = product.precio * quantity;
 
-        // Verificar si el producto ya está en el carrito
         const existingItem = await this.getCartItem(userId, productId);
         if (existingItem) {
-          // Si ya existe, actualizar la cantidad y el total
           const newQuantity = existingItem.cantidad + quantity;
-          const newTotal = product.precio * newQuantity; // Actualiza el total basado en la nueva cantidad
+          if (newQuantity > product.stock) {
+            console.error(`Stock insuficiente. Solo hay ${product.stock} productos disponibles.`);
+            return;
+          }
+          const newTotal = product.precio * newQuantity;
           await this.updateCartItem(userId, productId, newQuantity, newTotal);
-          console.log('Cantidad actualizada en el carrito');
         } else {
-          // Si no existe, agregarlo al carrito
           await this.databaseObj.executeSql(
             `INSERT INTO ${this.table_carrito} (id_usuario, id_producto, cantidad, total) VALUES (?, ?, ?, ?)`,
             [userId, productId, quantity, total]
           );
-          console.log('Producto agregado al carrito');
         }
       } else {
         console.error('Producto no encontrado');
@@ -527,6 +529,7 @@ async eliminarProducto(id_producto: number) {
     console.error('Error añadiendo el producto', e);
   }
 }
+
 
 // Método para actualizar un item en el carrito
 async updateCartItem(userId: number, productId: number, quantity: number, total: number) {
@@ -544,28 +547,6 @@ async updateCartItem(userId: number, productId: number, quantity: number, total:
     console.error('Error actualizando el item del carrito', e);
   }
 }
-
-
-//17-10
-async getCategories(): Promise<any[]> {
-  try {
-    if (this.databaseObj) {
-      const res = await this.databaseObj.executeSql(`SELECT * FROM ${this.table_categoria}`, []);
-      const categories = [];
-      for (let i = 0; i < res.rows.length; i++) {
-        categories.push(res.rows.item(i));  // Agregar cada categoría al array
-      }
-      return categories;
-    } else {
-      this.presentToast("Database object no fue inicializada.");
-      return [];
-    }
-  } catch (e) {
-    this.presentToast('Error al obtener categoria:'+ JSON.stringify(e));
-    return [];
-  }
-}
-//17-10
 
 // Método para obtener un producto por ID
 async getProductById(productId: number): Promise<any> {
@@ -630,28 +611,35 @@ async removeFromCart(userId: number, productId: number) {
   }
 }
 
-// Método para obtener los productos del carrito
 async getCartItems(userId: number): Promise<any[]> {
   try {
     if (this.databaseObj) {
+      // Ejecuta una consulta SQL para obtener los items del carrito del usuario específico
       const res = await this.databaseObj.executeSql(
-        `SELECT c.*, p.nombre_producto, p.precio, p.imagen FROM ${this.table_carrito} c JOIN ${this.table_producto} p ON c.id_producto = p.id_producto WHERE c.id_usuario = ?`,
+        `SELECT c.*, p.nombre_producto, p.precio, p.imagen 
+         FROM ${this.table_carrito} c 
+         JOIN ${this.table_producto} p ON c.id_producto = p.id_producto 
+         WHERE c.id_usuario = ?`,
         [userId]
       );
+
+      // Recoge todos los resultados en un array
       let cartItems = [];
       for (let i = 0; i < res.rows.length; i++) {
         cartItems.push(res.rows.item(i));
       }
+
       return cartItems;
     } else {
       console.error("Database object no fue inicializada.");
       return [];
     }
   } catch (e) {
-    console.error('Error encontrando el item del carrito', e);
+    console.error('Error obteniendo items del carrito', e);
     return [];
   }
 }
+
 
 
 
@@ -687,7 +675,7 @@ async updatePassword(username: string, newPassword: string): Promise<void> {
     throw new Error('Database not initialized');
   }
 
-  // Cambia 'password' por 'contraseña'
+  // contraseña
   const query = `UPDATE usuario SET contraseña = ? WHERE correo = ?`;
   const result = await this.databaseObj.executeSql(query, [newPassword, username]);
   
@@ -720,9 +708,26 @@ async updateEmail(currentEmail: string, newEmail: string): Promise<void> {
   }
 }
 
-
-
-
+//17-10
+async getCategories(): Promise<any[]> {
+  try {
+    if (this.databaseObj) {
+      const res = await this.databaseObj.executeSql(`SELECT * FROM ${this.table_categoria}`, []);
+      const categories = [];
+      for (let i = 0; i < res.rows.length; i++) {
+        categories.push(res.rows.item(i));  // Agregar cada categoría al array
+      }
+      return categories;
+    } else {
+      this.presentToast("Database object no fue inicializada.");
+      return [];
+    }
+  } catch (e) {
+    this.presentToast('Error al obtener categoria:'+ JSON.stringify(e));
+    return [];
+  }
+}
+//17-10
 
 }
 

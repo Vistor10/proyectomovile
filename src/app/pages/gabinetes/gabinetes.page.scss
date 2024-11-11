@@ -1,3 +1,4 @@
+/* Icono del logo */
 .icon {
   width: 100px;
   height: auto;
@@ -5,38 +6,46 @@
   margin: 0;
 }
 
+/* Contenedor de cada tarjeta de producto */
 ion-card {
-  height: 350px; 
+  height: 380px; 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center; 
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+ion-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Imagen del producto */
 ion-card img {
-  width: 100%; 
-  height: auto;
-  max-height: 120px; 
-  object-fit: contain; 
+  width: 100%;
+  max-height: 150px;
+  object-fit: contain; /* Ajuste para que toda la imagen se vea sin cortar */
+  border-bottom: 1px solid #ccc;
 }
 
+/* Título y precio */
 ion-card-header {
   flex-grow: 1;
   text-align: center;
+  font-weight: bold;
+  color: #ffffff;
+  padding: 10px;
 }
 
-ion-card-content {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center; 
-  text-align: center;
-}
-
+/* Botones dentro de la tarjeta */
 ion-button {
-  margin-top: auto; 
-  width: 90%; 
-  align-self: center; 
+  margin-top: auto;
+  width: 90%;
+  align-self: center;
+  border-radius: 20px;
+  font-weight: bold;
 }
-
