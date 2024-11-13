@@ -491,63 +491,6 @@ async eliminarProducto(id_producto: number) {
       return null;
     }
   }
-
-// Método para agregar productos al carrito
-async addToCart(userId: number, productId: number, quantity: number) {
-  try {
-    if (this.databaseObj) {
-      const product = await this.getProductById(productId);
-      if (product) {
-        if (quantity > product.stock) {
-          console.error(`Stock insuficiente. Solo hay ${product.stock} productos disponibles.`);
-          return;
-        }
-        const total = product.precio * quantity;
-
-        const existingItem = await this.getCartItem(userId, productId);
-        if (existingItem) {
-          const newQuantity = existingItem.cantidad + quantity;
-          if (newQuantity > product.stock) {
-            console.error(`Stock insuficiente. Solo hay ${product.stock} productos disponibles.`);
-            return;
-          }
-          const newTotal = product.precio * newQuantity;
-          await this.updateCartItem(userId, productId, newQuantity, newTotal);
-        } else {
-          await this.databaseObj.executeSql(
-            `INSERT INTO ${this.table_carrito} (id_usuario, id_producto, cantidad, total) VALUES (?, ?, ?, ?)`,
-            [userId, productId, quantity, total]
-          );
-        }
-      } else {
-        console.error('Producto no encontrado');
-      }
-    } else {
-      console.error("Database object no fue inicializada.");
-    }
-  } catch (e) {
-    console.error('Error añadiendo el producto', e);
-  }
-}
-
-
-// Método para actualizar un item en el carrito
-async updateCartItem(userId: number, productId: number, quantity: number, total: number) {
-  try {
-    if (this.databaseObj) {
-      await this.databaseObj.executeSql(
-        `UPDATE ${this.table_carrito} SET cantidad = ?, total = ? WHERE id_usuario = ? AND id_producto = ?`,
-        [quantity, total, userId, productId]
-      );
-      console.log('Item actualizado en el carrito');
-    } else {
-      console.error("Database object no fue inicializada.");
-    }
-  } catch (e) {
-    console.error('Error actualizando el item del carrito', e);
-  }
-}
-
 // Método para obtener un producto por ID
 async getProductById(productId: number): Promise<any> {
   try {
@@ -567,31 +510,176 @@ async getProductById(productId: number): Promise<any> {
     return null;
   }
 }
-
- // Método para obtener un item específico del carrito
- async getCartItem(userId: number, productId: number): Promise<any> {
+async addToCart(email: string, productId: number, quantity: number) {
   try {
     if (this.databaseObj) {
-      const res = await this.databaseObj.executeSql(
-        `SELECT * FROM ${this.table_carrito} WHERE id_usuario = ? AND id_producto = ?`,
-        [userId, productId]
+      // Verifica si el usuario existe en la base de datos
+      const userResult = await this.databaseObj.executeSql(
+        `SELECT id_usuario FROM ${this.table_usuario} WHERE correo = ?`, 
+        [email]
       );
-      return res.rows.length > 0 ? res.rows.item(0) : null; // Devuelve el item si se encuentra
+
+      if (userResult.rows.length === 0) {
+        console.error('Usuario no encontrado');
+        return;
+      }
+
+      const userId = userResult.rows.item(0).id_usuario;
+      const product = await this.getProductById(productId); // Obtiene el producto por su ID
+
+      if (product) {
+        // Verifica si el producto ya está en el carrito del usuario
+        const existingItems = await this.getCartItemsByEmail(email, productId);
+        const existingItem = existingItems.length > 0 ? existingItems[0] : null;
+
+        let newQuantity = quantity; // Define la cantidad que el usuario quiere agregar
+
+        if (existingItem) {
+          // Si el producto ya existe en el carrito, suma la cantidad
+          newQuantity += existingItem.cantidad;
+
+          // Limita la cantidad al stock disponible
+          if (newQuantity > product.stock) {
+            newQuantity = product.stock;  // No permitir más de lo que hay en stock
+          }
+
+          const newTotal = product.precio * newQuantity;
+          // Actualiza el artículo existente en el carrito
+          await this.updateCartItem(email, productId, newQuantity, newTotal);
+
+        } else {
+          // Si el producto no existe en el carrito, se agrega como un nuevo item
+          if (quantity > product.stock) {
+            newQuantity = product.stock;  // Limitar la cantidad al stock máximo
+          }
+
+          const total = product.precio * newQuantity;
+          // Inserta el nuevo producto en el carrito
+          await this.databaseObj.executeSql(
+            `INSERT INTO ${this.table_carrito} (id_usuario, id_producto, cantidad, total) VALUES (?, ?, ?, ?)`,
+            [userId, productId, newQuantity, total]
+          );
+        }
+
+        // Mostrar mensaje de éxito o actualización, por ejemplo con un toast
+        console.log(`Producto ${productId} agregado al carrito con ${newQuantity} unidades`);
+
+      } else {
+        console.error('Producto no encontrado');
+      }
     } else {
       console.error("Database object no fue inicializada.");
-      return null;
     }
   } catch (e) {
-    console.error('Error encontrando el item del carrito', e);
-    return null;
+    console.error('Error añadiendo el producto', e);
   }
 }
 
 
-// Método para eliminar productos del carrito
-async removeFromCart(userId: number, productId: number) {
+
+// Método para actualizar un item en el carrito usando el correo en lugar del ID del usuario
+async updateCartItem(email: string, productId: number, quantity: number, total: number) {
   try {
     if (this.databaseObj) {
+      // Obtener el ID del usuario autenticado usando su correo
+      const userResult = await this.databaseObj.executeSql(
+        `SELECT id_usuario FROM ${this.table_usuario} WHERE correo = ?`, 
+        [email]
+      );
+
+      if (userResult.rows.length === 0) {
+        console.error('Usuario no encontrado');
+        return;
+      }
+
+      const userId = userResult.rows.item(0).id_usuario;
+
+      // Actualizar la cantidad y el total del producto en el carrito
+      await this.databaseObj.executeSql(
+        `UPDATE ${this.table_carrito} SET cantidad = ?, total = ? WHERE id_usuario = ? AND id_producto = ?`,
+        [quantity, total, userId, productId]
+      );
+      console.log('Item actualizado en el carrito');
+    } else {
+      console.error("Database object no fue inicializada.");
+    }
+  } catch (e) {
+    console.error('Error actualizando el item del carrito', e);
+  }
+}
+
+
+// Método para obtener los ítems del carrito del usuario autenticado usando su correo
+async getCartItemsByEmail(email: string, productId?: number): Promise<any[]> {
+  try {
+    if (this.databaseObj) {
+      // Obtener el ID del usuario autenticado
+      const userResult = await this.databaseObj.executeSql(
+        `SELECT id_usuario FROM ${this.table_usuario} WHERE correo = ?`, 
+        [email]
+      );
+
+      if (userResult.rows.length === 0) {
+        console.error('Usuario no encontrado');
+        return [];
+      }
+
+      const userId = userResult.rows.item(0).id_usuario;
+
+      // Construir la consulta SQL para obtener los ítems del carrito
+      let query = `
+        SELECT c.*, p.nombre_producto, p.precio, p.imagen 
+        FROM ${this.table_carrito} c 
+        JOIN ${this.table_producto} p ON c.id_producto = p.id_producto 
+        WHERE c.id_usuario = ?
+      `;
+      const params = [userId];
+
+      // Si se proporciona productId, modificar la consulta para buscar un solo producto
+      if (productId) {
+        query += ' AND c.id_producto = ?';
+        params.push(productId);
+      }
+
+      // Ejecutar la consulta SQL
+      const res = await this.databaseObj.executeSql(query, params);
+
+      // Recoger todos los resultados en un array
+      let cartItems = [];
+      for (let i = 0; i < res.rows.length; i++) {
+        cartItems.push(res.rows.item(i));
+      }
+
+      return cartItems;
+    } else {
+      console.error("Database object no fue inicializada.");
+      return [];
+    }
+  } catch (e) {
+    console.error('Error obteniendo items del carrito', e);
+    return [];
+  }
+}
+
+
+
+// Método para eliminar productos del carrito usando el correo en lugar del ID del usuario
+async removeFromCart(email: string, productId: number) {
+  try {
+    if (this.databaseObj) {
+      // Obtener el ID del usuario autenticado usando su correo
+      const userResult = await this.databaseObj.executeSql(
+        `SELECT id_usuario FROM ${this.table_usuario} WHERE correo = ?`, 
+        [email]
+      );
+
+      if (userResult.rows.length === 0) {
+        console.error('Usuario no encontrado');
+        return;
+      }
+
+      const userId = userResult.rows.item(0).id_usuario;
+
       // Eliminar el producto del carrito donde coincidan el ID del usuario y el ID del producto
       const result = await this.databaseObj.executeSql(
         `DELETE FROM ${this.table_carrito} WHERE id_usuario = ? AND id_producto = ?`,
@@ -610,36 +698,6 @@ async removeFromCart(userId: number, productId: number) {
     console.error('Error eliminando el producto del carrito', e);
   }
 }
-
-async getCartItems(userId: number): Promise<any[]> {
-  try {
-    if (this.databaseObj) {
-      // Ejecuta una consulta SQL para obtener los items del carrito del usuario específico
-      const res = await this.databaseObj.executeSql(
-        `SELECT c.*, p.nombre_producto, p.precio, p.imagen 
-         FROM ${this.table_carrito} c 
-         JOIN ${this.table_producto} p ON c.id_producto = p.id_producto 
-         WHERE c.id_usuario = ?`,
-        [userId]
-      );
-
-      // Recoge todos los resultados en un array
-      let cartItems = [];
-      for (let i = 0; i < res.rows.length; i++) {
-        cartItems.push(res.rows.item(i));
-      }
-
-      return cartItems;
-    } else {
-      console.error("Database object no fue inicializada.");
-      return [];
-    }
-  } catch (e) {
-    console.error('Error obteniendo items del carrito', e);
-    return [];
-  }
-}
-
 
 
 

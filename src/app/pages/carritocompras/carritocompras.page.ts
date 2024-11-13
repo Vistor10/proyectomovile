@@ -9,7 +9,7 @@ import { NavController, AlertController } from '@ionic/angular';
 })
 export class CarritocomprasPage {
   cartItems: any[] = [];
-  userId: number | null = null;
+  userEmail: string | null = null;
 
   constructor(
     private servicebd: ServicebdService,
@@ -18,27 +18,26 @@ export class CarritocomprasPage {
   ) {}
 
   async ionViewWillEnter() {
-    const storedUserId = localStorage.getItem('userId');
-    this.userId = storedUserId ? parseInt(storedUserId) : null;
+    this.userEmail = localStorage.getItem('correoUsuario');
 
-    if (this.userId) {
+    if (this.userEmail) {
       try {
         await this.loadCartItems();
       } catch (error) {
         console.error('Error al cargar los items del carrito:', error);
       }
     } else {
-      console.error('ID de usuario no encontrado en localStorage o el usuario no está autenticado');
+      console.error('Correo del usuario no encontrado en localStorage o el usuario no está autenticado');
     }
   }
 
   async loadCartItems() {
     try {
-      if (this.userId) {
-        this.cartItems = await this.servicebd.getCartItems(this.userId);
+      if (this.userEmail) {
+        this.cartItems = await this.servicebd.getCartItemsByEmail(this.userEmail);
         console.log('Items del carrito cargados:', this.cartItems);
       } else {
-        console.warn('ID de usuario no disponible');
+        console.warn('Correo del usuario no disponible');
       }
     } catch (error) {
       console.error('Error al cargar los items del carrito', error);
@@ -46,20 +45,18 @@ export class CarritocomprasPage {
   }
 
   async increaseQuantity(item: any) {
-    if (this.userId) {
-      // Obtener el producto para verificar su stock
+    if (this.userEmail) {
       const product = await this.servicebd.getProductById(item.id_producto);
       if (product && item.cantidad < product.stock) {
         item.cantidad += 1;
         const newTotal = item.precio * item.cantidad;
         try {
-          await this.servicebd.updateCartItem(this.userId, item.id_producto, item.cantidad, newTotal);
+          await this.servicebd.updateCartItem(this.userEmail, item.id_producto, item.cantidad, newTotal);
           await this.loadCartItems();
         } catch (err) {
           console.error('Error al actualizar la cantidad en el carrito', err);
         }
       } else if (product) {
-        // Si excede el stock, mostrar alerta
         const alert = await this.alertController.create({
           header: 'Stock insuficiente',
           message: `Productos sobrepasan el stock. Solamente hay ${product.stock} productos en stock.`,
@@ -71,11 +68,11 @@ export class CarritocomprasPage {
   }
 
   async decreaseQuantity(item: any) {
-    if (this.userId && item.cantidad > 1) {
+    if (this.userEmail && item.cantidad > 1) {
       item.cantidad -= 1;
       const newTotal = item.precio * item.cantidad;
       try {
-        await this.servicebd.updateCartItem(this.userId, item.id_producto, item.cantidad, newTotal);
+        await this.servicebd.updateCartItem(this.userEmail, item.id_producto, item.cantidad, newTotal);
         await this.loadCartItems();
       } catch (err) {
         console.error('Error al actualizar la cantidad en el carrito', err);
@@ -84,9 +81,9 @@ export class CarritocomprasPage {
   }
 
   async removeFromCart(productId: number) {
-    if (this.userId) {
+    if (this.userEmail) {
       try {
-        await this.servicebd.removeFromCart(this.userId, productId);
+        await this.servicebd.removeFromCart(this.userEmail, productId);
         await this.loadCartItems();
       } catch (err) {
         console.error('Error al eliminar el producto del carrito', err);
