@@ -79,11 +79,7 @@ export class ServicebdService {
    
         await this.databaseObj.executeSql(`CREATE TABLE IF NOT EXISTS ${this.table_carrito} (id_carrito INTEGER PRIMARY KEY AUTOINCREMENT, id_usuario INTEGER, id_producto INTEGER, cantidad INTEGER, total REAL, FOREIGN KEY (id_usuario) REFERENCES ${this.table_usuario}(id_usuario), FOREIGN KEY (id_producto) REFERENCES ${this.table_producto}(id_producto));`, []);
 
-    
-        await this.databaseObj.executeSql(`CREATE TABLE IF NOT EXISTS estado (id_estado INTEGER PRIMARY KEY AUTOINCREMENT,nombre_estado TEXT UNIQUE);`, []);
-
-      
-        await this.databaseObj.executeSql(`CREATE TABLE IF NOT EXISTS venta (id_venta INTEGER PRIMARY KEY AUTOINCREMENT,fecha_venta TEXT,total REAL,id_usuario INTEGER,id_estado INTEGER,FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),FOREIGN KEY (id_estado) REFERENCES estado(id_estado));`, []);
+        await this.databaseObj.executeSql(`CREATE TABLE IF NOT EXISTS venta (id_venta INTEGER PRIMARY KEY AUTOINCREMENT,fecha_venta TEXT,total REAL,id_usuario INTEGER,id_estado INTEGER,FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario));`, []);
 
    
         await this.databaseObj.executeSql(`CREATE TABLE IF NOT EXISTS detalle_venta (id_detalle INTEGER PRIMARY KEY AUTOINCREMENT,cantidad INTEGER,subtotal REAL,id_venta INTEGER,id_producto INTEGER,FOREIGN KEY (id_venta) REFERENCES venta(id_venta),FOREIGN KEY (id_producto) REFERENCES producto(id_producto));`, []);
@@ -786,6 +782,7 @@ async getCategories(): Promise<any[]> {
   }
 }
 //17-10
+
 
 }
 

@@ -60,6 +60,14 @@
     </ion-item>
   </ion-list>
 </ion-content>
+<ion-buttons>
+  <ion-router-link [routerLink]="['/historialcomprausuario']">
+    <ion-button expand="full" color="tertiary" class="ion-margin-top">
+      <ion-icon slot="start" name="time-outline"></ion-icon>
+      Ver Historial de Compras
+    </ion-button>
+  </ion-router-link>
+</ion-buttons>
 
   
   <div *ngIf="isAdmin">
@@ -70,6 +78,7 @@
     <ion-button expand="full" color="secondary" class="ion-margin-top" routerLink="/modificarproducto">
       Modificar Producto
     </ion-button>
+
   </div>
 
   
