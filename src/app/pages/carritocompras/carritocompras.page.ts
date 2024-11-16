@@ -95,11 +95,35 @@ export class CarritocomprasPage {
     return this.cartItems.reduce((total, item) => total + (item.precio * item.cantidad), 0);
   }
 
-  goTocomprapage() {
+  async goTocomprapage() {
     if (this.cartItems.length === 0) {
-      alert('No tienes productos en el carrito. Agrega productos antes de continuar.');
-    } else {
-      this.navCtrl.navigateForward('/compra');
+      const alert = await this.alertController.create({
+        header: 'Carrito vacío',
+        message: 'No tienes productos en el carrito. Agrega productos antes de continuar.',
+        buttons: ['OK'],
+      });
+      await alert.present();
+      return;
+    }
+  
+    try {
+      if (this.userEmail) {
+        // Finalizar la compra
+        await this.servicebd.finalizePurchase(this.userEmail);
+  
+        // Mostrar un mensaje de confirmación
+        const alert = await this.alertController.create({
+          header: 'Compra confirmada',
+          message: 'Tu compra ha sido realizada con éxito.',
+          buttons: ['OK'],
+        });
+        await alert.present();
+  
+        // Redirigir a la página de inicio
+        this.navCtrl.navigateRoot('/paginainicio');
+      }
+    } catch (error) {
+      console.error('Error al procesar la compra:', error);
     }
   }
-}
+}  

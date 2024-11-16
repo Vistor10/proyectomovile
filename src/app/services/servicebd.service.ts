@@ -24,7 +24,13 @@ export class ServicebdService {
   listaProductos = new BehaviorSubject([]);
   private currentUserSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   constructor(private sqlite: SQLite, private toastController: ToastController, private platform: Platform, private alertController: AlertController) { }
+  private historialComprasSubject = new BehaviorSubject<any[]>([]);
+  historialCompras$ = this.historialComprasSubject.asObservable();
+  private ventasSubject = new BehaviorSubject<any[]>([]); // Observable para ventas
+  ventas$ = this.ventasSubject.asObservable(); // Exponer el observable para suscripciones
 
+  private detallesVentaSubject = new BehaviorSubject<any[]>([]);
+  detallesVenta$ = this.detallesVentaSubject.asObservable();
   fetchProductos(): Observable<Producto[]>{
     return this.listaProductos.asObservable();
   }
@@ -50,7 +56,7 @@ export class ServicebdService {
       await this.createTables();  // Crear las tablas después de abrir la base de datos
       await this.createInitialData();  // Insertar los roles iniciales y el usuario admin
       await this.createInitialCategories(); // Insertar categorías iniciales
-      await this.createInitialProducts();   // Insertar productos iniciales
+      
       //17-10
       this.loadProducts();
       //17-10
@@ -159,119 +165,6 @@ export class ServicebdService {
     return blob;                        // Retorna el Blob
   }
 
-  // Método para insertar productos iniciales
-  async createInitialProducts() {
-    try {
-      if (this.databaseObj) {
-        const TecladoRazerBlackwidowV4 = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/3r2pwux4_8665678f_thumbnail_512.jpg');
-        const TecladoRazerHuntsmanMini = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/snyhppat_a721dfd4_thumbnail_512.jpg');
-        const TecladoCougarAttackX3 = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/zwy4s9lw_57966fd8_thumbnail_512.png');
-        const TecladoLogitechG213Prodigy = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/ppwci9lq_50a0c365_thumbnail_512.jpg');
-
-        const GabineteCorsairiCue = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/88txvj8i_200d227b_thumbnail_512.png');
-        const GabineteKolinkVoid = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/6h2lh1by_22f3ee6b_thumbnail_512.jpg');
-        const GabineteAerocoolShard = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/_wq4_3_m_0d4a84e2_thumbnail_512.jpg');
-        const CoolerMasterCMP520 = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/9mtx0k9j_4b2c460e_thumbnail_512.jpg');
-
-        const AudífonosRazerKrakenKittyQuartz = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/sclrc6tz_57cd70db_thumbnail_512.jpg');
-        const AudífonosHyperXCloudStinger2 = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/22c0wthz_45384651_thumbnail_512.jpg');
-        const AudífonosHyperXCloud3 = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/ypolap0x_dcedc470_thumbnail_512.jpg');
-        const AudífonosLogitechG335 = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/wvwk9x87_25b20800_thumbnail_512.jpg');
-
-        const PlacaMadreMSIA520M_APRO = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/udt3fqxu_27f2e082_thumbnail_512.jpg');
-        const PlacaMadreGigabyteAORUXEliteAX = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/yb0mzi8o_57a6a515_thumbnail_512.jpg');
-        const PlacaMadreMSI_PRO_Z70_A_MAX = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/mp6q6_y0_7308a861_thumbnail_512.jpg');
-        const PlacaMadreGigabyteZ790UD = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/pii2vjbr_7316916c_thumbnail_512.jpg');
-
-        const FuentedePoderVERTEXPX_1000 = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/2wmybndr_f314bfdd_thumbnail_512.png');
-        const FuentedePoderSeasonicG12_850GM = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/_bist34q_687bdc0d_thumbnail_512.png');
-        const FuentedePoderThermaltakeSmart700W = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/maw61p4d_0b867802_thumbnail_512.jpg');
-        const FuentedePoderCLIOATX_700 = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/lf6fjhhg_018eb41a_thumbnail_512.png');
-
-        const MemoriaRamKingstonFURYRenegade = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/bmnbqq4b_89223714_thumbnail_512.png');
-        const MemoriaRamDDR4XPG_SPECTRIX_D35G = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/ngcwptyq_563b09c2_thumbnail_512.png');
-        const MemoriaRamDDR4KingstonFURYBeast = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/_xiag1e3_7be5c2ae_thumbnail_512.jpg');
-        const MemoriaRamDDR4CorsairVengeance = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/r6wg8h5d_806087bc_thumbnail_512.jpg');
-
-        const ProcesadorAMDRyzen7_5800XT = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/1sew7rqf_79eaae73_thumbnail_512.jpg');
-        const ProcesadorIntelCorei5_10400 = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/ispzb71k_2e51a77b_thumbnail_512.jpg');
-        const ProcesadorIntelCorei9_14900 = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/jyc8ynv8_f836da9b_thumbnail_512.jpg');
-        const ProcesadorAMDRyzen7_8700G = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/c725qtut_80d80dd3_thumbnail_512.jpg');
-
-        const ASUSDualNvidiaGeForceRTX407 = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/z4gsemrj_d8c06639_thumbnail_512.png');
-        const GigabyteNvidiaGeForceRTX4070Ti = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/rwddzmal_161d7a72_thumbnail_512.png');
-        const ZotacNvidiaGeForceRTX4070Ti = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/tuebyjvo_72ce1e1d_thumbnail_512.jpg');
-        const ASUSTUFNvidiaGeForceRTX4080SUPER = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/ehvdu6al_fedd27dd_thumbnail_512.png');
-
-        const MonitorSamsungOdysseyG632 = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/fqqvtub3_0cac7e5a_thumbnail_512.jpg');
-        const MonitorUltrawideCurvoLG32 = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/jyho6xu9_78536bc0_thumbnail_512.jpg');
-        const MonitorCurvoSamsungOdysseyG95C49 = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/tvlpbdac_aa836e31_thumbnail_512.jpg');
-        const MonitorGamerCurvoMSI49 = await this.urlToBlob('https://media.spdigital.cl/thumbnails/products/pbgyco0j_7ae2c79b_thumbnail_512.jpg');
-
-
-        // Asumir que la categoría 'Teclados' tiene id_categoria = 1
-     /*   await this.addProduct('Teclado Gamer Razer Huntsman Mini', 'Teclado mecánico de alta precisión para gamers.', 109990, 10, 1, TecladoRazerHuntsmanMini);
-        await this.addProduct('Teclado Gamer Razer Blackwidow V4', 'Teclado mecánico con switches verdes Razer.', 239000, 10, 1, TecladoRazerBlackwidowV4);
-        await this.addProduct('Teclado Gamer Cougar Attack X3', 'Teclado mecánico para gamers con retroiluminación.', 95990, 10, 1, TecladoCougarAttackX3);
-        await this.addProduct('Teclado Gamer LOGITECH G213 Prodigy', 'Teclado para gaming de membrana con RGB.', 53780, 10, 1, TecladoLogitechG213Prodigy);
-*/
-        // Asumir que la categoría 'Gabinetes' tiene id_categoria = 2
-      /*  await this.addProduct('Gabinete Corsair iCue 4000X', 'Gabinete ATX con panel de vidrio templado y RGB.', 119000, 10, 2,         GabineteCorsairiCue);
-        await this.addProduct('Gabinete Kolink Void RGB', 'Gabinete con diseño futurista y sistema RGB integrado.', 49570, 10, 2,         GabineteKolinkVoid);
-        await this.addProduct('Gabinete Aerocool Shard', 'Gabinete mid-tower con panel frontal iluminado.', 89990, 10, 2,         GabineteAerocoolShard);
-        await this.addProduct('Gabinete Cooler Master CMP 520', 'Gabinete con excelente flujo de aire y diseño moderno.', 64490, 10, 2,         CoolerMasterCMP520);
-      */  
-        // Asumir que la categoría 'Audífonos Gamer' tiene id_categoria = 3
-      /*  await this.addProduct('Audífonos Gamer Razer Kraken Kitty Quartz', 'Audífonos con orejas de gato y retroiluminación RGB.', 129990, 10,         3, AudífonosRazerKrakenKittyQuartz);
-        await this.addProduct('Audífonos Gamer HyperX Cloud Stinger 2', 'Audífonos ligeros y confortables con sonido envolvente.', 114150, 10,         3, AudífonosHyperXCloudStinger2);
-        await this.addProduct('Audífonos Gamer HyperX Cloud 3', 'Audífonos de alto rendimiento con micrófono desmontable.', 63990, 10, 3,         AudífonosHyperXCloud3);
-        await this.addProduct('Audífonos Gamer Logitech G335', 'Audífonos con diseño ligero y flexible.', 59990, 10, 3, AudífonosLogitechG335);
-        */
-        // Asumir que la categoría 'Placas Madre' tiene id_categoria = 4
-       /* await this.addProduct('Placa Madre MSI A520 M-A PRO', 'Placa madre con soporte para procesadores AMD Ryzen.', 61990, 10, 4,         PlacaMadreMSIA520M_APRO);
-        await this.addProduct('Placa Madre Gigabyte AORUX Elite AX', 'Placa madre con conectividad avanzada para gaming.', 342090, 10, 4,         PlacaMadreGigabyteAORUXEliteAX);
-        await this.addProduct('Placa Madre MSI PRO Z70 A MAX', 'Placa madre con soporte para PCIe 4.0 y almacenamiento rápido.', 298080, 10, 4,         PlacaMadreMSI_PRO_Z70_A_MAX);
-        await this.addProduct('Placa Madre Gigabyte Z790 UD', 'Placa madre con conectividad avanzada para overclocking.', 270460, 10, 4,         PlacaMadreGigabyteZ790UD);
-        */
-        // Asumir que la categoría 'Fuentes de Poder' tiene id_categoria = 5
-      /*  await this.addProduct('Fuente de Poder VERTEX PX-1000', 'Fuente de poder de 1000W con certificación 80+ Platinum.', 254990, 10, 5, FuentedePoderVERTEXPX_1000);
-        await this.addProduct('Fuente de Poder Seasonic G12-850GM', 'Fuente de poder modular de 850W con certificación Gold.', 114990, 10, 5, FuentedePoderSeasonicG12_850GM);
-        await this.addProduct('Fuente de Poder Thermaltake Smart 700W', 'Fuente de poder confiable con eficiencia de hasta 85%.', 64990, 10, 5, FuentedePoderThermaltakeSmart700W);
-        await this.addProduct('Fuente de Poder CLIO ATX-700', 'Fuente de poder accesible y eficiente para PC de entrada.', 51040, 10, 5, FuentedePoderCLIOATX_700);
-*/
-        // Asumir que la categoría 'Memorias RAM' tiene id_categoria = 6
-    /*    await this.addProduct('Memoria Ram Kingston FURY Renegade', 'Memoria RAM DDR4 de alto rendimiento con iluminación RGB.', 414990, 10, 6, MemoriaRamKingstonFURYRenegade);
-        await this.addProduct('Memoria Ram DDR4 XPG SPECTRIX D35G', 'Memoria RAM DDR4 con perfil bajo y RGB.', 38990, 10, 6, MemoriaRamDDR4XPG_SPECTRIX_D35G);
-        await this.addProduct('Memoria Ram DDR4 Kingston FURY Beast', 'Memoria RAM DDR4 con overclocking automático.', 99990, 10, 6, MemoriaRamDDR4KingstonFURYBeast);
-        await this.addProduct('Memoria Ram DDR4 Corsair Vengeance', 'Memoria RAM confiable con alto rendimiento.', 25990, 10, 6, MemoriaRamDDR4CorsairVengeance);
-*/
-// Asumir que la categoría 'Procesadores' tiene id_categoria = 7
-
-       // await this.addProduct('Procesador AMD Ryzen™ 7 5800XT', 'Procesador de alto rendimiento con 8 núcleos y 16 hilos.', 399990, 10, 7,         ProcesadorAMDRyzen7_5800XT);
-        //await this.addProduct('Procesador Intel® Core™ i5-10400', 'Procesador Intel de 10ª generación para equipos de escritorio.', 162770, 10,         7, ProcesadorIntelCorei5_10400);
-        //await this.addProduct('Procesador Intel® Core™ i9-14900', 'Procesador Intel de última generación con 24 núcleos.', 914560, 10, 7,         ProcesadorIntelCorei9_14900);
-       // await this.addProduct('Procesador AMD Ryzen™ 7 8700G', 'Procesador AMD con gráficos integrados de alto rendimiento.', 514990, 10, 7,         ProcesadorAMDRyzen7_8700G);
-        
-        // Asumir que la categoría 'Tarjetas de Video' tiene id_categoria = 8
-        //await this.addProduct('ASUS Dual Nvidia GeForce RTX 4070', 'Tarjeta gráfica con tecnología DLSS 3 para gaming 4K.', 899990, 10, 8,         ASUSDualNvidiaGeForceRTX407);
-        //await this.addProduct('Gigabyte Nvidia GeForce RTX 4070 Ti', 'Tarjeta gráfica con rendimiento extremo para gamers.', 1049990, 10, 8,         GigabyteNvidiaGeForceRTX4070Ti);
-        //await this.addProduct('Zotac Gaming Nvidia GeForce RTX 4070 Ti', 'Tarjeta gráfica con diseño compacto y gran rendimiento.', 1063654,         10, 8, ZotacNvidiaGeForceRTX4070Ti);
-        //await this.addProduct('ASUS TUF Nvidia GeForce RTX 4080 SUPER', 'Tarjeta gráfica con soporte para Ray Tracing en tiempo real.',         1399990, 10, 8, ASUSTUFNvidiaGeForceRTX4080SUPER);
-        
-        // Asumir que la categoría 'Monitores' tiene id_categoria = 9
-        //await this.addProduct('Monitor Samsung Odyssey G6 32', 'Monitor curvo de 32 pulgadas con tasa de refresco de 240Hz.', 599000, 10, 9,         MonitorSamsungOdysseyG632);
-        //await this.addProduct('Monitor Ultrawide Curvo LG 32', 'Monitor ultrawide con pantalla curva para una experiencia inmersiva.', 470750,         10, 9, MonitorUltrawideCurvoLG32);
-        //await this.addProduct('Monitor Curvo Samsung Odyssey G95C 49', 'Monitor ultra curvo de 49 pulgadas para multitarea y gaming.', 991250,         10, 9, MonitorCurvoSamsungOdysseyG95C49);
-        //await this.addProduct('Monitor Gamer Curvo MSI 49', 'Monitor curvo con pantalla ultra ancha para gamers.', 1257180, 10, 9,         MonitorGamerCurvoMSI49);
-
-        console.log('Initial products created');
-      } else {
-        console.error("Database object no fue inicializada.");
-      }
-    } catch (e) {
-      console.error('Error creando los productos iniciales', e);
-    }
-  }
   
   async getProductsByCategory(id_categoria: number): Promise<any[]> {
     try {
@@ -782,7 +675,370 @@ async getCategories(): Promise<any[]> {
   }
 }
 //17-10
-
-
+async loadPurchaseHistory(email: string) {
+  try {
+    const compras = await this.getPurchaseHistoryByUser(email);
+    this.historialComprasSubject.next(compras);
+  } catch (error) {
+    console.error('Error al cargar el historial de compras:', error);
+    this.historialComprasSubject.next([]);
+  }
 }
+
+async loadSaleDetails(idVenta: number) {
+  try {
+    const detalles = await this.getSaleDetails(idVenta);
+    this.detallesVentaSubject.next(detalles);
+  } catch (error) {
+    console.error('Error al cargar detalles de la venta:', error);
+    this.detallesVentaSubject.next([]);
+  }
+}
+  // Método para crear una venta
+  async createSale(userId: number, total: number): Promise<number | null> {
+    try {
+      if (!this.databaseObj) {
+        console.error("Database object no fue inicializada.");
+        return null;
+      }
+
+      const fechaVenta = new Date().toISOString(); // Fecha actual en formato ISO
+      const result = await this.databaseObj.executeSql(
+        `INSERT INTO venta (fecha_venta, total, id_usuario) VALUES (?, ?, ?)`,
+        [fechaVenta, total, userId]
+      );
+
+      if (result.rowsAffected > 0) {
+        console.log("Venta creada con éxito.");
+        return result.insertId; // Retorna el ID de la venta creada
+      }
+      return null;
+    } catch (error) {
+      console.error("Error creando la venta:", error);
+      return null;
+    }
+  }
+
+  // Método para crear un detalle de venta
+  async createSaleDetail(idVenta: number, idProducto: number, cantidad: number, subtotal: number) {
+    try {
+      if (!this.databaseObj) {
+        console.error("Database object no fue inicializada.");
+        return;
+      }
+
+      await this.databaseObj.executeSql(
+        `INSERT INTO detalle_venta (id_venta, id_producto, cantidad, subtotal) VALUES (?, ?, ?, ?)`,
+        [idVenta, idProducto, cantidad, subtotal]
+      );
+      console.log("Detalle de venta creado con éxito.");
+    } catch (error) {
+      console.error("Error creando el detalle de venta:", error);
+    }
+  }
+  async getPurchaseHistoryByUser(email: string): Promise<any[]> {
+    try {
+      if (!this.databaseObj) {
+        throw new Error('Database object is not initialized.');
+      }
+  
+      // Consulta para obtener el historial de compras por correo
+      const query = `
+        SELECT v.id_venta, v.fecha_venta, v.total 
+        FROM venta v
+        INNER JOIN usuario u ON v.id_usuario = u.id_usuario
+        WHERE u.correo = ?
+        ORDER BY v.fecha_venta DESC
+      `;
+      const result = await this.databaseObj.executeSql(query, [email]);
+  
+      const purchases: any[] = [];
+      for (let i = 0; i < result.rows.length; i++) {
+        purchases.push(result.rows.item(i));
+      }
+  
+      return purchases;
+    } catch (error) {
+      console.error('Error fetching purchase history:', error);
+      return [];
+    }
+  }
+  
+async finalizePurchase(email: string) {
+  try {
+    if (!this.databaseObj) {
+      console.error('Database object no fue inicializada.');
+      return;
+    }
+
+    // Obtener el ID del usuario
+    const userResult = await this.databaseObj.executeSql(
+      `SELECT id_usuario FROM usuario WHERE correo = ?`, [email]
+    );
+
+    if (userResult.rows.length === 0) {
+      console.error('Usuario no encontrado');
+      return;
+    }
+
+    const userId = userResult.rows.item(0).id_usuario;
+
+    // Obtener productos del carrito del usuario
+    const cartItems = await this.getCartItemsByEmail(email);
+    let total = 0;
+
+    for (const item of cartItems) {
+      total += item.precio * item.cantidad; // Calcular el total de la venta
+    }
+
+    // Crear la venta y obtener el ID de la venta creada
+    const saleId = await this.createSale(userId, total);
+
+    if (saleId) {
+      for (const item of cartItems) {
+        // Crear detalles de la venta
+        await this.createSaleDetail(saleId, item.id_producto, item.cantidad, item.precio * item.cantidad);
+
+        // Reducir el stock del producto
+        await this.databaseObj.executeSql(
+          `UPDATE producto SET stock = stock - ? WHERE id_producto = ?`,
+          [item.cantidad, item.id_producto]
+        );
+      }
+
+      // Limpiar el carrito del usuario
+      await this.databaseObj.executeSql(`DELETE FROM carrito WHERE id_usuario = ?`, [userId]);
+
+      // Emitir el historial actualizado
+      const updatedHistory = await this.getPurchaseHistoryByUser(email);
+      this.historialComprasSubject.next(updatedHistory);
+    }
+  } catch (error) {
+    console.error('Error finalizando la compra:', error);
+  }
+}
+
+
+
+  async getSaleDetails(idVenta: number): Promise<any[]> {
+    try {
+      // Verifica que el objeto de la base de datos esté inicializado
+      if (!this.databaseObj) {
+        throw new Error('Database object is not initialized.');
+      }
+  
+      // Consulta para obtener los detalles de la venta
+      const query = `SELECT * FROM detalle_venta WHERE id_venta = ?`;
+      const result = await this.databaseObj.executeSql(query, [idVenta]);
+  
+      // Verifica si hay resultados y los convierte a un array
+      const saleDetails: any[] = [];
+      for (let i = 0; i < result.rows.length; i++) {
+        saleDetails.push(result.rows.item(i)); // Convierte cada fila a un objeto
+      }
+  
+      return saleDetails;
+    } catch (error: unknown) { // Aquí definimos que error es de tipo 'unknown'
+      // Comprobamos si 'error' es una instancia de 'Error'
+      if (error instanceof Error) {
+        console.error('Error fetching sale details:', error.message);
+        throw new Error(`Failed to fetch sale details: ${error.message}`);
+      } else {
+        // Si no es un objeto de tipo 'Error', mostramos un mensaje genérico
+        console.error('Unknown error:', error);
+        throw new Error('Failed to fetch sale details: Unknown error');
+      }
+    }
+  }
+  async loadDetailedPurchaseHistory(email: string) {
+    try {
+        if (!this.databaseObj) {
+            throw new Error('Database object is not initialized.');
+        }
+
+        const userResult = await this.databaseObj.executeSql(
+            `SELECT id_usuario FROM usuario WHERE correo = ?`,
+            [email]
+        );
+
+        if (userResult.rows.length === 0) {
+            console.error('Usuario no encontrado con el correo:', email);
+            this.historialComprasSubject.next([]);
+            return;
+        }
+
+        const userId = userResult.rows.item(0).id_usuario;
+
+        const ventasResult = await this.databaseObj.executeSql(
+            `SELECT id_venta, fecha_venta, total 
+             FROM venta 
+             WHERE id_usuario = ? 
+             ORDER BY fecha_venta DESC`,
+            [userId]
+        );
+
+        const ventas = [];
+        for (let i = 0; i < ventasResult.rows.length; i++) {
+            const venta = ventasResult.rows.item(i);
+
+            const detallesResult = await this.databaseObj.executeSql(
+                `SELECT 
+                    p.nombre_producto AS nombre_producto, 
+                    dv.cantidad AS cantidad, 
+                    dv.subtotal AS subtotal, 
+                    p.imagen AS imagen_producto
+                 FROM detalle_venta dv
+                 INNER JOIN producto p ON dv.id_producto = p.id_producto
+                 WHERE dv.id_venta = ?`,
+                [venta.id_venta]
+            );
+
+            const detalles = [];
+            for (let j = 0; j < detallesResult.rows.length; j++) {
+                detalles.push(detallesResult.rows.item(j));
+            }
+
+            const fechaChile = new Date(venta.fecha_venta).toLocaleString('es-CL', {
+                timeZone: 'America/Santiago',
+            });
+
+            ventas.push({
+                id_venta: venta.id_venta,
+                fecha_venta: fechaChile,
+                total: Math.round(venta.total),
+                detalles,
+            });
+        }
+
+        this.historialComprasSubject.next(ventas);
+    } catch (error) {
+        console.error('Error al cargar el historial de compras detallado:', error);
+        this.historialComprasSubject.next([]);
+    }
+}
+
+
+  async loadDetailedSalesHistory() {
+    try {
+      if (!this.databaseObj) {
+        console.error('El objeto de la base de datos no está inicializado.');
+        this.ventasSubject.next([]);
+        return;
+      }
+  
+      const userEmail = localStorage.getItem('userEmail');
+      if (!userEmail) {
+        console.error('El correo del usuario no está definido en localStorage.');
+        this.ventasSubject.next([]);
+        return;
+      }
+  
+      console.log('Correo del usuario:', userEmail);
+  
+      const ventasResult = await this.databaseObj.executeSql(
+        `SELECT v.id_venta, v.fecha_venta, v.total, u.correo AS correo_usuario
+         FROM venta v 
+         INNER JOIN usuario u ON v.id_usuario = u.id_usuario
+         WHERE u.correo = ?
+         ORDER BY v.fecha_venta DESC`, 
+        [userEmail]
+      );
+  
+      const ventas = [];
+      for (let i = 0; i < ventasResult.rows.length; i++) {
+        const venta = ventasResult.rows.item(i);
+  
+        const detallesResult = await this.databaseObj.executeSql(
+          `SELECT 
+            p.nombre_producto AS nombre_producto, 
+            dv.cantidad AS cantidad, 
+            dv.subtotal AS subtotal, 
+            p.imagen AS imagen_producto
+           FROM detalle_venta dv
+           INNER JOIN producto p ON dv.id_producto = p.id_producto
+           WHERE dv.id_venta = ?`,
+          [venta.id_venta]
+        );
+  
+        const detalles = [];
+        for (let j = 0; j < detallesResult.rows.length; j++) {
+          detalles.push(detallesResult.rows.item(j));
+        }
+  
+        const fechaChile = new Date(venta.fecha_venta).toLocaleString('es-CL', {
+          timeZone: 'America/Santiago',
+        });
+  
+        ventas.push({
+          id_venta: venta.id_venta,
+          fecha_venta: fechaChile,
+          total: Math.round(venta.total),
+          correo_usuario: venta.correo_usuario,
+          detalles,
+        });
+      }
+  
+      console.log('Ventas procesadas:', ventas);
+      this.ventasSubject.next(ventas);
+    } catch (error) {
+      console.error('Error al obtener el historial detallado de ventas:', JSON.stringify(error, Object.getOwnPropertyNames(error)));
+      this.ventasSubject.next([]);
+    }
+  }
+  async loadAllSalesHistory() {
+    try {
+      if (!this.databaseObj) {
+        throw new Error('Database object is not initialized.');
+      }
+  
+      // Obtener todas las ventas con el correo del usuario asociado
+      const ventasResult = await this.databaseObj.executeSql(
+        `SELECT v.id_venta, v.fecha_venta, v.total, u.correo AS correo_usuario
+         FROM venta v
+         INNER JOIN usuario u ON v.id_usuario = u.id_usuario
+         ORDER BY v.fecha_venta DESC`
+      );
+  
+      const ventas: any[] = [];
+      for (let i = 0; i < ventasResult.rows.length; i++) {
+        const venta = ventasResult.rows.item(i);
+  
+        // Obtener detalles de la venta
+        const detallesResult = await this.databaseObj.executeSql(
+          `SELECT 
+            p.nombre_producto AS nombre_producto,
+            dv.cantidad AS cantidad,
+            dv.subtotal AS subtotal,
+            p.imagen AS imagen_producto
+           FROM detalle_venta dv
+           INNER JOIN producto p ON dv.id_producto = p.id_producto
+           WHERE dv.id_venta = ?`,
+          [venta.id_venta]
+        );
+  
+        const detalles: any[] = [];
+        for (let j = 0; j < detallesResult.rows.length; j++) {
+          detalles.push(detallesResult.rows.item(j));
+        }
+  
+        const fechaChile = new Date(venta.fecha_venta).toLocaleString('es-CL', {
+          timeZone: 'America/Santiago',
+        });
+  
+        ventas.push({
+          id_venta: venta.id_venta,
+          fecha_venta: fechaChile,
+          total: Math.round(venta.total),
+          correo_usuario: venta.correo_usuario,
+          detalles,
+        });
+      }
+  
+      this.historialComprasSubject.next(ventas);
+    } catch (error) {
+      console.error('Error al cargar el historial de todas las ventas:', error);
+      this.historialComprasSubject.next([]);
+    }
+  }
+}  
 

@@ -1,15 +1,37 @@
-<div class="ion-page" id="main-content">
-  <ion-header [translucent]="true">
-    <ion-toolbar color="dark">
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-buttons slot="end">
-        <ion-router-link [routerLink]="['/paginainicio']">
-          <img class="icon" src="../../assets/icon/gadgetzone_logo-removebg-preview.png" alt="logo">
-        </ion-router-link>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content [fullscreen]="true" color="dark" class="ion-padding">
-    
+<ion-header [translucent]="true">
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/paginainicio"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Historial de Compras</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-list *ngIf="compras.length > 0">
+    <ion-item *ngFor="let compra of compras">
+      <ion-label>
+        <div *ngFor="let detalle of compra.detalles">
+          <ion-row class="detalle-compra">
+            <ion-col size="3" class="imagen-container">
+              <img
+                [src]="detalle.imagen_producto || 'assets/placeholder.png'"
+                alt="Imagen del producto"
+              />
+            </ion-col>
+            <ion-col size="9" class="info-container">
+              <p><strong>Producto:</strong> {{ detalle.nombre_producto }}</p>
+              <p><strong>Cantidad:</strong> {{ detalle.cantidad }}</p>
+              <p><strong>Subtotal:</strong> ${{ detalle.subtotal | number: '1.0-0' }}</p>
+              <p><strong>Fecha:</strong> {{ compra.fecha_venta }}</p>
+              <p *ngIf="isAdmin"><strong>Correo:</strong> {{ compra.correo_usuario }}</p>
+            </ion-col>
+          </ion-row>
+        </div>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-text *ngIf="compras.length === 0">
+    <p>No se encontraron compras.</p>
+  </ion-text>
+</ion-content>

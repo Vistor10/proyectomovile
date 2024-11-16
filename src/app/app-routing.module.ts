@@ -81,19 +81,14 @@ const routes: Routes = [
     loadChildren: () => import('./pages/historialcomprausuario/historialcomprausuario.module').then( m => m.HistorialcomprausuarioPageModule)
   },
   {
-    path: 'detalleventa',
-    loadChildren: () => import('./pages/detalleventa/detalleventa.module').then( m => m.DetalleventaPageModule)
-  },
-  {
 
     path: '**',
     loadChildren: () => import('./pages/notfound/notfound.module').then( m => m.NotfoundPageModule)
  
   },
-  {
-    path: 'detalleventa',
-    loadChildren: () => import('./pages/detalleventa/detalleventa.module').then( m => m.DetalleventaPageModule)
-  },
+
+
+
 
 
 

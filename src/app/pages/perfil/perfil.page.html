@@ -4,7 +4,6 @@
       <ion-back-button defaultHref="paginainicio"></ion-back-button>
     </ion-buttons>
     <ion-title>Perfil</ion-title>
-    <!-- Botón de cerrar sesión en la esquina superior derecha -->
     <ion-buttons slot="end">
       <ion-button color="light" (click)="cerrarSesion()">
         <ion-icon slot="start" name="log-out-outline"></ion-icon>
@@ -14,15 +13,14 @@
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content [fullscreen]="true" class="ion-padding" color="dark">
   <div class="profile-header">
     <div class="profile-picture-container">
-      <img *ngIf="imagen; else defaultIcon" [src]="imagen" class="profile-icon"/>
+      <img *ngIf="imagen; else defaultIcon" [src]="imagen" class="profile-icon" />
       <ng-template #defaultIcon>
         <ion-icon name="person-circle-outline" class="profile-icon"></ion-icon>
       </ng-template>
-  
+
       <button class="camera-button" (click)="takePicture()">
         <ion-icon name="camera-outline"></ion-icon>
       </button>
@@ -30,7 +28,7 @@
 
     <h2 class="user-name">{{ usuario?.nombre_usuario }}</h2>
     <p class="user-role">{{ usuario?.correo }}</p>
-    
+
     <ion-buttons>
       <ion-router-link [routerLink]="['/modificarperfil']">
         <ion-button color="light">
@@ -60,7 +58,9 @@
     </ion-item>
   </ion-list>
 </ion-content>
-<ion-buttons>
+
+<!-- Botón visible solo para usuarios regulares -->
+<ion-buttons *ngIf="!isAdmin">
   <ion-router-link [routerLink]="['/historialcomprausuario']">
     <ion-button expand="full" color="tertiary" class="ion-margin-top">
       <ion-icon slot="start" name="time-outline"></ion-icon>
@@ -69,16 +69,17 @@
   </ion-router-link>
 </ion-buttons>
 
-  
-  <div *ngIf="isAdmin">
-    <ion-button expand="full" color="primary" class="ion-margin-top" routerLink="/agregarproducto">
-      Agregar Producto
-    </ion-button>
+<!-- Botón visible solo para admin -->
+<ion-buttons *ngIf="isAdmin">
+  <ion-button expand="full" color="primary" class="ion-margin-top" routerLink="/agregarproducto">
+    Agregar Producto
+  </ion-button>
 
-    <ion-button expand="full" color="secondary" class="ion-margin-top" routerLink="/modificarproducto">
-      Modificar Producto
-    </ion-button>
+  <ion-button expand="full" color="secondary" class="ion-margin-top" routerLink="/modificarproducto">
+    Modificar Producto
+  </ion-button>
 
-  </div>
-
-  
+  <ion-button expand="full" color="tertiary" class="ion-margin-top" routerLink="/historialcomprausuario">
+    Historial de Ventas
+  </ion-button>
+</ion-buttons>
