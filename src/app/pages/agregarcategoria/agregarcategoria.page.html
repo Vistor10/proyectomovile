@@ -1,0 +1,35 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/perfil"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Agregar Categoría</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" color="dark" class="ion-padding">
+  <form (ngSubmit)="onSubmit(categoryForm)" #categoryForm="ngForm">
+    <ion-item>
+      <ion-label position="floating">Nombre de la Categoría</ion-label>
+      <ion-input type="text" name="nombre" [(ngModel)]="nombre" required minlength="3" pattern="^[a-zA-ZÀ-ÿ\s]+$" #nombreInput="ngModel"></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="nombreInput.invalid && nombreInput.touched">
+      <p *ngIf="nombreInput.errors?.['required']">El nombre de la categoría es obligatorio.</p>
+      <p *ngIf="nombreInput.errors?.['minlength']">El nombre debe tener al menos 3 caracteres.</p>
+      <p *ngIf="nombreInput.errors?.['pattern']">El nombre no puede contener números ni caracteres especiales.</p>
+    </ion-text>
+    <ion-item>
+      <ion-label position="floating">Imagen de la Categoría</ion-label>
+    </ion-item>
+    <ion-button expand="block" color="primary" (click)="takePicture()">Tomar Foto / Seleccionar de Galería</ion-button>
+    <div *ngIf="imagen">
+      <img [src]="imagen" alt="Imagen de la Categoría" style="width: 100%; height: auto; margin-top: 15px;">
+    </div>
+    <ion-text color="danger" *ngIf="!imagen">
+      <p>Es necesario seleccionar una imagen para agregar la categoría.</p>
+    </ion-text>
+    <ion-button expand="full" color="primary" class="ion-margin-top" [disabled]="!categoryForm.form.valid || !imagen" type="submit">
+      Agregar Categoría
+    </ion-button>
+  </form>
+</ion-content>

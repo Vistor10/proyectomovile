@@ -1,22 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DetalleventaPage } from './detalleventa.page';
+import { AgregarcategoriaPage } from './agregarcategoria.page';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { SQLite } from '@awesome-cordova-plugins/sqlite/ngx';
 import { HttpClient } from '@angular/common/http';
 
-describe('DetalleventaPage', () => {
-  let component: DetalleventaPage;
-  let fixture: ComponentFixture<DetalleventaPage>;
+describe('AgregarcategoriaPage', () => {
+  let component: AgregarcategoriaPage;
+  let fixture: ComponentFixture<AgregarcategoriaPage>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DetalleventaPage],
+      declarations: [AgregarcategoriaPage],
       imports: [IonicModule.forRoot(),FormsModule],
       providers:[SQLite, HttpClient]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DetalleventaPage);
+    fixture = TestBed.createComponent(AgregarcategoriaPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

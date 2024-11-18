@@ -16,135 +16,18 @@
     <img class="icon" src="../../assets/icon/gadgetzone_logo-removebg-preview.png" alt="logo">
   </div>
 
-
   <div class="categories-container">
     <ion-grid>
       <ion-row>
-        <ion-col size="4">
-          <div (click)="irDetalleCategoria('Gabinetes')">
+        <ion-col size="4" *ngFor="let category of categories">
+          <div (click)="irDetalleCategoria(category.id_categoria)">
             <div class="category-circle">
-              <img src="https://media.spdigital.cl/thumbnails/products/_wq4_3_m_0d4a84e2_thumbnail_512.jpg"
-                alt="Gabinetes">
+              <img [src]="category.imagen" [alt]="category.nombre_categoria">
             </div>
-            <p>Gabinetes</p>
-          </div>
-        </ion-col>
-
-        <ion-col size="4">
-          <div (click)="irDetalleCategoria('Teclados')">
-            <div class="category-circle">
-              <img src="https://media.spdigital.cl/thumbnails/products/ppwci9lq_50a0c365_thumbnail_512.jpg"
-                alt="Teclados">
-            </div>
-            <p>Teclados</p>
-          </div>
-        </ion-col>
-
-        <ion-col size="4">
-          <div (click)="irDetalleCategoria('Audifonos Gamer')">
-            <div class="category-circle">
-              <img src="https://media.spdigital.cl/thumbnails/products/sclrc6tz_57cd70db_thumbnail_512.jpg"
-                alt="Audífonos Gamer">
-            </div>
-            <p>Audífonos Gamer</p>
-          </div>
-        </ion-col>
-
-        <ion-col size="4">
-          <div (click)="irDetalleCategoria('Placas Madre')">
-            <div class="category-circle">
-              <img src="https://media.spdigital.cl/thumbnails/products/udt3fqxu_27f2e082_thumbnail_512.jpg"
-                alt="Placas Madre">
-            </div>
-            <p>Placas Madre</p>
-          </div>
-        </ion-col>
-
-        <ion-col size="4">
-          <div (click)="irDetalleCategoria('Fuentes de Poder')">
-            <div class="category-circle">
-              <img src="https://media.spdigital.cl/thumbnails/products/lf6fjhhg_018eb41a_thumbnail_512.png"
-                alt="Fuentes de Poder">
-            </div>
-            <p>Fuentes de Poder</p>
-          </div>
-        </ion-col>
-
-        <ion-col size="4">
-          <div (click)="irDetalleCategoria('Memorias RAM')">
-            <div class="category-circle">
-              <img src="https://media.spdigital.cl/thumbnails/products/bmnbqq4b_89223714_thumbnail_512.png"
-                alt="Memorias RAM">
-            </div>
-            <p>Memorias RAM</p>
-          </div>
-        </ion-col>
-
-        <ion-col size="4">
-          <div (click)="irDetalleCategoria('Procesadores')">
-            <div class="category-circle">
-              <img src="https://media.spdigital.cl/thumbnails/products/ispzb71k_2e51a77b_thumbnail_512.jpg"
-                alt="Procesadores">
-            </div>
-            <p>Procesadores</p>
-          </div>
-        </ion-col>
-
-        <ion-col size="4">
-          <div (click)="irDetalleCategoria('Tarjetas de Video')">
-            <div class="category-circle">
-              <img src="https://media.spdigital.cl/thumbnails/products/z4gsemrj_d8c06639_thumbnail_512.png"
-                alt="Tarjetas de Video">
-            </div>
-            <p>Tarjetas de Video</p>
-          </div>
-        </ion-col>
-
-        <ion-col size="4">
-          <div (click)="irDetalleCategoria('Monitores')">
-            <div class="category-circle">
-              <img src="https://media.spdigital.cl/thumbnails/products/tvlpbdac_aa836e31_thumbnail_512.jpg"
-                alt="Monitores">
-            </div>
-            <p>Monitores</p>
+            <p>{{ category.nombre_categoria }}</p>
           </div>
         </ion-col>
       </ion-row>
     </ion-grid>
-    <ion-footer>
-      <ion-grid>
-        <ion-row class="footer-icons">
-          <ion-col size="3">
-            <ion-button href="https://twitter.com/" target="_blank" fill="clear">
-              <ion-icon name="logo-twitter" slot="icon-only"></ion-icon>
-            </ion-button>
-          </ion-col>
-          <ion-col size="3">
-            <ion-button href="https://www.instagram.com/" target="_blank" fill="clear">
-              <ion-icon name="logo-instagram" slot="icon-only"></ion-icon>
-            </ion-button>
-          </ion-col>
-          <ion-col size="3">
-            <ion-button href="https://wa.me/" target="_blank" fill="clear">
-              <ion-icon name="logo-whatsapp" slot="icon-only"></ion-icon>
-            </ion-button>
-          </ion-col>
-          <ion-col size="3">
-            <ion-button href="https://www.facebook.com/" target="_blank" fill="clear">
-              <ion-icon name="logo-facebook" slot="icon-only"></ion-icon>
-            </ion-button>
-          </ion-col>
-        </ion-row>
-        <!-- Mostrar el valor del dólar -->
-        <ion-row class="footer-dollar">
-          <ion-col text-center>
-            <ion-text color="light" *ngIf="dolarValue">
-              Valor del dólar hoy: {{ dolarValue | number:'1.2-2' }} CLP
-            </ion-text>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-footer>
   </div>
-  
 </ion-content>

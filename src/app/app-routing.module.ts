@@ -81,11 +81,21 @@ const routes: Routes = [
     loadChildren: () => import('./pages/historialcomprausuario/historialcomprausuario.module').then( m => m.HistorialcomprausuarioPageModule)
   },
   {
+    path: 'modificarcategorias',
+    loadChildren: () => import('./pages/modificarcategorias/modificarcategorias.module').then( m => m.ModificarcategoriasPageModule)
+  },
+  {
+    path: 'agregarcategoria',
+    loadChildren: () => import('./pages/agregarcategoria/agregarcategoria.module').then( m => m.AgregarcategoriaPageModule)
+  },
+  {
 
     path: '**',
     loadChildren: () => import('./pages/notfound/notfound.module').then( m => m.NotfoundPageModule)
  
   },
+  
+
 
 
 

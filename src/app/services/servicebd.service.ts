@@ -8,7 +8,7 @@ import { Producto } from './producto';
 })
 export class ServicebdService {
   private databaseObj: SQLiteObject | null = null; // Inicializar como null
-  readonly db_name: string = "gadgetzone_db3.db";
+  readonly db_name: string = "gadgetzone_db4.db";
   readonly table_rol: string = "rol";
   readonly table_usuario: string = "usuario";
   readonly table_categoria: string = "categoria";
@@ -55,7 +55,7 @@ export class ServicebdService {
       }
       await this.createTables();  // Crear las tablas después de abrir la base de datos
       await this.createInitialData();  // Insertar los roles iniciales y el usuario admin
-      await this.createInitialCategories(); // Insertar categorías iniciales
+      
       
       //17-10
       this.loadProducts();
@@ -137,28 +137,7 @@ export class ServicebdService {
       console.error('Error creando el data inicial', e);
     }
   }
-
-  // Método para insertar categorías iniciales
-  async createInitialCategories() {
-    try {
-      if (this.databaseObj) {
-        await this.addCategory('Teclados');
-        await this.addCategory('Gabinetes');
-        await this.addCategory('Audifonos Gamer');
-        await this.addCategory('Placas Madre');
-        await this.addCategory('Fuentes de Poder');
-        await this.addCategory('Memorias RAM');
-        await this.addCategory('Procesadores');
-        await this.addCategory('Tarjetas de Video');
-        await this.addCategory('Monitores');
-        console.log('Initial categories created');
-      } else {
-        console.error("Database object no fue inicializada.");
-      }
-    } catch (e) {
-      console.error('Error creando la categoría inicial', e);
-    }
-  }
+  
   async urlToBlob(url: string): Promise<Blob> {
     const response = await fetch(url);  // Realiza la solicitud para obtener la imagen
     const blob = await response.blob(); // Convierte la imagen a Blob
@@ -262,16 +241,18 @@ export class ServicebdService {
   }
 
   // Método para insertar datos en la tabla categoría
-  async addCategory(nombre_categoria: string) {
+  async addCategory(nombre_categoria: string, imagen: Blob) {
     try {
       if (this.databaseObj) {
-        await this.databaseObj.executeSql(`INSERT INTO ${this.table_categoria} (nombre_categoria) VALUES (?)`, [nombre_categoria]);
-        console.log('Category anadida');
+        await this.databaseObj.executeSql(`
+          INSERT INTO categoria (nombre_categoria, imagen) VALUES (?, ?)
+        `, [nombre_categoria, imagen]);
+        this.presentToast('Categoría agregada con éxito');
       } else {
-        console.error("Database object no fue inicializada.");
+        this.presentToast("Database object no fue inicializada.");
       }
     } catch (e) {
-      console.error('Error anadiendo la categoria', e);
+      this.presentToast('Error al agregar categoria: ' + JSON.stringify(e));
     }
   }
 
@@ -279,7 +260,7 @@ export class ServicebdService {
   async buscarCat(categoria: string): Promise<any> {
     try {
       if (this.databaseObj) {
-        const res = await this.databaseObj.executeSql(`SELECT id_categoria FROM ${this.table_categoria} WHERE nombre_categoria = ?`, [categoria]);
+        const res = await this.databaseObj.executeSql(`SELECT id_categoria FROM ${this.table_categoria} WHERE id_categoria = ?`, [categoria]);
 
         if (res.rows.length > 0) {
           // // Categoria encontrada
@@ -652,6 +633,21 @@ async updateEmail(currentEmail: string, newEmail: string): Promise<void> {
 
   if (result.rowsAffected === 0) {
     throw new Error('No se pudo actualizar el correo. Verifica si el usuario existe.');
+  }
+}
+async modificarCategoria(id_categoria: number, nombre_categoria: string, imagen: string | null) {
+  try {
+    if (this.databaseObj) {
+      await this.databaseObj.executeSql(
+        `UPDATE categoria SET nombre_categoria = ?, imagen = ? WHERE id_categoria = ?`,
+        [nombre_categoria, imagen, id_categoria]
+      );
+      this.presentToast('Categoría modificada exitosamente.');
+    } else {
+      throw new Error('La base de datos no está inicializada.');
+    }
+  } catch (error) {
+    throw new Error('Error al modificar la categoría: ' + JSON.stringify(error));
   }
 }
 

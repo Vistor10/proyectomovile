@@ -1,0 +1,40 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/perfil"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Modificar Categoría</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" color="dark" class="ion-padding">
+  <!-- Selección de categoría -->
+  <ion-item>
+    <ion-label>Seleccionar Categoría</ion-label>
+    <ion-select [(ngModel)]="categoriaSeleccionada" (ionChange)="onCategoriaSelect()">
+      <ion-select-option *ngFor="let cat of categorias" [value]="cat">
+        {{ cat.nombre_categoria }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- Formulario de modificación -->
+  <form *ngIf="categoriaSeleccionada" (ngSubmit)="guardarCambios()">
+    <ion-item>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input type="text" [(ngModel)]="categoriaSeleccionada.nombre_categoria" name="nombre" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Cambiar Imagen</ion-label>
+    </ion-item>
+    <ion-button expand="block" color="primary" (click)="takePicture()">Tomar Foto / Seleccionar de Galería</ion-button>
+
+    <!-- Vista previa de la imagen -->
+    <div *ngIf="categoriaSeleccionada.imagen">
+      <img [src]="categoriaSeleccionada.imagen" alt="Imagen de la categoría" style="width: 100%; height: auto; margin-top: 15px;">
+    </div>
+
+    <ion-button expand="full" color="primary" type="submit">Guardar Cambios</ion-button>
+  </form>
+</ion-content>
