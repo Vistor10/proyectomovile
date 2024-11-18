@@ -8,16 +8,22 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" color="dark" class="ion-padding center-content">
-  <form (ngSubmit)="onForward()" #forwardForm="ngForm">
+  <form (ngSubmit)="onForward()" *ngIf="!tokenEnviado">
     <ion-item>
-      <ion-label position="floating">
-        Ingresa tu correo para mandarte un código de acceso
-      </ion-label>
+      <ion-label position="floating">Ingresa tu correo</ion-label>
       <ion-input type="email" [(ngModel)]="email" name="email" required email #emailInput="ngModel"></ion-input>
     </ion-item>
     <ion-text color="danger" *ngIf="emailInput.invalid && emailInput.touched">
       <p>Por favor, ingresa un correo válido.</p>
     </ion-text>
-    <button mat-raised-button class="custom-forward-button" type="submit" [disabled]="!forwardForm.form.valid">Enviar</button>
+    <ion-button expand="full" color="primary" type="submit" [disabled]="!email">Enviar Código</ion-button>
+  </form>
+
+  <form (ngSubmit)="onVerify()" *ngIf="tokenEnviado">
+    <ion-item>
+      <ion-label position="floating">Ingresa el código</ion-label>
+      <ion-input type="text" [(ngModel)]="inputToken" name="inputToken" required></ion-input>
+    </ion-item>
+    <ion-button expand="full" color="primary" type="submit">Verificar</ion-button>
   </form>
 </ion-content>
