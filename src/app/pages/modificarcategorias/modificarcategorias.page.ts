@@ -10,15 +10,14 @@ import { ServicebdService } from 'src/app/services/servicebd.service';
   styleUrls: ['./modificarcategorias.page.scss'],
 })
 export class ModificarcategoriasPage implements OnInit {
-  categorias: any[] = []; // Lista de categorías
-  categoriaSeleccionada: any = null; // Categoría seleccionada para modificar
+  categorias: any[] = []; 
+  categoriaSeleccionada: any = null; 
 
   constructor(private dbService: ServicebdService, private toastController: ToastController, private router: Router) { }
 
   ngOnInit() {
     this.cargarCategorias();
   }
-  // Cargar categorías existentes desde el servicio
   async cargarCategorias() {
     try {
       this.categorias = await this.dbService.getCategories();
@@ -26,21 +25,17 @@ export class ModificarcategoriasPage implements OnInit {
       this.presentToast('Error al cargar categorías: ' + JSON.stringify(error));
     }
   }
-
-  // Seleccionar una categoría
   onCategoriaSelect() {
     if (this.categoriaSeleccionada) {
       console.log('Categoría seleccionada:', this.categoriaSeleccionada);
     }
   }
-
-  // Cambiar la imagen de la categoría
   async takePicture() {
     try {
       const image = await Camera.getPhoto({
         quality: 90,
         allowEditing: false,
-        resultType: CameraResultType.Uri, // Obtener la URL de la imagen
+        resultType: CameraResultType.Uri, 
       });
       if (image.webPath) {
         this.categoriaSeleccionada.imagen = image.webPath;
@@ -50,7 +45,6 @@ export class ModificarcategoriasPage implements OnInit {
     }
   }
 
-  // Guardar los cambios realizados
   async guardarCambios() {
     if (this.categoriaSeleccionada) {
       try {
@@ -60,10 +54,8 @@ export class ModificarcategoriasPage implements OnInit {
           this.categoriaSeleccionada.imagen
         );
         this.presentToast('Categoría modificada exitosamente.');
-  
-        // Redirigir a la página de inicio para refrescar la vista
         this.router.navigate(['/paginainicio']).then(() => {
-          window.location.reload(); // Forzar el recargado completo de la página
+          window.location.reload(); 
         });
       } catch (error) {
         this.presentToast('Error al guardar los cambios: ' + JSON.stringify(error));
@@ -73,8 +65,6 @@ export class ModificarcategoriasPage implements OnInit {
     }
   }
   
-
-  // Mostrar un mensaje
   async presentToast(message: string) {
     const toast = await this.toastController.create({
       message: message,

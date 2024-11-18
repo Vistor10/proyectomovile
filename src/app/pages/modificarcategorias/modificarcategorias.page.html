@@ -8,7 +8,6 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" color="dark" class="ion-padding">
-  <!-- Selección de categoría -->
   <ion-item>
     <ion-label>Seleccionar Categoría</ion-label>
     <ion-select [(ngModel)]="categoriaSeleccionada" (ionChange)="onCategoriaSelect()">
@@ -17,8 +16,6 @@
       </ion-select-option>
     </ion-select>
   </ion-item>
-
-  <!-- Formulario de modificación -->
   <form *ngIf="categoriaSeleccionada" (ngSubmit)="guardarCambios()">
     <ion-item>
       <ion-label position="floating">Nombre</ion-label>
@@ -29,8 +26,6 @@
       <ion-label position="floating">Cambiar Imagen</ion-label>
     </ion-item>
     <ion-button expand="block" color="primary" (click)="takePicture()">Tomar Foto / Seleccionar de Galería</ion-button>
-
-    <!-- Vista previa de la imagen -->
     <div *ngIf="categoriaSeleccionada.imagen">
       <img [src]="categoriaSeleccionada.imagen" alt="Imagen de la categoría" style="width: 100%; height: auto; margin-top: 15px;">
     </div>
