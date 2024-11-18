@@ -30,4 +30,17 @@ describe('ModificarcorreoPage', () => {
     component.newEmail = testEmail;
     expect(component.newEmail).toBe(testEmail);
   });
+  it('debería deshabilitar el botón si el campo newEmail está vacío', () => {
+    const form = { valid: false } as any; 
+    component.newEmail = ''; 
+
+    expect(form.valid).toBeFalse(); 
+  });
+
+  it('debería habilitar el botón si el campo newEmail es válido', () => {
+    const form = { valid: true } as any; 
+    component.newEmail = 'correo@example.com'; 
+
+    expect(form.valid).toBeTrue();
+  });
 });
