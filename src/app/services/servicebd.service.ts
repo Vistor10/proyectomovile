@@ -8,7 +8,7 @@ import { Producto } from './producto';
 })
 export class ServicebdService {
   private databaseObj: SQLiteObject | null = null; // Inicializar como null
-  readonly db_name: string = "gadgetzone_db4.db";
+  readonly db_name: string = "gadgetzone_db5.db";
   readonly table_rol: string = "rol";
   readonly table_usuario: string = "usuario";
   readonly table_categoria: string = "categoria";
@@ -76,7 +76,7 @@ export class ServicebdService {
         await this.databaseObj.executeSql(`CREATE TABLE IF NOT EXISTS ${this.table_usuario} (id_usuario INTEGER PRIMARY KEY AUTOINCREMENT, nombre_usuario TEXT, correo TEXT UNIQUE, contraseña TEXT, id_rol INTEGER, FOREIGN KEY (id_rol) REFERENCES ${this.table_rol}(id_rol));`, []);
 
   
-        await this.databaseObj.executeSql(`CREATE TABLE IF NOT EXISTS ${this.table_categoria} (id_categoria INTEGER PRIMARY KEY AUTOINCREMENT, nombre_categoria TEXT UNIQUE);`, []);
+        await this.databaseObj.executeSql(`CREATE TABLE IF NOT EXISTS ${this.table_categoria} (id_categoria INTEGER PRIMARY KEY AUTOINCREMENT, nombre_categoria TEXT UNIQUE,imagen BLOB);`, []);
 
  
         await this.databaseObj.executeSql(`CREATE TABLE IF NOT EXISTS ${this.table_producto} (id_producto INTEGER PRIMARY KEY AUTOINCREMENT, nombre_producto TEXT, descripcion_producto TEXT, precio REAL, stock INTEGER, id_categoria INTEGER, imagen BLOB, status INTEGER DEFAULT 1, FOREIGN KEY (id_categoria) REFERENCES ${this.table_categoria}(id_categoria));`, []
