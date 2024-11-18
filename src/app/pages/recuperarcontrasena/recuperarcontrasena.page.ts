@@ -57,7 +57,7 @@ export class RecuperarcontrasenaPage implements OnInit {
       await this.presentAlert('Éxito', 'El código es correcto. Redirigiendo...');
       
       
-      this.navCtrl.navigateForward('/contrasenanueva');
+      this.navCtrl.navigateForward('/contrasenanuevaolvido');
     } else {
       await this.presentAlert('Error', 'El código ingresado es incorrecto.');
     }
