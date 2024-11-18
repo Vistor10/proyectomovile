@@ -89,11 +89,17 @@ const routes: Routes = [
     loadChildren: () => import('./pages/agregarcategoria/agregarcategoria.module').then( m => m.AgregarcategoriaPageModule)
   },
   {
+    path: 'contrasenanuevaolvido',
+    loadChildren: () => import('./pages/contrasenanuevaolvido/contrasenanuevaolvido.module').then( m => m.ContrasenanuevaolvidoPageModule)
+  },
+  {
 
     path: '**',
     loadChildren: () => import('./pages/notfound/notfound.module').then( m => m.NotfoundPageModule)
  
   },
+ 
+
   
 
 

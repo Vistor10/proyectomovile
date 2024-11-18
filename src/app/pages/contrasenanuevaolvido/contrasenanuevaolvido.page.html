@@ -1,0 +1,48 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="login"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Cambiar Contraseña</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" color="dark" class="ion-padding center-content">
+  <form (ngSubmit)="onChangePassword()" #changePasswordForm="ngForm">
+    <ion-item>
+      <ion-label position="floating">Nueva Contraseña</ion-label>
+      <ion-input
+        type="password"
+        name="newPassword"
+        [(ngModel)]="newPassword"
+        required
+        minlength="6"
+        #newPasswordInput="ngModel">
+      </ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="newPasswordInput.invalid && newPasswordInput.touched">
+      <p *ngIf="newPasswordInput.errors?.['required']">La contraseña es obligatoria.</p>
+      <p *ngIf="newPasswordInput.errors?.['minlength']">Debe tener al menos 6 caracteres.</p>
+    </ion-text>
+
+    <ion-item>
+      <ion-label position="floating">Confirmar Contraseña</ion-label>
+      <ion-input
+        type="password"
+        name="confirmPassword"
+        [(ngModel)]="confirmPassword"
+        required
+        [pattern]="newPassword"
+        #confirmPasswordInput="ngModel">
+      </ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="confirmPasswordInput.invalid && confirmPasswordInput.touched">
+      <p *ngIf="confirmPasswordInput.errors?.['required']">Debes confirmar la contraseña.</p>
+      <p *ngIf="confirmPasswordInput.errors?.['pattern']">Las contraseñas no coinciden.</p>
+    </ion-text>
+
+    <ion-button expand="full" color="primary" class="ion-margin-top" type="submit" [disabled]="!changePasswordForm.form.valid">
+      Cambiar Contraseña
+    </ion-button>
+  </form>
+</ion-content>
