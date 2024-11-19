@@ -5,6 +5,10 @@
     </ion-buttons>
     <ion-title>Modificar producto</ion-title>
   </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" color="dark" class="ion-padding">
+  <form (ngSubmit)="onSubmit(modificarProductoForm)" #modificarProductoForm="ngForm">
 
     <!-- Selección de producto -->
     <ion-item>

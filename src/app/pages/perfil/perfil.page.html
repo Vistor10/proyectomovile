@@ -62,7 +62,7 @@
 <!-- Botón visible solo para usuarios regulares -->
 <ion-buttons *ngIf="!isAdmin">
   <ion-router-link [routerLink]="['/historialcomprausuario']">
-    <ion-button expand="full" color="tertiary" class="ion-margin-top">
+    <ion-button expand="full" color="primary" class="ion-margin-top">
       <ion-icon slot="start" name="time-outline"></ion-icon>
       Ver Historial de Compras
     </ion-button>
@@ -70,14 +70,11 @@
 </ion-buttons>
 
 <!-- Botón visible solo para admin -->
-<ion-buttons *ngIf="isAdmin">
-  <ion-button expand="full" color="primary" class="ion-margin-top" routerLink="/agregarproducto">
+<ion-buttons *ngIf="isAdmin" class="admin-buttons">
+  <ion-button expand="block" color="primary" class="ion-margin-top" routerLink="/agregarproducto">
     Agregar Producto
   </ion-button>
-  <ion-button *ngIf="isAdmin" expand="full" color="tertiary" (click)="goToHistorialAdmin()">
-    Ver Historial de Ventas
-  </ion-button>
-  <ion-button expand="full" color="secondary" class="ion-margin-top" routerLink="/modificarproducto">
+  <ion-button expand="block" color="primary" class="ion-margin-top" routerLink="/modificarproducto">
     Modificar Producto
   </ion-button>
   <ion-button expand="full" color="secondary" class="ion-margin-top" routerLink="/agregarcategoria">
@@ -86,9 +83,8 @@
   <ion-button expand="full" color="secondary" class="ion-margin-top" routerLink="/modificarcategorias">
     Modificar Categoria
   </ion-button>
-
-  <ion-button expand="full" color="tertiary" class="ion-margin-top" routerLink="/historialcomprausuario">
-    Historial de Ventas
+  <ion-button *ngIf="isAdmin" expand="full" color="tertiary" (click)="goToHistorialAdmin()">
+    Ver Historial de Ventas
   </ion-button>
-  
 </ion-buttons>
+
