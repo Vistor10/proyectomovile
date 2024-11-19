@@ -11,31 +11,55 @@
   <div class="form-container">
     <form (ngSubmit)="onUpdatePassword()" #updatePasswordForm="ngForm">
       <ion-item>
-        <ion-label position="floating">Nueva Contraseña</ion-label>
-        <ion-input type="password" 
-          pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[#.@$!%*?&])[A-Za-z\d#.@$!%*?&]{8,}$" 
-          [(ngModel)]="newPassword" name="newPassword" required #newPasswordInput="ngModel">
+        <ion-label position="floating">Contraseña Actual</ion-label>
+        <ion-input 
+          type="password" 
+          [(ngModel)]="currentPassword" 
+          name="currentPassword" 
+          required 
+          #currentPasswordInput="ngModel">
         </ion-input>
       </ion-item>
+      <ion-text color="danger" *ngIf="currentPasswordInput.invalid && currentPasswordInput.touched">
+        <p>La contraseña actual es obligatoria.</p>
+      </ion-text>
 
+      <ion-item>
+        <ion-label position="floating">Nueva Contraseña</ion-label>
+        <ion-input 
+          type="password" 
+          pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[#.@$!%*?&])[A-Za-z\d#.@$!%*?&]{8,}$" 
+          [(ngModel)]="newPassword" 
+          name="newPassword" 
+          required 
+          #newPasswordInput="ngModel">
+        </ion-input>
+      </ion-item>
       <ion-text color="danger" *ngIf="newPasswordInput.invalid && newPasswordInput.touched">
-        <p *ngIf="newPasswordInput.errors?.['required']">La contraseña es obligatoria.</p>
+        <p *ngIf="newPasswordInput.errors?.['required']">La nueva contraseña es obligatoria.</p>
         <p *ngIf="newPasswordInput.errors?.['pattern']">
-          La contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula, un número y un carácter especial.
+          La nueva contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula, un número y un carácter especial.
         </p>
       </ion-text>
 
       <ion-item>
         <ion-label position="floating">Confirmar Nueva Contraseña</ion-label>
-        <ion-input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" required #confirmPasswordInput="ngModel">
+        <ion-input 
+          type="password" 
+          [(ngModel)]="confirmPassword" 
+          name="confirmPassword" 
+          required 
+          #confirmPasswordInput="ngModel">
         </ion-input>
       </ion-item>
-
       <ion-text color="danger" *ngIf="confirmPasswordInput.touched && !passwordsMatch()">
         <p>Las contraseñas no coinciden.</p>
       </ion-text>
 
-      <ion-button expand="full" type="submit" color="primary"
+      <ion-button 
+        expand="full" 
+        type="submit" 
+        color="primary" 
         [disabled]="!updatePasswordForm.form.valid || !passwordsMatch()">
         Actualizar Contraseña
       </ion-button>

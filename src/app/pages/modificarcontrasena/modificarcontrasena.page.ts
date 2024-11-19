@@ -8,16 +8,17 @@ import { ServicebdService } from 'src/app/services/servicebd.service';
   styleUrls: ['./modificarcontrasena.page.scss'],
 })
 export class ModificarcontrasenaPage implements OnInit {
-  newPassword: string = '';   
-  confirmPassword: string = '';    
+  currentPassword: string = '';  // Contraseña actual
+  newPassword: string = '';     // Nueva contraseña
+  confirmPassword: string = ''; // Confirmar contraseña nueva
 
   constructor(
     private navCtrl: NavController,
     private dbService: ServicebdService,
     private toastController: ToastController
-  ) { }
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   passwordsMatch(): boolean {
     return this.newPassword === this.confirmPassword;
@@ -33,37 +34,54 @@ export class ModificarcontrasenaPage implements OnInit {
   }
 
   async onUpdatePassword() {
-    if (this.passwordsMatch()) {
-      const username = localStorage.getItem('correoUsuario');
-      if (username) {
-        const passwordValid = this.validatePassword(this.newPassword);
-        if (passwordValid) {
-          try {
-            await this.dbService.updatePassword(username, this.newPassword);
-            console.log('Contraseña actualizada con éxito:', this.newPassword);
-            this.presentToast('Contraseña actualizada correctamente.');
-            this.navCtrl.navigateRoot('/paginainicio');
-          } catch (error) {
-            console.error('Error al actualizar la contraseña:', error);
-            this.presentToast('Error al actualizar la contraseña. ' + JSON.stringify(error));
-          }
-        } else {
-          console.error('La contraseña no cumple con los requisitos.');
-          this.presentToast('La contraseña no cumple con los requisitos.');
-        }
-      } else {
-        console.error('No se encontró el correo del usuario en localStorage.');
-        this.presentToast('No se encontró el correo del usuario.');
+    const email = localStorage.getItem('correoUsuario'); // Obtener correo del usuario logueado
+
+    if (!email) {
+      this.presentToast('No se encontró información del usuario en localStorage.');
+      return;
+    }
+
+    try {
+      // Obtener el usuario autenticado desde la base de datos
+      const user = await this.dbService.getCurrentUser(email);
+
+      if (!user) {
+        this.presentToast('Usuario no encontrado.');
+        return;
       }
-    } else {
-      console.log('Las contraseñas no coinciden.');
-      this.presentToast('Las contraseñas no coinciden.');
+
+      // Validar que la contraseña actual ingresada coincida con la almacenada
+      if (user.contraseña !== this.currentPassword) {
+        this.presentToast('La contraseña actual no es correcta.');
+        return;
+      }
+
+      // Validar que las nuevas contraseñas coincidan
+      if (!this.passwordsMatch()) {
+        this.presentToast('Las contraseñas no coinciden.');
+        return;
+      }
+
+      // Validar requisitos de la nueva contraseña
+      const passwordValid = this.validatePassword(this.newPassword);
+      if (!passwordValid) {
+        this.presentToast('La nueva contraseña debe tener al menos 8 caracteres, una letra mayúscula, un número y un carácter especial.');
+        return;
+      }
+
+      // Actualizar la contraseña en la base de datos
+      await this.dbService.updatePassword(email, this.newPassword);
+
+      this.presentToast('Contraseña actualizada correctamente.');
+      this.navCtrl.navigateRoot('/paginainicio');
+    } catch (error) {
+      console.error('Error al actualizar la contraseña:', error);
+      this.presentToast('Error al actualizar la contraseña. Intenta nuevamente.');
     }
   }
-  
+
   validatePassword(password: string): boolean {
-    // Regex actualizado para permitir también . y #
-    const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[#@$!%*?&.])[A-Za-z\d#$@$!%*?&.]{8,}$/;
+    const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[#.@$!%*?&])[A-Za-z\d#.@$!%*?&]{8,}$/;
     return regex.test(password);
   }
 }

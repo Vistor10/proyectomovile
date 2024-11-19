@@ -571,42 +571,35 @@ async removeFromCart(email: string, productId: number) {
 
 
 
-// Método para obtener el ID del usuario autenticado
 async getCurrentUser(email: string): Promise<any> {
   try {
     if (this.databaseObj) {
       const result = await this.databaseObj.executeSql(
-        `SELECT * FROM ${this.table_usuario} WHERE correo = ?`, [email]
+        `SELECT * FROM usuario WHERE correo = ?`,
+        [email]
       );
 
       if (result.rows.length > 0) {
-        const user = result.rows.item(0);
-        return user; // Devuelve el usuario encontrado con `id_usuario`
-      } else {
-        console.error('Usuario no encontrado');
-        return null;
+        return result.rows.item(0); // Devuelve el usuario encontrado
       }
     }
+    return null; // Usuario no encontrado
   } catch (e) {
     console.error('Error obteniendo usuario', e);
-    return null;
+    throw e;
   }
 }
-
 
 getCurrentUserObservable(): Observable<any> {
   return this.currentUserSubject.asObservable();
 }
 
-async updatePassword(username: string, newPassword: string): Promise<void> {
+async updatePassword(email: string, newPassword: string): Promise<void> {
   if (!this.databaseObj) {
     throw new Error('Database not initialized');
   }
-
-  // contraseña
   const query = `UPDATE usuario SET contraseña = ? WHERE correo = ?`;
-  const result = await this.databaseObj.executeSql(query, [newPassword, username]);
-  
+  const result = await this.databaseObj.executeSql(query, [newPassword, email]);
   if (result.rowsAffected === 0) {
     throw new Error('No se pudo actualizar la contraseña. Verifica si el usuario existe.');
   }
@@ -981,60 +974,58 @@ async finalizePurchase(email: string) {
       this.ventasSubject.next([]);
     }
   }
-  async loadAllSalesHistory() {
-    try {
-      if (!this.databaseObj) {
-        throw new Error('Database object is not initialized.');
-      }
+  async loadAllSalesHistory(): Promise<any[]> {
+    if (!this.databaseObj) {
+      console.error('La conexión a la base de datos no está inicializada.');
+      return [];
+    }
   
-      // Obtener todas las ventas con el correo del usuario asociado
-      const ventasResult = await this.databaseObj.executeSql(
+    try {
+      const ventas = await this.databaseObj.executeSql(
         `SELECT v.id_venta, v.fecha_venta, v.total, u.correo AS correo_usuario
          FROM venta v
-         INNER JOIN usuario u ON v.id_usuario = u.id_usuario
-         ORDER BY v.fecha_venta DESC`
+         JOIN usuario u ON v.id_usuario = u.id_usuario`,
+        []
       );
   
-      const ventas: any[] = [];
-      for (let i = 0; i < ventasResult.rows.length; i++) {
-        const venta = ventasResult.rows.item(i);
+      const allSales: any[] = [];
+      for (let i = 0; i < ventas.rows.length; i++) {
+        const venta = ventas.rows.item(i);
   
-        // Obtener detalles de la venta
-        const detallesResult = await this.databaseObj.executeSql(
-          `SELECT 
-            p.nombre_producto AS nombre_producto,
-            dv.cantidad AS cantidad,
-            dv.subtotal AS subtotal,
-            p.imagen AS imagen_producto
+        // Formatear fecha a zona horaria de Chile
+        const fechaChile = new Intl.DateTimeFormat('es-CL', {
+          weekday: 'short', // Día de la semana (abrev.)
+          year: 'numeric',  // Año completo
+          month: 'short',   // Mes abreviado
+          day: 'numeric',   // Día del mes
+          hour: 'numeric',  // Hora
+          minute: 'numeric',// Minuto
+          second: 'numeric',// Segundo
+          hour12: true,     // Formato 12 horas (AM/PM)
+          timeZone: 'America/Santiago' // Zona horaria de Chile
+        }).format(new Date(venta.fecha_venta));
+  
+        const detalles = await this.databaseObj.executeSql(
+          `SELECT dv.cantidad, dv.subtotal, p.nombre_producto, p.imagen AS imagen_producto
            FROM detalle_venta dv
-           INNER JOIN producto p ON dv.id_producto = p.id_producto
+           JOIN producto p ON dv.id_producto = p.id_producto
            WHERE dv.id_venta = ?`,
           [venta.id_venta]
         );
   
-        const detalles: any[] = [];
-        for (let j = 0; j < detallesResult.rows.length; j++) {
-          detalles.push(detallesResult.rows.item(j));
+        const detallesArray: any[] = [];
+        for (let j = 0; j < detalles.rows.length; j++) {
+          detallesArray.push(detalles.rows.item(j));
         }
   
-        const fechaChile = new Date(venta.fecha_venta).toLocaleString('es-CL', {
-          timeZone: 'America/Santiago',
-        });
-  
-        ventas.push({
-          id_venta: venta.id_venta,
-          fecha_venta: fechaChile,
-          total: Math.round(venta.total),
-          correo_usuario: venta.correo_usuario,
-          detalles,
-        });
+        // Agregar la venta con la fecha formateada y los detalles
+        allSales.push({ ...venta, fecha_venta: fechaChile, detalles: detallesArray });
       }
   
-      this.historialComprasSubject.next(ventas);
+      return allSales;
     } catch (error) {
-      console.error('Error al cargar el historial de todas las ventas:', error);
-      this.historialComprasSubject.next([]);
+      console.error('Error al cargar todas las compras:', error);
+      throw error;
     }
   }
 }  
-

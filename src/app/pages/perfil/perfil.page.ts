@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router } from '@angular/router'; // Usamos Router para navegación
 import { ServicebdService } from 'src/app/services/servicebd.service';
 import { Camera, CameraResultType } from '@capacitor/camera';
 
@@ -77,5 +77,10 @@ export class PerfilPage implements OnInit {
     localStorage.removeItem('correoUsuario');
     localStorage.removeItem('isAdmin');
     this.router.navigate(['/login']);
+  }
+
+  // Método para redirigir a la página de historial admin
+  goToHistorialAdmin() {
+    this.router.navigate(['/historialadmin']); 
   }
 }

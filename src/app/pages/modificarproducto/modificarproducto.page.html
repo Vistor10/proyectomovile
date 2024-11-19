@@ -1,5 +1,10 @@
-<ion-content [fullscreen]="true" color="dark" class="ion-padding">
-  <form (ngSubmit)="onSubmit(modificarProductoForm)" #modificarProductoForm="ngForm">
+<ion-header [translucent]="true">
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/perfil"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Modificar producto</ion-title>
+  </ion-toolbar>
 
     <!-- Selección de producto -->
     <ion-item>

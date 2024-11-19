@@ -3,7 +3,6 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/paginainicio"></ion-back-button>
     </ion-buttons>
-   
   </ion-toolbar>
 </ion-header>
 
@@ -24,7 +23,7 @@
               <p><strong>Cantidad:</strong> {{ detalle.cantidad }}</p>
               <p><strong>Subtotal:</strong> ${{ detalle.subtotal | number: '1.0-0' }}</p>
               <p><strong>Fecha:</strong> {{ compra.fecha_venta }}</p>
-              <p *ngIf="isAdmin"><strong>Correo:</strong> {{ compra.correo_usuario }}</p>
+              <p><strong>Correo Usuario:</strong> {{ compra.correo_usuario }}</p>
             </ion-col>
           </ion-row>
         </div>

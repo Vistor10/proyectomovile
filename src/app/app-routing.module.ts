@@ -93,11 +93,17 @@ const routes: Routes = [
     loadChildren: () => import('./pages/contrasenanuevaolvido/contrasenanuevaolvido.module').then( m => m.ContrasenanuevaolvidoPageModule)
   },
   {
+    path: 'historialadmin',
+    loadChildren: () => import('./pages/historialadmin/historialadmin.module').then( m => m.HistorialadminPageModule)
+  },
+  {
 
     path: '**',
     loadChildren: () => import('./pages/notfound/notfound.module').then( m => m.NotfoundPageModule)
  
   },
+  
+
  
 
   
