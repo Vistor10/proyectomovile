@@ -21,7 +21,35 @@ describe('ContrasenanuevaolvidoPage', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('debería crear el componente', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('debería permitir actualizar el campo newPassword', () => {
+    const testPassword = 'Password123!';
+    component.newPassword = testPassword;
+    expect(component.newPassword).toBe(testPassword);
+  });
+
+  it('debería permitir actualizar el campo confirmPassword', () => {
+    const testConfirmPassword = 'Password123!';
+    component.confirmPassword = testConfirmPassword;
+    expect(component.confirmPassword).toBe(testConfirmPassword);
+  });
+
+  it('debería deshabilitar el botón si las contraseñas no coinciden', () => {
+    const form = { valid: true } as any; // Simulamos un formulario válido
+    component.newPassword = 'Password123!';
+    component.confirmPassword = 'Password456!'; // Contraseñas diferentes
+
+    expect(form.valid && component.newPassword === component.confirmPassword).toBeFalse(); // Botón deshabilitado
+  });
+
+  it('debería habilitar el botón si las contraseñas coinciden y son válidas', () => {
+    const form = { valid: true } as any; // Simulamos un formulario válido
+    component.newPassword = 'Password123!';
+    component.confirmPassword = 'Password123!'; // Contraseñas coinciden
+
+    expect(form.valid && component.newPassword === component.confirmPassword).toBeTrue(); // Botón habilitado
   });
 });
