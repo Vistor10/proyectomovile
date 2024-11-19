@@ -3,22 +3,23 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>
+    <ion-title class="header-title">
       <ion-text color="light">
-        <p *ngIf="!address">Ingresa tu dirección aquí</p>
-        <p *ngIf="address">{{ address }}</p>
+        <p *ngIf="!address" class="header-text">Te encuentras aquí</p>
+        <p *ngIf="address" class="header-text">{{ address }}</p>
       </ion-text>
     </ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="getCurrentLocation()">
-        <ion-icon name="location"></ion-icon>
+        <ion-icon name="location" class="header-icon"></ion-icon>
       </ion-button>
       <ion-router-link [routerLink]="['/carritocompras']">
-        <ion-icon name="cart" class="cart-icon"></ion-icon>
+        <ion-icon name="cart" class="header-icon"></ion-icon>
       </ion-router-link>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
+
 
 
 <ion-content [fullscreen]="true" color="dark" class="ion-padding center-content">

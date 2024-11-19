@@ -50,6 +50,32 @@
 .footer-icons ion-col {
   text-align: center;
 }
+/* Header alignment */
+.header-title {
+  text-align: center; /* Centers the title text */
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-text {
+  margin: 0;
+  font-size: 16px;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.header-icon {
+  font-size: 24px; /* Adjust size for consistency */
+  margin: 0 5px; /* Add spacing between icons */
+  --ionicon-stroke-width: 32px;
+}
+
+.ion-toolbar {
+  display: flex;
+  align-items: center;
+}
 
 
 
