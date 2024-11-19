@@ -3,57 +3,37 @@
     <ion-menu contentId="main-content">
       <ion-header>
         <ion-toolbar color="dark">
-          <ion-title>Menu </ion-title>
+          <ion-title>Menu</ion-title>
         </ion-toolbar>
       </ion-header>
-      <ion-item routerLink="/paginainicio">
-        <ion-icon name="home-outline" slot="start"></ion-icon>
-        <ion-label>Inicio</ion-label>
-      </ion-item>
-      <ion-item routerLink="/perfil">
-        <ion-icon name="person-outline" slot="start"></ion-icon>
-        <ion-label>Ver perfil</ion-label>
-      </ion-item>
-      <ion-item routerLink="/sobrenosotros">
-        <ion-icon name="laptop-outline" slot="start"></ion-icon>
-        <ion-label>Sobre nosotros</ion-label>
-      </ion-item>
-      <ion-item (click)="irDetalleCategoria('Gabinetes')">
-        <ion-icon name="cube-outline" slot="start"></ion-icon>
-        <ion-label>Gabinetes</ion-label>
-      </ion-item>
-      <ion-item (click)="irDetalleCategoria('Teclados')">
-        <ion-icon name="keypad-outline" slot="start"></ion-icon>
-        <ion-label>Teclados</ion-label>
-      </ion-item>
-      <ion-item (click)="irDetalleCategoria('Audifonos Gamer')">
-        <ion-icon name="headset-outline" slot="start"></ion-icon>
-        <ion-label>Audifonos gamer</ion-label>
-      </ion-item>
-      <ion-item (click)="irDetalleCategoria('Placas Madre')">
-        <ion-icon name="hardware-chip-outline" slot="start"></ion-icon>
-        <ion-label>Placas madre</ion-label>
-      </ion-item>
-      <ion-item (click)="irDetalleCategoria('Fuentes de Poder')">
-        <ion-icon name="battery-half-outline" slot="start"></ion-icon>
-        <ion-label>Fuentes de poder</ion-label>
-      </ion-item>
-      <ion-item (click)="irDetalleCategoria('Memorias RAM')">
-        <ion-icon name="albums-outline" slot="start"></ion-icon>
-        <ion-label>Memorias ram</ion-label>
-      </ion-item>
-      <ion-item (click)="irDetalleCategoria('Procesadores')">
-        <ion-icon name="settings-outline" slot="start"></ion-icon>
-        <ion-label>Procesadores</ion-label>
-      </ion-item>
-      <ion-item (click)="irDetalleCategoria('Tarjetas de Video')">
-        <ion-icon name="film-outline" slot="start"></ion-icon>
-        <ion-label>Tarjetas de video</ion-label>
-      </ion-item>
-      <ion-item (click)="irDetalleCategoria('Monitores')">
-        <ion-icon name="tv-outline" slot="start"></ion-icon>
-        <ion-label>Monitores</ion-label>
-      </ion-item>     
+      <ion-content>
+        
+        <ion-list>
+          <ion-item routerLink="/paginainicio">
+            <ion-icon name="home-outline" slot="start"></ion-icon>
+            <ion-label>Inicio</ion-label>
+          </ion-item>
+          <ion-item routerLink="/perfil">
+            <ion-icon name="person-outline" slot="start"></ion-icon>
+            <ion-label>Ver perfil</ion-label>
+          </ion-item>
+          <ion-item routerLink="/sobrenosotros">
+            <ion-icon name="laptop-outline" slot="start"></ion-icon>
+            <ion-label>Sobre nosotros</ion-label>
+          </ion-item>
+        </ion-list>
+       
+        <ion-item-divider class="divider-title">
+          Categorías
+        </ion-item-divider>
+        
+        <ion-list>
+          <ion-item *ngFor="let category of categories" (click)="irDetalleCategoria(category.nombre_categoria)">
+            <ion-icon name="cube-outline" slot="start"></ion-icon>
+            <ion-label>{{ category.nombre_categoria }}</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-content>
     </ion-menu>
   </ion-menu-toggle>
   <ion-router-outlet id="main-content"></ion-router-outlet>

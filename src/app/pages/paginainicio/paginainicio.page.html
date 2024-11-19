@@ -40,4 +40,37 @@
       </ion-row>
     </ion-grid>
   </div>
+  <ion-footer>
+    <ion-grid>
+      <ion-row class="footer-icons">
+        <ion-col size="3">
+          <ion-button href="https://twitter.com/" target="_blank" fill="clear">
+            <ion-icon name="logo-twitter" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col size="3">
+          <ion-button href="https://www.instagram.com/" target="_blank" fill="clear">
+            <ion-icon name="logo-instagram" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col size="3">
+          <ion-button href="https://wa.me/" target="_blank" fill="clear">
+            <ion-icon name="logo-whatsapp" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col size="3">
+          <ion-button href="https://www.facebook.com/" target="_blank" fill="clear">
+            <ion-icon name="logo-facebook" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row class="footer-dollar">
+        <ion-col text-center>
+          <ion-text color="light" *ngIf="dolarValue">
+            Valor del dólar hoy: {{ dolarValue | number:'1.2-2' }} CLP
+          </ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-footer>
 </ion-content>

@@ -8,20 +8,33 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   idCategoria: number = 0;
+  categories: any[] = [];
   constructor(private servicebdService: ServicebdService, private router: Router) {
     this.initializeApp();
   }
 
   async initializeApp() {
     await this.servicebdService.createDatabase();
+    await this.loadCategories(); 
   }
-  async irDetalleCategoria(cat: string){
-    //buscar el id correspondiente a la categoria
-   // this.bd.presentAlert("1","1");
-    const user = await this.servicebdService.buscarCat(cat);
-    this.idCategoria = user.id_categoria;
-   // this.bd.presentAlert("2",this.idCategoria+"");
-    this.servicebdService.getProductsByCategory(this.idCategoria);
-    this.router.navigate(['/gabinetes']);
+  
+  async loadCategories() {
+    try {
+      this.categories = await this.servicebdService.getCategories();
+    } catch (error) {
+      console.error('Error al cargar las categorías:', error);
+    }
+  }
+  
+  async irDetalleCategoria(cat: string) {
+    try {
+      const category = await this.servicebdService.buscarCat(cat); 
+      this.idCategoria = category.id_categoria;
+
+      await this.servicebdService.getProductsByCategory(this.idCategoria); 
+      this.router.navigate(['/gabinetes']); 
+    } catch (error) {
+      console.error('Error al redirigir a la categoría:', error);
+    }
   }
 }
