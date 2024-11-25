@@ -18,7 +18,8 @@
       <ion-row>
         <ion-col size="6" size-md="6" *ngFor="let product of products">
           <ion-card>
-            <img [src]="product.imagen" alt="Sin foto" />
+            <!-- La imagen ahora actúa como un botón -->
+            <img [src]="product.imagen" alt="Sin foto" (click)="verDetalles(product)" style="cursor: pointer;" />
             
             <ion-card-header>
               <ion-card-title>{{ product.nombre_producto }}</ion-card-title>
@@ -34,6 +35,7 @@
             </ion-button>
           </ion-card>
         </ion-col>
+        
       </ion-row>
     </ion-grid>
     

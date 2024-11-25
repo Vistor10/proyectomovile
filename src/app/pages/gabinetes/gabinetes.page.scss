@@ -1,51 +1,66 @@
 /* Icono del logo */
 .icon {
-  width: 100px;
+  width: 80px; /* Ajuste del tamaño del logo para armonizar */
   height: auto;
   display: block;
-  margin: 0;
+  margin: 0 auto;
 }
 
 /* Contenedor de cada tarjeta de producto */
 ion-card {
-  height: 380px; 
+  height: 320px; /* Reducir la altura de la tarjeta */
+  width: 100%; /* Asegurar que ocupe el ancho disponible */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Sombra más sutil */
+  border-radius: 12px; /* Bordes ligeramente redondeados */
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #2c2c2c; /* Fondo oscuro para contraste */
 }
 
 ion-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  transform: scale(1.03); /* Efecto de hover más discreto */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25); /* Sombra elegante */
 }
 
 /* Imagen del producto */
 ion-card img {
   width: 100%;
-  max-height: 150px;
-  object-fit: contain; /* Ajuste para que toda la imagen se vea sin cortar */
-  border-bottom: 1px solid #ccc;
+  max-height: 140px; /* Reducir la altura de las imágenes */
+  object-fit: contain; /* Mostrar imagen completa sin cortar */
+  border-bottom: 1px solid #444; /* Línea sutil para separar */
+  background-color: #fff; /* Fondo blanco para resaltar imágenes */
 }
 
 /* Título y precio */
 ion-card-header {
-  flex-grow: 1;
   text-align: center;
-  font-weight: bold;
-  color: #ffffff;
-  padding: 10px;
+  color: #ffffff; /* Color predeterminado blanco */
+  padding: 8px;
 }
+
+ion-card-title {
+  font-size: 14px; /* Tamaño del texto del nombre del producto */
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #ffffff; /* Nombre del producto en blanco */
+}
+
+ion-card-subtitle {
+  font-size: 13px; /* Tamaño del precio */
+  color: #bbbbbb; /* Precio en un color gris claro */
+}
+
 
 /* Botones dentro de la tarjeta */
 ion-button {
-  margin-top: auto;
-  width: 90%;
-  align-self: center;
-  border-radius: 20px;
-  font-weight: bold;
+  margin-top: 8px; /* Separación uniforme entre botones */
+  width: 85%;
+  height: 35px; /* Tamaño más compacto */
+  border-radius: 18px; /* Bordes suaves */
+  font-size: 13px;
+  font-weight: 600;
 }
